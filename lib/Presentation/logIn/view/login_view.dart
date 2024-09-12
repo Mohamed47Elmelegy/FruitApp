@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/Presentation/logIn/widgets/apple_signin.dart';
+import 'package:frutes_app/Presentation/logIn/widgets/facebook_signin.dart';
+import 'package:frutes_app/Presentation/logIn/widgets/google_signin.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
-import 'package:frutes_app/core/theme/text_theme.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/custom_text_field.dart';
 import 'package:gap/gap.dart';
@@ -73,6 +75,12 @@ class _LoginViewState extends State<LoginView> {
             const AccountCreationPrompt(),
             const Gap(37),
             const CustomDivider(),
+            const Gap(16),
+            const GoogleSignin(),
+            const Gap(16),
+            const AppleSignin(),
+            const Gap(16),
+            const FacebookSignin(),
           ],
         ),
       ),

@@ -37,4 +37,7 @@ class Assets {
   /// assets/images/topBackgroundSplash2.svg
   static const String imagesTopBackgroundSplash2 =
       "assets/images/topBackgroundSplash2.svg";
+  static const String googleIcons = 'assets/images/GoogleIcons.svg';
+  static const String appleIcons = 'assets/images/AppleIcons.svg';
+  static const String facebookIcons = 'assets/images/FacebookIcons.svg';
 }
