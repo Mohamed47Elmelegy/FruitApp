@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/theme/text_theme.dart';
+import 'package:frutes_app/main.dart';
 
-AppBar appBar(BuildContext context,
-    {required String title, required VoidCallback onTap}) {
+AppBar appBar(BuildContext context, {required title}) {
   return AppBar(
     actions: const [],
     leading: GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        navigatorKey.currentState!.pop();
+      },
       child: const Icon(
         Icons.arrow_back_ios_new,
       ),

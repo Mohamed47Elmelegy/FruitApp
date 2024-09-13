@@ -13,13 +13,8 @@ class GoogleSignin extends StatelessWidget {
     return PlatformSignin(
         width: 343,
         height: 56,
-        icon: SvgPicture.asset(
-          Assets.imagesGoogleIcons,
-        ).setAllPadding(
-          context,
-          16,
-          enableMediaQuery: false,
-        ),
+        icon: SvgPicture.asset(Assets.googleIcons)
+            .setAllPadding(context, 16, enableMediaQuery: false),
         label: 'تسجيل بواسطة جوجل',
         onPressed: () {},
         color: Colors.transparent,

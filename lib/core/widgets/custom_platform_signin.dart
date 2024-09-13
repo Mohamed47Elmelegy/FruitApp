@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/theme/text_theme.dart';
 import 'package:gap/gap.dart';
 

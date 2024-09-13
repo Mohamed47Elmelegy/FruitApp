@@ -72,11 +72,7 @@ class _LoginViewState extends State<LoginView> {
                 color: AppColors.green1_500,
                 onPressed: () {}),
             const Gap(33),
-            AccountCreationPrompt(
-              onPressed: () {},
-              text: '',
-              buttonText: '',
-            ),
+            const AccountCreationPrompt(),
             const Gap(37),
             const CustomDivider(),
             const Gap(16),

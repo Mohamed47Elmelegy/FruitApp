@@ -9,7 +9,7 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: appBar(context, title: 'تسجيل الدخول', onTap: () {}),
+      appBar: appBar(context, title: 'تسجيل الدخول'),
       body: const LoginView(),
     );
   }
