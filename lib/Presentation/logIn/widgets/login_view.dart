@@ -5,8 +5,10 @@ import 'package:frutes_app/Presentation/logIn/widgets/google_signin.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/custom_text_field.dart';
+import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
 
+import '../../../core/routes/page_routes_name.dart';
 import '../../../core/theme/colors_theme.dart';
 import '../../../core/widgets/account_creation_prompt.dart';
 import '../../../core/widgets/custom_divider.dart';
@@ -73,11 +75,14 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {}),
             const Gap(33),
             AccountCreationPrompt(
-              onPressed: () {},
-              text: '',
-              buttonText: '',
+              onPressed: () {
+                navigatorKey.currentState
+                    ?.pushReplacementNamed(PageRoutesName.signUp);
+              },
+              text: 'ليس لديك حساب؟ ',
+              buttonText: 'انشاء حساب',
             ),
-            const Gap(37),
+            const Gap(33),
             const CustomDivider(),
             const Gap(16),
             const GoogleSignin(),
