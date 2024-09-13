@@ -24,7 +24,7 @@ class CustomTextField extends StatefulWidget {
   final bool? filled;
 
   const CustomTextField({
-    super.key,
+    Key? key,
     this.controller,
     this.isPassword,
     this.hint,
@@ -51,7 +51,7 @@ class CustomTextField extends StatefulWidget {
     this.fillColor,
     this.filled,
     String? initialValue,
-  });
+  }) : super(key: key);
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -62,6 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return TextFormField(
       controller: widget.controller,
       initialValue: widget.value,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/utils/app_images.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; // للتعامل مع تعدد اللغات
 
 import '../../../core/config/constants.dart';
 import '../../../core/routes/page_routes_name.dart';

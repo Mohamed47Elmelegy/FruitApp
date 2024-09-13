@@ -13,9 +13,7 @@ class AppleSignin extends StatelessWidget {
     return PlatformSignin(
         width: 343,
         height: 56,
-        icon: SvgPicture.asset(
-          Assets.imagesAppIcon,
-        ).setAllPadding(
+        icon: SvgPicture.asset(Assets.appleIcons).setAllPadding(
           context,
           16,
           enableMediaQuery: false,

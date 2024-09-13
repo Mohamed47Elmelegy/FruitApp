@@ -15,7 +15,7 @@ class OnboardingPageView extends StatelessWidget {
         children: [
           PageViewItem(
             isVisable: true,
-            image: Assets.imagesFruitBasketView1,
+            image: Assets.imagesFruitbasketSplash1,
             backgroundImage: Assets.imagesTopBackgroundSplash1,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ class OnboardingPageView extends StatelessWidget {
           ),
           const PageViewItem(
             isVisable: false,
-            image: Assets.imagesPineappleView2,
+            image: Assets.imagesPineappleSplash2,
             backgroundImage: Assets.imagesTopBackgroundSplash2,
             title: Text(
               'ابحث وتسوق',
