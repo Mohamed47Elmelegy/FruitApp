@@ -3,7 +3,7 @@ import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import 'package:frutes_app/main.dart';
 import '../../../core/widgets/custom_app_bar.dart';
-import '../view/signup_view.dart';
+import '../widgets/signup_view.dart';
 
 class SignupViewBody extends StatelessWidget {
   const SignupViewBody({super.key});
@@ -16,8 +16,11 @@ class SignupViewBody extends StatelessWidget {
           title: 'حساب جديد',
           onTap: () => navigatorKey.currentState
               ?.pushReplacementNamed(PageRoutesName.login)),
-      body: const SignupView()
-          .setHorizontalPadding(context, 16, enableMediaQuery: false),
+      body: const SignupView().setHorizontalPadding(
+        context,
+        16,
+        enableMediaQuery: false,
+      ),
     );
   }
 }
