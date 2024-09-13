@@ -13,7 +13,7 @@ class FacebookSignin extends StatelessWidget {
     return PlatformSignin(
         width: 343,
         height: 56,
-        icon: SvgPicture.asset(Assets.facebookIcons).setAllPadding(
+        icon: SvgPicture.asset(Assets.imagesFacebookIcons).setAllPadding(
           context,
           16,
           enableMediaQuery: false,

@@ -30,7 +30,7 @@ class PageViewItem extends StatelessWidget {
       children: [
         SizedBox(
           width: Constants.mediaQuery.width,
-          height: Constants.mediaQuery.height * 0.5,
+          height: Constants.mediaQuery.height * 0.4,
           child: Stack(
             children: [
               Positioned.fill(
