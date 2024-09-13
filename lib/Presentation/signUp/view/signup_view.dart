@@ -7,6 +7,7 @@ import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/widgets/butn.dart';
+import '../../../core/widgets/terms_and_conditions_checkbox.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -88,7 +89,7 @@ class _SignupViewState extends State<SignupView> {
               },
             ),
             const Gap(16),
-            // const TermsAndConditionsCheckbox(),
+            const TermsAndConditionsCheckbox(),
             const Gap(30),
             Butn(
               text: 'إنشاء حساب جديد',
