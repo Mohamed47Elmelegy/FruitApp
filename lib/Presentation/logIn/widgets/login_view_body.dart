@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/widgets/custom_app_bar.dart';
+import 'package:frutes_app/main.dart';
 import '../view/login_view.dart';
 
 class LoginViewBody extends StatelessWidget {
@@ -9,7 +10,9 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: appBar(context, title: 'تسجيل الدخول'),
+      appBar: appBar(context, title: 'تسجيل الدخول', onTap: () {
+        navigatorKey.currentState!.pop();
+      }),
       body: const LoginView(),
     );
   }

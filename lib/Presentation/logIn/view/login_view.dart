@@ -3,8 +3,10 @@ import 'package:frutes_app/Presentation/logIn/widgets/apple_signin.dart';
 import 'package:frutes_app/Presentation/logIn/widgets/facebook_signin.dart';
 import 'package:frutes_app/Presentation/logIn/widgets/google_signin.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
+import 'package:frutes_app/core/routes/page_routes_name.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/custom_text_field.dart';
+import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/theme/colors_theme.dart';
@@ -72,7 +74,14 @@ class _LoginViewState extends State<LoginView> {
                 color: AppColors.green1_500,
                 onPressed: () {}),
             const Gap(33),
-            const AccountCreationPrompt(),
+            AccountCreationPrompt(
+              onPressed: () {
+                navigatorKey.currentState
+                    ?.pushReplacementNamed(PageRoutesName.signup);
+              },
+              text: 'لا تمتلك حساب؟',
+              buttonText: 'قم بانشاء حساب',
+            ),
             const Gap(37),
             const CustomDivider(),
             const Gap(16),
