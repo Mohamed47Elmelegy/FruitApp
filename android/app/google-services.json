@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "244051247756",
+    "firebase_url": "https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "furute-fefa1",
+    "storage_bucket": "furute-fefa1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244051247756:android:4949f37a25d791ef7c71a9",
+        "android_client_info": {
+          "package_name": "com.example.furute"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

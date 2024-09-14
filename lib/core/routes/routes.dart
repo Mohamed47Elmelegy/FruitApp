@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/Presentation/logIn/view/login_view_body.dart';
 import 'package:frutes_app/Presentation/onBording/widgets/onbording_view_body.dart';
-import 'package:frutes_app/Presentation/signUp/view/signup_view_body.dart';
+import 'package:frutes_app/Presentation/signUp/widgets/signup_view_body.dart';
 import '../../Presentation/Splash/view/splash_view.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 
