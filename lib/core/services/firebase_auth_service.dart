@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../errors/custom_exception.dart';
+
 class FirbaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -9,21 +11,24 @@ class FirbaseAuthService {
   }) async {
     try {
       UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       return userCredential.user!;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw Exception('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        throw Exception('Wrong password provided for that user.');
+      if (e.code == 'weak-password') {
+        throw CustomException(message: 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        throw Exception('The account already exists for that email.');
+        throw CustomException(
+            message: 'The account already exists for that email.');
+      } else {
+        throw CustomException(
+            message: 'Something went wrong please try again.');
       }
-      rethrow;
+    } catch (e) {
+      throw CustomException(message: 'Something went wrong please try again.');
     }
   }
 }

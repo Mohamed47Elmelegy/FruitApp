@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/core/errors/validators_erros.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/widgets/account_creation_prompt.dart';
@@ -36,18 +37,7 @@ class _SignupViewState extends State<SignupView> {
               hint: 'الاسم كامل',
               keyboardType: TextInputType.name,
               onValidate: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'برجاء ادخال الاسم كامل';
-                }
-                if (value.split(' ').length < 3) {
-                  return 'الاسم كامل يجب ان يحتوي على الاسم واللقب';
-                }
-                if (!RegExp(
-                  r'^[a-zA-Z\u0621-\u064A\u0660-\u0669\s]+$',
-                ).hasMatch(value)) {
-                  return 'الاسم كامل يجب ان يحتوي على الاسم واللقب فقط';
-                }
-                return null;
+                return ValidatorsErrors.validateFullName(value!);
               },
             ),
             const Gap(16),
@@ -56,16 +46,7 @@ class _SignupViewState extends State<SignupView> {
               hint: 'البريد الإلكتروني',
               keyboardType: TextInputType.name,
               onValidate: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'برجاء ادخال البريد الالكتروني';
-                }
-
-                if (!RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+(\.[a-zA-Z]+)*$",
-                ).hasMatch(value)) {
-                  return 'البريد الالكتروني يجب ان يكون صحيح';
-                }
-                return null;
+                return ValidatorsErrors.validateEmail(value!);
               },
             ),
             const Gap(16),
@@ -75,17 +56,7 @@ class _SignupViewState extends State<SignupView> {
               hint: "كلمة المرور",
               isPassword: true,
               onValidate: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return "برجاء ادخال كلمة المرور";
-                }
-
-                var regex = RegExp(
-                    r"(?=^.{8,}$)(?=.*[!@#$%^&*]+)(?![.//n])(?=.*[A-Z])(?=.*[a-z]).*$");
-                if (!regex.hasMatch(value)) {
-                  return "كلمة المرور يجب ان تكون على الاقل 8 احرف و تحوي حروف كبيرة و صغيرة و ارقام و رموز خاصة.";
-                }
-
-                return null;
+                return ValidatorsErrors.validatePassword(value!);
               },
             ),
             const Gap(16),
