@@ -6,15 +6,19 @@ abstract class ValidatorsErrors {
       return 'يرجى إدخال الاسم واللقب';
     }
 
-    // فحص إذا كان الاسم أقل من 2 كلمات
-    if (value.split(' ').length < 2) {
+    // إزالة المسافات الزائدة بين الكلمات
+    String cleanedValue = value.trim().replaceAll(RegExp(r'\s+'), ' ');
+
+    // فحص إذا كان الاسم أقل من كلمتين
+    List<String> nameParts = cleanedValue.split(' ');
+    if (nameParts.length < 2 || nameParts.length > 3) {
       return 'الاسم كامل يجب أن يحتوي على الاسم واللقب';
     }
 
     // فحص إذا كان الاسم يحتوي على رموز أو أرقام
     if (!RegExp(
       r'^[a-zA-Z\u0621-\u064A\u0660-\u0669\s]+$',
-    ).hasMatch(value)) {
+    ).hasMatch(cleanedValue)) {
       return 'الاسم كامل يجب أن يحتوي على الاسم واللقب فقط';
     }
 

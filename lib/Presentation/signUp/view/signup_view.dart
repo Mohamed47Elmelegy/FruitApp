@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frutes_app/Presentation/signUp/widgets/signup_view_body.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import 'package:frutes_app/main.dart';

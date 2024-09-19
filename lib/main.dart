@@ -1,5 +1,7 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/services/shared_preferences_sengltion.dart';
 import 'package:frutes_app/core/theme/application_theme_manager.dart';
@@ -27,6 +29,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: EasyLoading.init(
+        builder: BotToastInit(),
+      ),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
