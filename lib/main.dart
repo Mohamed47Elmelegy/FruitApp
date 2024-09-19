@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/services/shared_preferences_sengltion.dart';
 import 'package:frutes_app/core/theme/application_theme_manager.dart';
 import 'package:frutes_app/firebase_options.dart';
@@ -15,6 +16,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Prefs.init();
+  getItSetup();
   runApp(const MyApp());
 }
 

@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 
 /// registers all the services needed for the app
 final getIt = GetIt.instance;
-void setup() {
+void getItSetup() {
   getIt.registerLazySingleton<FirbaseAuthService>(
     () => FirbaseAuthService(),
   );
