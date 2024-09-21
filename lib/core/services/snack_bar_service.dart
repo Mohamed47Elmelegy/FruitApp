@@ -18,7 +18,7 @@ class SnackBarService {
               right: 24,
             ),
             decoration: BoxDecoration(
-              color: Colors.white60,
+              color: AppColors.grayscale50,
               borderRadius: BorderRadius.circular(12),
             ),
             child: msg.length > 80
@@ -51,7 +51,7 @@ class SnackBarService {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Success",
+                              "نجاح",
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               style: TextStyle(
@@ -83,7 +83,7 @@ class SnackBarService {
                         child: IconButton(
                           onPressed: cancelFunc,
                           icon: const Text(
-                            "close",
+                            "اغلاق",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black54),
                           ),
@@ -121,7 +121,7 @@ class SnackBarService {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Success",
+                              "نجاح",
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               style: TextStyle(
@@ -153,7 +153,7 @@ class SnackBarService {
                         child: IconButton(
                           onPressed: cancelFunc,
                           icon: const Text(
-                            "close",
+                            "أغلاق",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black54),
                           ),
@@ -218,7 +218,7 @@ class SnackBarService {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Error",
+                              'خطأ',
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               style: TextStyle(
@@ -250,7 +250,7 @@ class SnackBarService {
                         child: IconButton(
                           onPressed: cancelFunc,
                           icon: const Text(
-                            "close",
+                            'اغلاق',
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black54),
                           ),
@@ -288,7 +288,7 @@ class SnackBarService {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Error",
+                              "خطأ",
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               style: TextStyle(
@@ -320,7 +320,7 @@ class SnackBarService {
                         child: IconButton(
                           onPressed: cancelFunc,
                           icon: const Text(
-                            "close",
+                            "اغلاق",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black54),
                           ),

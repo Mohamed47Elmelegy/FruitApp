@@ -13,7 +13,9 @@ import '../../../core/widgets/terms_and_conditions_checkbox.dart';
 import '../manager/signup_cubit.dart';
 
 class SignupViewBody extends StatefulWidget {
-  const SignupViewBody({super.key});
+  const SignupViewBody({
+    super.key,
+  });
 
   @override
   State<SignupViewBody> createState() => _SignupViewBodyState();
@@ -27,6 +29,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
   var passwordController = TextEditingController();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String name, password, email;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

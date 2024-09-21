@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/services/shared_preferences_sengltion.dart';
@@ -8,12 +9,14 @@ import 'package:frutes_app/core/theme/application_theme_manager.dart';
 import 'package:frutes_app/firebase_options.dart';
 import 'core/routes/page_routes_name.dart';
 import 'core/routes/routes.dart';
+import 'core/services/bloc_observer_service.dart';
 import 'generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = BlocObserverService();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

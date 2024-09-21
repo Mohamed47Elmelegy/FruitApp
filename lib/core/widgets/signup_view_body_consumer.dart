@@ -16,6 +16,7 @@ class SignupViewBodyConsumer extends StatelessWidget {
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
+          SnackBarService.showSuccessMessage('تم انشاء حسابك بنجاح');
         } else if (state is SignupFailure) {
           SnackBarService.showErrorMessage(state.exception);
         }

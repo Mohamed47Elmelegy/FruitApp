@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 import 'package:frutes_app/domin/auth/repositories/auth_repo.dart';
 import '../../../domin/auth/Entities/user_entities.dart';
 part 'signup_state.dart';
@@ -18,6 +18,7 @@ class SignupCubit extends Cubit<SignupState> {
     String password,
   ) async {
     emit(SignupLoading());
+
     final user = await authRepo.creatUserWithEmailAndPassword(
       name,
       email,
