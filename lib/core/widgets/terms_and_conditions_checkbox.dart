@@ -6,15 +6,30 @@ import 'package:frutes_app/core/widgets/custom_checkbox.dart';
 import '../theme/colors_theme.dart';
 import '../theme/text_theme.dart';
 
-class TermsAndConditionsCheckbox extends StatelessWidget {
-  const TermsAndConditionsCheckbox({super.key});
+class TermsAndConditionsCheckbox extends StatefulWidget {
+  const TermsAndConditionsCheckbox({super.key, required this.onChanged});
+  final ValueChanged<bool> onChanged;
+  @override
+  TermsAndConditionsCheckboxState createState() =>
+      TermsAndConditionsCheckboxState();
+}
+
+class TermsAndConditionsCheckboxState
+    extends State<TermsAndConditionsCheckbox> {
+  bool isTermsAccept = false;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CustomCheckbox()
-            .setOnlyPadding(context, 0, 0, 0, 20, enableMediaQuery: false),
+        CustomCheckbox(
+          onChecked: (value) {
+            isTermsAccept = value;
+            widget.onChanged(value);
+            setState(() {});
+          },
+          isChecked: isTermsAccept,
+        ).setOnlyPadding(context, 0, 0, 0, 20, enableMediaQuery: false),
         SizedBox(
           width: Constants.mediaQuery.width * 0.7,
           child: Text.rich(
@@ -25,33 +40,15 @@ class TermsAndConditionsCheckbox extends StatelessWidget {
                   style: AppTextStyles.bodySmallSemiBold13
                       .copyWith(color: AppColors.grayscale400),
                 ),
-                const TextSpan(
-                  text: ' ',
-                  style: AppTextStyles.bodySmallSemiBold13,
-                ),
                 TextSpan(
                   text: 'الشروط',
                   style: AppTextStyles.bodySmallSemiBold13
                       .copyWith(color: AppColors.green1_600),
                 ),
                 const TextSpan(
-                  text: ' ',
+                  text: ' والأحكام الخاصة بنا',
                   style: AppTextStyles.bodySmallSemiBold13,
                 ),
-                TextSpan(
-                  text: ' والأحكام',
-                  style: AppTextStyles.bodySmallSemiBold13
-                      .copyWith(color: AppColors.green1_600),
-                ),
-                const TextSpan(
-                  text: ' ',
-                  style: AppTextStyles.bodySmallSemiBold13,
-                ),
-                TextSpan(
-                  text: ' الخاصة بنا',
-                  style: AppTextStyles.bodySmallSemiBold13
-                      .copyWith(color: AppColors.green1_600),
-                )
               ],
             ),
           ),

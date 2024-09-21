@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frutes_app/core/errors/validators_erros.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
+import 'package:frutes_app/core/services/snack_bar_service.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/widgets/account_creation_prompt.dart';
 import 'package:frutes_app/core/widgets/custom_text_field.dart';
@@ -22,7 +25,7 @@ class SignupViewBody extends StatefulWidget {
 }
 
 class _SignupViewBodyState extends State<SignupViewBody> {
-  bool agreeToTerms = false;
+  late bool isTermsAccept = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
   var emailController = TextEditingController();
@@ -76,7 +79,12 @@ class _SignupViewBodyState extends State<SignupViewBody> {
               },
             ),
             const Gap(16),
-            const TermsAndConditionsCheckbox(),
+            TermsAndConditionsCheckbox(
+              onChanged: (value) {
+                isTermsAccept = value;
+                setState(() {});
+              },
+            ),
             const Gap(30),
             Butn(
               text: 'إنشاء حساب جديد',
@@ -84,11 +92,16 @@ class _SignupViewBodyState extends State<SignupViewBody> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
-                  context.read<SignupCubit>().createUserWithEmailAndPassword(
-                        name,
-                        email,
-                        password,
-                      );
+                  if (isTermsAccept) {
+                    context.read<SignupCubit>().createUserWithEmailAndPassword(
+                          name,
+                          email,
+                          password,
+                        );
+                  } else {
+                    SnackBarService.showErrorMessage(
+                        'يجب عليك الموافقة علي الشروط');
+                  }
                 } else {
                   setState(() {
                     autovalidateMode = AutovalidateMode.always;
