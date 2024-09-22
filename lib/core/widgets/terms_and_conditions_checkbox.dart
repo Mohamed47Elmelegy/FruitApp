@@ -45,9 +45,10 @@ class TermsAndConditionsCheckboxState
                   style: AppTextStyles.bodySmallSemiBold13
                       .copyWith(color: AppColors.green1_600),
                 ),
-                const TextSpan(
+                TextSpan(
                   text: ' والأحكام الخاصة بنا',
-                  style: AppTextStyles.bodySmallSemiBold13,
+                  style: AppTextStyles.bodySmallSemiBold13
+                      .copyWith(color: AppColors.green1_600),
                 ),
               ],
             ),

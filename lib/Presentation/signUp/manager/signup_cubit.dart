@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:frutes_app/domin/auth/repositories/auth_repo.dart';
+import 'package:frutes_app/domin/auth/repositories/auth/auth_repo.dart';
 import '../../../domin/auth/Entities/user_entities.dart';
 part 'signup_state.dart';
 

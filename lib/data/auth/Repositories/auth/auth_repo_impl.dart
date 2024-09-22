@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:frutes_app/core/errors/custom_exception.dart';
-import '../../../core/errors/failure.dart';
-import '../../../core/services/firebase_auth_service.dart';
-import '../../../domin/auth/Entities/user_entities.dart';
-import '../../../domin/auth/repositories/auth_repo.dart';
-import '../models/user_model.dart';
+import '../../../../core/errors/failure.dart';
+import '../../../../core/services/firebase_auth_service.dart';
+import '../../../../domin/auth/Entities/user_entities.dart';
+import '../../../../domin/auth/repositories/auth/auth_repo.dart';
+import '../../models/user_model.dart';
 
 /// This class implements the [AuthRepo] interface. It uses a [FirbaseAuthService]
 /// to create new users.
@@ -41,6 +43,7 @@ class AuthRepoImpl extends AuthRepo {
         ),
       );
     } catch (e) {
+      log('An Exception occurred in AuthRepoImpl.creatUserWithEmailAndPassword: $e');
       // Return a Left containing a ServerFailure if the operation fails.
       return Left(
         ServerFailure(
