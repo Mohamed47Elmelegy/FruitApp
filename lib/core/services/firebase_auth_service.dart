@@ -42,4 +42,40 @@ class FirbaseAuthService {
           message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
     }
   }
+
+  Future<User> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UserCredential userCredential =
+          await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      ); // Success log with green color
+      log(DebugConsoleMessages.success(
+          'User signed in successfully: ${userCredential.user!.email}'));
+      return userCredential.user!; // Success log with green color
+    } on FirebaseAuthException catch (e) {
+      log(DebugConsoleMessages.error(
+          'FirbaseAuthService.signInWithEmailAndPassword Exception message : ${e.toString()}Exception e.code : ${e.code}'));
+      if (e.code == 'network-request-failed') {
+        throw CustomException(message: 'لا يوجد اتصال بالانترنت');
+      }
+      if (e.code == 'user-not-found') {
+        throw CustomException(message: 'البريد الالكتروني غير موجود.');
+      } else if (e.code == 'wrong-password') {
+        throw CustomException(message: 'كلمة المرور خاطئة.');
+      } else {
+        throw CustomException(
+            message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+      }
+    } catch (e) {
+      // Critical error log with cyan color
+      log(DebugConsoleMessages.critical(
+          'Unknown error occurred: ${e.toString()}'));
+      throw CustomException(
+          message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+    }
+  }
 }
