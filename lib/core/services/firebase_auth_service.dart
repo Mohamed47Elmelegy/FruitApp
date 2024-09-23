@@ -65,7 +65,13 @@ class FirbaseAuthService {
       if (e.code == 'user-not-found') {
         throw CustomException(message: 'البريد الالكتروني غير موجود.');
       } else if (e.code == 'wrong-password') {
-        throw CustomException(message: 'كلمة المرور خاطئة.');
+        throw CustomException(
+            message: 'البريد الألكتروني او كلمة المرور غير صحيحة.');
+      } else if (e.code == 'invalid-credential') {
+        throw CustomException(
+            message: 'البريد الألكتروني او كلمة المرور غير صحيحة.');
+      } else if (e.code == 'invalid-email') {
+        throw CustomException(message: 'البريد الالكتروني غير صالح.');
       } else {
         throw CustomException(
             message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');

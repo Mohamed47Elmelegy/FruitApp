@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frutes_app/Features/auth/Presentation/logIn/widgets/apple_signin.dart';
-import 'package:frutes_app/Features/auth/Presentation/logIn/widgets/facebook_signin.dart';
-import 'package:frutes_app/Features/auth/Presentation/logIn/widgets/google_signin.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frutes_app/core/errors/validators_erros.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
@@ -13,6 +11,10 @@ import '../../../../../../../core/theme/colors_theme.dart';
 import '../../../../../../../core/widgets/account_creation_prompt.dart';
 import '../../../../../../../core/widgets/custom_divider.dart';
 import '../../../../../../../core/widgets/forget_password.dart';
+import '../manager/cubit/signin_cubit.dart';
+import 'apple_signin.dart';
+import 'facebook_signin.dart';
+import 'google_signin.dart';
 
 class SigninViewBody extends StatefulWidget {
   const SigninViewBody({super.key});
@@ -24,7 +26,6 @@ class SigninViewBody extends StatefulWidget {
 class _SigninViewBodyState extends State<SigninViewBody> {
   String? email;
   String? password;
-  bool isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -46,8 +47,7 @@ class _SigninViewBodyState extends State<SigninViewBody> {
               keyboardType: TextInputType.emailAddress,
               hint: 'البريد الإلكتروني',
               onValidate: (value) {
-                ValidatorsErrors.validateEmail(value!);
-                return null;
+                return ValidatorsErrors.validateEmail(value!);
               },
             ),
             const Gap(16),
@@ -60,17 +60,25 @@ class _SigninViewBodyState extends State<SigninViewBody> {
               hint: 'كلمة المرور',
               isPassword: true,
               onValidate: (value) {
-                ValidatorsErrors.validatePassword(value!);
-                return null;
+                return ValidatorsErrors.validatePassword(value!);
               },
             ),
             const Gap(16),
             const ForgetPassword(),
             const Gap(33),
             Butn(
-                text: 'تسجيل الدخول',
-                color: AppColors.green1_500,
-                onPressed: () {}),
+              text: 'تسجيل الدخول',
+              color: AppColors.green1_500,
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  context.read<SigninCubit>().signInWithEmailAndPassword(
+                        email!,
+                        password!,
+                      );
+                }
+              },
+            ),
             const Gap(33),
             AccountCreationPrompt(
               onPressed: () {
