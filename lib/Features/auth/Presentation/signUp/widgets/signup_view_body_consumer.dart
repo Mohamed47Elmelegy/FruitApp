@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
-import '../../Features/auth/Presentation/signUp/manager/signup_cubit.dart';
-import '../../Features/auth/Presentation/signUp/widgets/signup_view_body.dart';
-import '../services/snack_bar_service.dart';
+import 'package:frutes_app/core/widgets/model_progress_hud.dart';
+import '../manager/signup_cubit.dart';
+import 'signup_view_body.dart';
+import '../../../../../core/services/snack_bar_service.dart';
 
 class SignupViewBodyConsumer extends StatelessWidget {
   const SignupViewBodyConsumer({
@@ -22,8 +21,8 @@ class SignupViewBodyConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ModalProgressHUD(
-            inAsyncCall: state is SignupLoading ? true : false,
+        return CustomModelProgressHud(
+            isLoding: state is SignupLoading ? true : false,
             child: const SignupViewBody());
       },
     );

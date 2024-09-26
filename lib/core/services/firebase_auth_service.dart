@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../config/ansicolor.dart';
 import '../errors/custom_exception.dart';
 
@@ -80,6 +82,63 @@ class FirbaseAuthService {
       // Critical error log with cyan color
       log(DebugConsoleMessages.critical(
           'Unknown error occurred: ${e.toString()}'));
+      throw CustomException(
+          message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+    }
+  }
+
+  Future<User> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    log(DebugConsoleMessages.error(
+        'GoogleSignInAuthentication: ${googleAuth?.accessToken}, ${googleAuth?.idToken}'));
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    log(DebugConsoleMessages.success(
+        'User signed in successfully with Google: ${userCredential.user!.email}'));
+    return (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
+  }
+
+  Future<User> signInWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+      final userCredential = await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+
+      log(DebugConsoleMessages.success(
+          'User signed in successfully with Facebook: ${userCredential.user!.email}'));
+      return userCredential.user!;
+    } on FirebaseAuthException catch (e) {
+      log(DebugConsoleMessages.error(
+          'An error occurred while signing in with Facebook: ${e.toString()}'));
+      if (e.code == 'account-exists-with-different-credential') {
+        throw CustomException(
+            message:
+                'يوجد حساب بالفيس بوك بهذا البريد الالكتروني, الرجاء الدخول بهذا البريد الالكتروني');
+      } else {
+        throw CustomException(
+            message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+      }
+    } catch (e) {
+      // Critical error log with cyan color
+      log(DebugConsoleMessages.critical(
+          'Unknown error occurred while signing in with Facebook: ${e.toString()}'));
       throw CustomException(
           message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
     }

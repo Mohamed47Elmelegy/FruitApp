@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 
 import '../../../../../core/utils/app_images.dart';
-import '../../../../../core/widgets/custom_platform_signin.dart';
+import 'custom_platform_signin.dart';
 
 class AppleSignin extends StatelessWidget {
   const AppleSignin({super.key});

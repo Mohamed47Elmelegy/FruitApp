@@ -5,7 +5,7 @@ import 'package:frutes_app/core/routes/page_routes_name.dart';
 import 'package:frutes_app/main.dart';
 import '../../../../../../../core/services/get_it_services.dart';
 import '../../../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../../../../core/widgets/signup_view_body_consumer.dart';
+import '../widgets/signup_view_body_consumer.dart';
 import '../../../domin/repositories/auth_repo.dart';
 import '../manager/signup_cubit.dart';
 

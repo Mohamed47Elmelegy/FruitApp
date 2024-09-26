@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/config/constants.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
-import 'package:frutes_app/core/widgets/custom_checkbox.dart';
+import 'package:frutes_app/Features/auth/Presentation/signUp/widgets/custom_checkbox.dart';
 
-import '../theme/colors_theme.dart';
-import '../theme/text_theme.dart';
+import '../../../../../core/theme/colors_theme.dart';
+import '../../../../../core/theme/text_theme.dart';
 
 class TermsAndConditionsCheckbox extends StatefulWidget {
   const TermsAndConditionsCheckbox({super.key, required this.onChanged});

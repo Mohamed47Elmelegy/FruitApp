@@ -16,48 +16,48 @@ class SigninCubit extends Cubit<SigninState> {
     String password,
   ) async {
     emit(SigninLoading());
-    final user = await authRepo.signInWithEmailAndPassword(
+    final result = await authRepo.signInWithEmailAndPassword(
       email,
       password,
     );
     emit(
-      user.fold(
+      result.fold(
         (failure) => SigninFailure(exception: failure.message),
         (userEntities) => SigninSuccess(userEntities: userEntities),
       ),
     );
   }
 
-  // Future<void> signInWithGoogle() async {
-  //   emit(SigninLoading());
-  //   final user = await authRepo.signInWithGoogle();
-  //   emit(
-  //     user.fold(
-  //       (failure) => SigninError(exception: failure.message),
-  //       (userEntities) => SigninSuccess(userEntities: userEntities),
-  //     ),
-  //   );
-  // }
+  Future<void> signInWithGoogle() async {
+    emit(SigninLoading());
+    final result = await authRepo.signInWithGoogle();
+    emit(
+      result.fold(
+        (failure) => SigninFailure(exception: failure.message),
+        (userEntities) => SigninSuccess(userEntities: userEntities),
+      ),
+    );
+  }
 
-  // Future<void> signInWithFacebook() async {
-  //   emit(SigninLoading());
-  //   final user = await authRepo.signInWithFacebook();
-  //   emit(
-  //     user.fold(
-  //       (failure) => SigninError(exception: failure.message),
-  //       (userEntities) => SigninSuccess(userEntities: userEntities),
-  //     ),
-  //   );
-  // }
+  Future<void> signInWithFacebook() async {
+    emit(SigninLoading());
+    final result = await authRepo.signInWithFacebook();
+    emit(
+      result.fold(
+        (failure) => SigninFailure(exception: failure.message),
+        (userEntities) => SigninSuccess(userEntities: userEntities),
+      ),
+    );
+  }
 
-  // Future<void> signInWithApple() async {
-  //   emit(SigninLoading());
-  //   final user = await authRepo.signInWithApple();
-  //   emit(
-  //     user.fold(
-  //       (failure) => SigninError(exception: failure.message),
-  //       (userEntities) => SigninSuccess(userEntities: userEntities),
-  //     ),
-  //   );
-  // }
+  Future<void> signInWithApple() async {
+    emit(SigninLoading());
+    final result = await authRepo.signInWithApple();
+    emit(
+      result.fold(
+        (failure) => SigninFailure(exception: failure.message),
+        (userEntities) => SigninSuccess(userEntities: userEntities),
+      ),
+    );
+  }
 }

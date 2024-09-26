@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
-import '../utils/app_images.dart';
+import '../../../../../core/utils/app_images.dart';
 
 class CustomCheckbox extends StatefulWidget {
   final bool isChecked;

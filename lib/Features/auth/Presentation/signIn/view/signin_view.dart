@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/widgets/custom_app_bar.dart';
-import 'package:frutes_app/core/widgets/signin_view_body_consumer.dart';
+import 'package:frutes_app/Features/auth/Presentation/signIn/widgets/signin_view_body_consumer.dart';
 import '../../../domin/repositories/auth_repo.dart';
 import '../manager/cubit/signin_cubit.dart';
 

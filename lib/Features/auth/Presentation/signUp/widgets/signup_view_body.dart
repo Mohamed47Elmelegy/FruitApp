@@ -10,7 +10,7 @@ import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../../../core/widgets/butn.dart';
-import '../../../../../../../core/widgets/terms_and_conditions_checkbox.dart';
+import 'terms_and_conditions_checkbox.dart';
 import '../manager/signup_cubit.dart';
 
 class SignupViewBody extends StatefulWidget {
