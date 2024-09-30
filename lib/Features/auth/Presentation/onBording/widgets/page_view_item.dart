@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/config/constants.dart';
+import 'package:frutes_app/core/constants/prefs.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/theme/text_theme.dart';
 import 'package:frutes_app/main.dart';
@@ -47,7 +48,7 @@ class PageViewItem extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Prefs.setBool(Constants.hasSeenOnboarding, true);
+                  Prefs.setBool(SharedPrefs.hasSeenOnboarding, true);
                   navigatorKey.currentState?.pushNamed(PageRoutesName.signin);
                 },
                 child: Visibility(

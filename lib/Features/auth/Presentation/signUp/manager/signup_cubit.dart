@@ -1,9 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domin/Entities/user_entities.dart';
-import '../../../domin/repositories/auth_repo.dart';
+import '../../../domain/Entities/user_entities.dart';
+import '../../../domain/repositories/auth_repo.dart';
 part 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {

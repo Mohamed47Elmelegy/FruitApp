@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:gap/gap.dart';
 import '../../../../../core/config/constants.dart';
+import '../../../../../core/constants/prefs.dart';
 import '../../../../../core/routes/page_routes_name.dart';
 import '../../../../../core/services/shared_preferences_sengltion.dart';
 import '../../../../../core/theme/colors_theme.dart';
@@ -75,7 +76,7 @@ class _OnBordingViewBodyState extends State<OnBordingViewBody> {
               color: AppColors.green1_500,
               text: 'أبداء الأن',
               onPressed: () {
-                Prefs.setBool(Constants.hasSeenOnboarding, true);
+                Prefs.setBool(SharedPrefs.hasSeenOnboarding, true);
                 navigatorKey.currentState?.pushNamed(
                   PageRoutesName.signin,
                 );

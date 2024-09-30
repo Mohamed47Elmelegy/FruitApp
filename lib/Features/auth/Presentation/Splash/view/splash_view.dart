@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frutes_app/core/constants/prefs.dart';
 import 'package:frutes_app/core/utils/app_images.dart';
-
-import '../../../../../core/config/constants.dart';
 import '../../../../../core/routes/page_routes_name.dart';
 import '../../../../../core/services/shared_preferences_sengltion.dart';
 import '../../../../../main.dart';
@@ -17,7 +16,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
-    excuteNavigation();
+    navigateBasedOnUserStatus();
     super.initState();
   }
 
@@ -57,15 +56,25 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-  void excuteNavigation() {
-    bool isOnBordingViewSeen = Prefs.getBool(Constants.hasSeenOnboarding);
+  void navigateBasedOnUserStatus() {
+    bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
+    bool isLoggedIn = Prefs.getBool(SharedPrefs.isLoggedIn);
+
     Future.delayed(
       const Duration(seconds: 3),
       () {
         if (isOnBordingViewSeen) {
-          navigatorKey.currentState
-              ?.pushReplacementNamed(PageRoutesName.signin);
+          if (isLoggedIn) {
+            // Navigate to Home page if the user is logged in
+            navigatorKey.currentState
+                ?.pushReplacementNamed(PageRoutesName.home);
+          } else {
+            // Navigate to Login page if the user is not logged in
+            navigatorKey.currentState
+                ?.pushReplacementNamed(PageRoutesName.signin);
+          }
         } else {
+          // Navigate to Onboarding page if the user hasn't seen it
           navigatorKey.currentState
               ?.pushReplacementNamed(PageRoutesName.onBording);
         }

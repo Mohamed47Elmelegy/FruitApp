@@ -7,8 +7,8 @@ import 'package:frutes_app/core/services/database_service.dart';
 import '../../../../core/config/ansicolor.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/services/firebase_auth_service.dart';
-import '../../domin/Entities/user_entities.dart';
-import '../../domin/repositories/auth_repo.dart';
+import '../../domain/Entities/user_entities.dart';
+import '../../domain/repositories/auth_repo.dart';
 import '../models/user_model.dart';
 
 class AuthRepoImpl extends AuthRepo {
@@ -74,8 +74,8 @@ class AuthRepoImpl extends AuthRepo {
         email: email,
         password: password,
       );
-
-      return Right(UserModel.fromFirebaseUser(user));
+      var userEntity = await getUserData(userId: user.uid);
+      return Right(userEntity);
     } on CustomException catch (e) {
       return Left(
         ServerFailure(
@@ -100,9 +100,7 @@ class AuthRepoImpl extends AuthRepo {
     try {
       user = await firbaseAuthService.signInWithGoogle();
       var userEntity = UserModel.fromFirebaseUser(user);
-      await addUserData(
-        user: userEntity,
-      );
+      await syncUserData(user, userEntity);
       return Right(userEntity);
     } on CustomException catch (e) {
       deleteUser(user);
@@ -118,14 +116,30 @@ class AuthRepoImpl extends AuthRepo {
     }
   }
 
+  /// يتحقق من وجود المستخدم في قاعدة البيانات بعد تسجيل الدخول.
+  /// إذا كان المستخدم موجودًا، يتم جلب بياناته من Firestore.
+  /// إذا لم يكن موجودًا، يتم إضافة بياناته الجديدة إلى قاعدة البيانات.
+
+  Future<void> syncUserData(User user, UserModel userEntity) async {
+    var isUserExist = await databaseService.checkIfDataExists(
+        path: BackendPoint.isUserExists, documentId: user.uid);
+    if (isUserExist) {
+      await getUserData(userId: user.uid);
+    } else {}
+    await addUserData(
+      user: userEntity,
+    );
+  }
+
   @override
   Future<Either<Failure, UserEntities>> signInWithFacebook() async {
     User? user;
     try {
       user = await firbaseAuthService.signInWithFacebook();
       var userEntities = UserModel.fromFirebaseUser(user);
-      await addUserData(
-        user: userEntities,
+      await syncUserData(
+        user,
+        userEntities,
       );
       return Right(userEntities);
     } on CustomException catch (e) {
@@ -153,8 +167,17 @@ class AuthRepoImpl extends AuthRepo {
     required UserEntities user,
   }) async {
     await databaseService.addData(
-      path: BackendPoint.addDataToUsersCollection,
-      data: user.toMap(),
+        path: BackendPoint.addDataToUsersCollection,
+        data: user.toMap(),
+        documentId: user.uId);
+  }
+
+  @override
+  Future<UserEntities> getUserData({required String userId}) async {
+    var userData = await databaseService.getData(
+      path: BackendPoint.getDataFromUsersCollection,
+      documentId: userId,
     );
+    return UserModel.fromJson(userData);
   }
 }

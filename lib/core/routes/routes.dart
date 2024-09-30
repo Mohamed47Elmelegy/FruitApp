@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/Features/Home/presentation/view/home_view.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import '../../Features/auth/Presentation/Splash/view/splash_view.dart';
 import '../../Features/auth/Presentation/signIn/view/signin_view.dart';
@@ -14,6 +15,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const SigninView());
       case PageRoutesName.signup:
         return MaterialPageRoute(builder: (context) => const SignupView());
+      case PageRoutesName.home:
+        return MaterialPageRoute(builder: (context) => const HomeView());
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());

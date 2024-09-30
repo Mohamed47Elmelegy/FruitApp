@@ -15,6 +15,7 @@ abstract class AuthRepo {
     String password,
   );
   Future addUserData({required UserEntities user});
+  Future<UserEntities> getUserData({required String userId});
   Future<Either<Failure, UserEntities>> signInWithGoogle();
 
   Future<Either<Failure, UserEntities>> signInWithApple();
