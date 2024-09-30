@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:frutes_app/core/constants/backend_point.dart';
 import 'package:frutes_app/core/errors/custom_exception.dart';
 import 'package:frutes_app/core/services/database_service.dart';
@@ -25,8 +25,9 @@ class AuthRepoImpl extends AuthRepo {
     String email,
     String password,
   ) async {
+    User? user;
     try {
-      var user = await firbaseAuthService.createUserWithEmailAndPassword(
+      user = await firbaseAuthService.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -41,12 +42,14 @@ class AuthRepoImpl extends AuthRepo {
 
       return Right(userEntity);
     } on CustomException catch (e) {
+      deleteUser(user);
       return Left(
         ServerFailure(
           e.message,
         ),
       );
     } catch (e) {
+      deleteUser(user);
       log(DebugConsoleMessages.error(
           'An Exception occurred in AuthRepoImpl.creatUserWithEmailAndPassword: $e'));
       return Left(
@@ -54,6 +57,12 @@ class AuthRepoImpl extends AuthRepo {
           'حدث خطأ  في الاتصال بالسيرفر, حاول مرة ثانية',
         ),
       );
+    }
+  }
+
+  void deleteUser(User? user) {
+    if (user != null) {
+      firbaseAuthService.deleteUser();
     }
   }
 
@@ -87,10 +96,16 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, UserEntities>> signInWithGoogle() async {
+    User? user;
     try {
-      var user = await firbaseAuthService.signInWithGoogle();
-      return Right(UserModel.fromFirebaseUser(user));
+      user = await firbaseAuthService.signInWithGoogle();
+      var userEntity = UserModel.fromFirebaseUser(user);
+      await addUserData(
+        user: userEntity,
+      );
+      return Right(userEntity);
     } on CustomException catch (e) {
+      deleteUser(user);
       log(
         DebugConsoleMessages.error(
             'An Exception occurred in AuthRepoImpl.signInWithGoogle: ${e.toString()}'),
@@ -105,10 +120,16 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, UserEntities>> signInWithFacebook() async {
+    User? user;
     try {
-      var user = await firbaseAuthService.signInWithFacebook();
-      return Right(UserModel.fromFirebaseUser(user));
+      user = await firbaseAuthService.signInWithFacebook();
+      var userEntities = UserModel.fromFirebaseUser(user);
+      await addUserData(
+        user: userEntities,
+      );
+      return Right(userEntities);
     } on CustomException catch (e) {
+      deleteUser(user);
       log(
         DebugConsoleMessages.error(
             'An Exception occurred in AuthRepoImpl.signInWithFacebook: ${e.toString()}'),
@@ -132,7 +153,7 @@ class AuthRepoImpl extends AuthRepo {
     required UserEntities user,
   }) async {
     await databaseService.addData(
-      path: BackendPoint.addDataToUserCollection,
+      path: BackendPoint.addDataToUsersCollection,
       data: user.toMap(),
     );
   }

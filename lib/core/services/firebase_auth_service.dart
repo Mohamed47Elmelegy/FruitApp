@@ -143,4 +143,8 @@ class FirbaseAuthService {
           message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
     }
   }
+
+  Future deleteUser() async {
+    await FirebaseAuth.instance.currentUser!.delete();
+  }
 }

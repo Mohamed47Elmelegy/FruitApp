@@ -1,4 +1,4 @@
 class BackendPoint {
-  static const addDataToUserCollection = 'users';
-  static const getDataFromUserCollection = 'users';
+  static const addDataToUsersCollection = 'users';
+  static const getDataFromUsersCollection = 'users';
 }
