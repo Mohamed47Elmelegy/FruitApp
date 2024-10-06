@@ -180,4 +180,9 @@ class AuthRepoImpl extends AuthRepo {
     );
     return UserModel.fromJson(userData);
   }
+
+  @override
+  Future signOut() async {
+    await firbaseAuthService.signOut();
+  }
 }

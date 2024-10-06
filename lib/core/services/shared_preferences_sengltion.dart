@@ -14,4 +14,8 @@ class Prefs {
   static getBool(String key) {
     return _prefs.getBool(key) ?? false;
   }
+
+  static remove(String key) {
+    _prefs.remove(key);
+  }
 }

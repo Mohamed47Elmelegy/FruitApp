@@ -65,6 +65,8 @@ flutter:
   assets:
     - assets/images/
     - assets/snakebarJson/
+    # - assets/images/vuesax/bold/
+    # - assets/images/vuesax/outline/
 
   fonts:
     - family: Cairo

@@ -59,7 +59,6 @@ class _SplashViewState extends State<SplashView> {
   void navigateBasedOnUserStatus() {
     bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
     bool isLoggedIn = Prefs.getBool(SharedPrefs.isLoggedIn);
-
     Future.delayed(
       const Duration(seconds: 3),
       () {

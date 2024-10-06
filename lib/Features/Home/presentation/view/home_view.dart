@@ -3,22 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/main.dart';
 
+import '../../../../core/constants/prefs.dart';
 import '../../../../core/routes/page_routes_name.dart';
+import '../../../../core/services/shared_preferences_sengltion.dart';
 import '../../../../core/theme/colors_theme.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomeView extends StatelessWidget {
+  HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  signOut() async {
-    await auth.signOut();
-    navigatorKey.currentState!.pushReplacementNamed(PageRoutesName.signin);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +24,13 @@ class _HomeViewState extends State<HomeView> {
           ),
           Butn(
               text: 'تسجل خروج',
-              color: AppColors.green1_600,
+              color: AppColors.green1_500,
               onPressed: () {
-                signOut();
+                auth.signOut().then((value) {
+                  Prefs.remove(SharedPrefs.isLoggedIn);
+                  navigatorKey.currentState!
+                      .pushReplacementNamed(PageRoutesName.signin);
+                });
               }),
         ],
       ),

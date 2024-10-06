@@ -1,4 +1,5 @@
 class SharedPrefs {
-  static const String isLoggedIn = 'isLoggedIn';
+  static const isLoggedIn = 'isLoggedIn';
   static const hasSeenOnboarding = 'hasSeenOnboarding';
+  static const isSignOut = 'isSignOut';
 }

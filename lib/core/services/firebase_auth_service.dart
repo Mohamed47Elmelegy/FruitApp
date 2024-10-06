@@ -88,27 +88,45 @@ class FirbaseAuthService {
   }
 
   Future<User> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    log(DebugConsoleMessages.error(
-        'GoogleSignInAuthentication: ${googleAuth?.accessToken}, ${googleAuth?.idToken}'));
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      log(DebugConsoleMessages.error(
+          'GoogleSignInAuthentication: ${googleAuth?.accessToken}, ${googleAuth?.idToken}'));
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    // Once signed in, return the UserCredential
-    final userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    log(DebugConsoleMessages.success(
-        'User signed in successfully with Google: ${userCredential.user!.email}'));
-    return (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
+      // Once signed in, return the UserCredential
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      log(DebugConsoleMessages.success(
+          'User signed in successfully with Google: ${userCredential.user!.email}'));
+      return userCredential.user!;
+    } on FirebaseAuthException catch (e) {
+      log(DebugConsoleMessages.error(
+          'FirbaseAuthService.signInWithGoogle Exception message : ${e.toString()}Exception e.code : ${e.code}'));
+
+      if (e.code == 'network-request-failed') {
+        throw CustomException(message: 'لا يوجد اتصال بالانترنت');
+      } else {
+        throw CustomException(
+            message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+      }
+    } catch (e) {
+      // Critical error log with cyan color
+      log(DebugConsoleMessages.critical(
+          'Unknown error occurred while signing in with Google: ${e.toString()}'));
+      throw CustomException(
+          message: 'حدث خطأ في الاتصال بالسيرفر, حاول مرة ثانية');
+    }
   }
 
   Future<User> signInWithFacebook() async {
@@ -146,5 +164,9 @@ class FirbaseAuthService {
 
   Future deleteUser() async {
     await FirebaseAuth.instance.currentUser!.delete();
+  }
+
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

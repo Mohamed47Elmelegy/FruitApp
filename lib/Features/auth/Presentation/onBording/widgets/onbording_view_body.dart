@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:gap/gap.dart';
-import '../../../../../core/config/constants.dart';
 import '../../../../../core/constants/prefs.dart';
 import '../../../../../core/routes/page_routes_name.dart';
 import '../../../../../core/services/shared_preferences_sengltion.dart';

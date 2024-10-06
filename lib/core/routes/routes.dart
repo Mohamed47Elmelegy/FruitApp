@@ -16,7 +16,7 @@ class Routes {
       case PageRoutesName.signup:
         return MaterialPageRoute(builder: (context) => const SignupView());
       case PageRoutesName.home:
-        return MaterialPageRoute(builder: (context) => const HomeView());
+        return MaterialPageRoute(builder: (context) => HomeView());
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());
