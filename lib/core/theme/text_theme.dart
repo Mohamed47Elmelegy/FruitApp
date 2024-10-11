@@ -124,6 +124,11 @@ class AppTextStyles {
     fontSize: 11,
   );
 
+  static const TextStyle bodyXsmallSemibold11 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 11,
+  );
   static const TextStyle bodyXSmallBold11 = TextStyle(
     fontFamily: 'Cairo',
     fontWeight: FontWeight.w700, // Bold

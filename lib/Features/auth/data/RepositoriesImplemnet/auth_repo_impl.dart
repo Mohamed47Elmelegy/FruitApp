@@ -39,8 +39,9 @@ class AuthRepoImpl extends AuthRepo {
       addUserData(
         user: userEntity,
       );
+      var fetchedUserEntity = await getUserData(userId: user.uid);
 
-      return Right(userEntity);
+      return Right(fetchedUserEntity);
     } on CustomException catch (e) {
       deleteUser(user);
       return Left(

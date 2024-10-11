@@ -99,9 +99,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : widget.suffixWidget,
         prefixIcon: widget.prefixIcon,
         hintText: widget.hint,
-        fillColor: const Color(
-          0xffF9FAFA,
-        ),
+        fillColor: widget.fillColor ?? const Color(0xffF9FAFA), // هنا التعديل
+
         filled: true,
         hintStyle: AppTextStyles.bodySmallBold13
             .copyWith(color: AppColors.grayscale400),

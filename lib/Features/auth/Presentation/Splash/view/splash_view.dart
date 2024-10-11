@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/constants/prefs.dart';
 import 'package:frutes_app/core/utils/app_images.dart';
 import '../../../../../core/routes/page_routes_name.dart';
+import '../../../../../core/services/firebase_auth_service.dart';
 import '../../../../../core/services/shared_preferences_sengltion.dart';
 import '../../../../../main.dart';
 
@@ -58,7 +60,8 @@ class _SplashViewState extends State<SplashView> {
 
   void navigateBasedOnUserStatus() {
     bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
-    bool isLoggedIn = Prefs.getBool(SharedPrefs.isLoggedIn);
+    var isLoggedIn = FirbaseAuthService().isLoggedIn();
+    // bool isLoggedIn = Prefs.getBool(SharedPrefs.isLoggedIn);
     Future.delayed(
       const Duration(seconds: 3),
       () {
