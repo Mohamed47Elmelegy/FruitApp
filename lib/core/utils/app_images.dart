@@ -75,4 +75,10 @@ class Assets {
   static const String imagesDiscountItems = 'assets/images/discountItems.svg';
   static const String imagesFeaturedItemBackground =
       'assets/images/featured_item_background.svg';
+  static const String imagesDiscountOffersSVG =
+      'assets/images/DiscountOffersSVG.svg';
+  static const String imagesDiscountOffers = 'assets/images/DiscountOffers.png';
+  static const String imagesWatermelon = 'assets/images/watermelon.svg';
+  static const String imagesStrawberry = 'assets/images/Strawberry.svg';
+  static const String imagesStrawberryPng = 'assets/images/StrawberryPng.png';
 }
