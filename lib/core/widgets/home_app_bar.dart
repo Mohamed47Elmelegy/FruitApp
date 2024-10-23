@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/core/functions/get_user.dart';
 import 'package:frutes_app/core/widgets/notification_widget.dart';
 import 'package:gap/gap.dart';
 import '../theme/text_theme.dart';
@@ -27,8 +28,8 @@ class CustomHomeAppBar extends StatelessWidget {
                 color: const Color(0xFF949D9E),
               ),
             ),
-            const Text(
-              'محمد المليجي',
+            Text(
+              getUser().name,
               textAlign: TextAlign.right,
               style: AppTextStyles.bodyBaseBold16,
             ),

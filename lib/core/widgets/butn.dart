@@ -24,7 +24,9 @@ class Butn extends StatelessWidget {
           children: [
             Text(
               text,
-              style: AppTextStyles.bodyBaseBold16.copyWith(color: Colors.white),
+              style: AppTextStyles.bodyBaseBold16.copyWith(
+                color: Colors.white,
+              ),
             ),
           ],
         ),

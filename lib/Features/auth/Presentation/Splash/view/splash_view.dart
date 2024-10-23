@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/constants/prefs.dart';
@@ -24,7 +23,6 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    // التحقق من لغة التطبيق الحالية
     bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return Scaffold(
@@ -61,7 +59,6 @@ class _SplashViewState extends State<SplashView> {
   void navigateBasedOnUserStatus() {
     bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
     var isLoggedIn = FirbaseAuthService().isLoggedIn();
-    // bool isLoggedIn = Prefs.getBool(SharedPrefs.isLoggedIn);
     Future.delayed(
       const Duration(seconds: 3),
       () {

@@ -38,29 +38,6 @@ class Assets {
   static const String imagesTopBackgroundSplash2 =
       "assets/images/topBackgroundSplash2.svg";
 
-  static const String imagesVuesaxBoldHome =
-      'assets/images/vuesax/bold/Home.svg';
-
-  static const String imagesVuesaxOutlineHome =
-      'assets/images/vuesax/outline/Home.svg';
-
-  static const String imagesVuesaxBoldProducts =
-      'assets/images/vuesax/bold/Products.svg';
-
-  static const String imagesVuesaxOutlineProducts =
-      'assets/images/vuesax/outline/Products.svg';
-
-  static const String imagesVuesaxBoldShoppingCart =
-      'assets/images/vuesax/bold/ShoppingCart.svg';
-
-  static const String imagesVuesaxOutlineShoppingCart =
-      'assets/images/vuesax/outline/ShoppingCart.svg';
-
-  static const String imagesVuesaxBoldUser =
-      'assets/images/vuesax/bold/User.svg';
-
-  static const String imagesVuesaxOutlineUser =
-      'assets/images/vuesax/outline/User.svg';
   static const String googleIcons = 'assets/images/GoogleIcons.svg';
   static const String appleIcons = 'assets/images/AppleIcons.svg';
   static const String facebookIcons = 'assets/images/FacebookIcons.svg';
@@ -81,4 +58,18 @@ class Assets {
   static const String imagesWatermelon = 'assets/images/watermelon.svg';
   static const String imagesStrawberry = 'assets/images/Strawberry.svg';
   static const String imagesStrawberryPng = 'assets/images/StrawberryPng.png';
+  static const String imagesBoldHome = 'assets/images/vuesax/bold/home.svg';
+  static const String imagesOutlineHome =
+      'assets/images/vuesax/outline/home.svg';
+  static const String imagesBoldProducts =
+      'assets/images/vuesax/bold/products.svg';
+  static const String imagesOutlineProducts =
+      'assets/images/vuesax/outline/products.svg';
+  static const String imagesBoldShoppingCart =
+      'assets/images/vuesax/bold/ShoppingCart.svg';
+  static const String imagesOutlineShoppingCart =
+      'assets/images/vuesax/outline/ShoppingCart.svg';
+  static const String imagesBoldUser = 'assets/images/vuesax/bold/user.svg';
+  static const String imagesOutlineUser =
+      'assets/images/vuesax/outline/user.svg';
 }

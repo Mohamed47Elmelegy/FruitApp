@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../core/widgets/fruit_item.dart';
 
 class ProductsGridView extends StatelessWidget {
@@ -15,7 +14,7 @@ class ProductsGridView extends StatelessWidget {
           crossAxisSpacing: 16,
         ),
         itemBuilder: (context, index) {
-          return FruitItem();
+          return const FruitItem();
         });
   }
 }

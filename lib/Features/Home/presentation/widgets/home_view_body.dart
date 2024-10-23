@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/Features/Home/presentation/widgets/discount_offers.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
-import 'package:frutes_app/core/widgets/fruit_item.dart';
 import 'package:frutes_app/core/widgets/search_text_field.dart';
 import 'package:gap/gap.dart';
-
 import '../../../../core/widgets/home_app_bar.dart';
 import 'best_selling_header.dart';
 import 'products_grid_view.dart';
