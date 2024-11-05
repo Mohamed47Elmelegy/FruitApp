@@ -27,11 +27,11 @@ void main() async {
       : await Firebase.initializeApp();
   await Prefs.init();
   getItSetup();
-  runApp(const MyApp());
+  runApp(const FruitApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FruitApp extends StatelessWidget {
+  const FruitApp({super.key});
 
   // This widget is the root of your application.
   @override

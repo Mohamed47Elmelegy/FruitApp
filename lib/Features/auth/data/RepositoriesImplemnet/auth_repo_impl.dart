@@ -143,12 +143,13 @@ class AuthRepoImpl extends AuthRepo {
     User? user;
     try {
       user = await firbaseAuthService.signInWithFacebook();
-      var userEntities = UserModel.fromFirebaseUser(user);
+      var userEntity = UserModel.fromFirebaseUser(user);
       await syncUserData(
         user,
-        userEntities,
+        userEntity,
       );
-      return Right(userEntities);
+      saveUserData(user: userEntity);
+      return Right(userEntity);
     } on CustomException catch (e) {
       deleteUser(user);
       log(

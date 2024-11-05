@@ -5,6 +5,7 @@ import '../../Features/auth/Presentation/Splash/view/splash_view.dart';
 import '../../Features/auth/Presentation/signIn/view/signin_view.dart';
 import '../../Features/auth/Presentation/onBording/widgets/onbording_view_body.dart';
 import '../../Features/auth/Presentation/signUp/view/signup_view.dart';
+import '../../Features/best_selling_view/Presentation/views/best_selling_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,6 +18,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const SignupView());
       case PageRoutesName.home:
         return MaterialPageRoute(builder: (context) => const HomeView());
+      case PageRoutesName.bestSellingView:
+        return MaterialPageRoute(builder: (context) => const BestSellingView());
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());
