@@ -40,6 +40,20 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+    flavorDimensions "env"
+
+    productFlavors {
+
+        dev {
+            dimension "env"
+            applicationId "com.example.furute.dev"
+        }
+
+        prod {
+            dimension "env"
+            applicationId "com.example.furute"
+        }
+    }
 }
 
 flutter {

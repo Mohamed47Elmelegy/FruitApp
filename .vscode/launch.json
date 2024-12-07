@@ -5,21 +5,35 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Furute App",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "Furute App (profile mode)",
+            "name": "[Debug] Development App",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "program" : "lib/main_dev.dart",
+            "args": [
+                "--flavor",
+                "Dev"
+            ]
         },
         {
-            "name": "Furute App (release mode)",
+            "name": "[Debug] Production App",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
-        }
+            "program" : "lib/main_prod.dart",
+            "args": [
+                "--flavor",
+                "Prod"
+            ]
+        },
+        {
+            "name": "[Release] Production App",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "program" : "lib/main_prod.dart",
+            "args": [
+                "--flavor",
+                "Prod"
+            ]
+        },
     ]
 }

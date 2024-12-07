@@ -1,0 +1,215 @@
+[33mcommit 04e80eee16e03f505c848d76e748079069de79bf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Tue Nov 5 21:43:36 2024 +0200
+
+    create best selling view
+
+[33mcommit c6f56f28e89bf74f559c53110f994e456a2a277b[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Wed Oct 23 17:28:59 2024 +0300
+
+    add bottom navigator bar
+    add save user data to cached with shared prefs
+    and cahnge user Entity toMap to userModel
+    made encode and decode to json String data
+    feach username when user sign In
+
+[33mcommit e749621be07a1be6876009351d06bda84acfcf1e[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sun Oct 13 17:23:58 2024 +0300
+
+    - Used CarouselSlider.builder to create a dynamic carousel based on offer images.
+    - Set viewportFraction to 1.0 for the first item to start from the left edge of the screen.
+    - Adjusted margins for the first item to have no left margin, ensuring it starts from 0.
+    - Maintained a margin for subsequent items to ensure consistent spacing.
+    - Enabled auto-play functionality for smoother transitions between offers.
+    and create products grid view
+
+[33mcommit 3c4de67258da35396f5e06d1059766fb4ff98d84[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Oct 11 17:25:18 2024 +0300
+
+    create home view
+
+[33mcommit 1320a182da0bbfad0b8ad60350c01acddf34ba84[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sun Oct 6 14:04:49 2024 +0300
+
+    log in save datat in local mobile
+
+[33mcommit 7432d5a5215bd0e507cf91f0c9b034ebd2a0045d[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Mon Sep 30 21:38:20 2024 +0300
+
+    signOut Test
+
+[33mcommit bb769b32153b41d2d23c72a08266c928977bbeaa[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Mon Sep 30 18:12:59 2024 +0300
+
+    delete user data when have error when sign in to can create as same Data again
+
+[33mcommit 1d0d99be00c58f8dfc8b3cdb75b371982896ba06[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Mon Sep 30 16:00:35 2024 +0300
+
+    add data to  users collection to firestore
+
+[33mcommit b634e97da89568e4ebf12fdc7b1f9e947ee1bca0[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 26 14:10:32 2024 +0300
+
+    just edite files to every own folders
+
+[33mcommit 4adba3d764127cbe41697cfc5369fe3c8d40dfa8[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Mon Sep 23 08:32:32 2024 +0300
+
+    create signin repo , impl and cubit
+
+[33mcommit 16e390c651a215f52e6768ff282b234c81f85eab[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sun Sep 22 15:44:48 2024 +0300
+
+    use features folders to add every features domin, data and presentations at single folder
+
+[33mcommit e1bc2f649a1ba28d1ef45b99c6e6f70cb38707b6[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sun Sep 22 10:57:31 2024 +0300
+
+    add colors messages to debug console
+
+[33mcommit 74248eddf2e6f054ec6b1e2036fa8e16e4c6df52[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Sep 21 13:01:49 2024 +0300
+
+    add TermsAccept logic
+
+[33mcommit 26dcf7762a518c2aacd0922dec8aa15e83d3a1e0[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Sep 21 11:39:30 2024 +0300
+
+    create bloc observer onChange and add to main
+
+[33mcommit daf76c903da928c0921234c55b413d129bd04a89[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 19 15:46:17 2024 +0300
+
+    add coustom snake bar services
+
+[33mcommit 9df718a86c41e7970bf709b94fd0b7ce135888b2[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 19 13:50:44 2024 +0300
+
+    create BlocConsumer to signupViewBody
+
+[33mcommit 6d4f502d78ab1002928ad70d154989ba5ee7a8cb[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 19 13:46:27 2024 +0300
+
+    make signup cubit
+    make get it serveses
+
+[33mcommit 0c90d9ac05b9dcf28a62049bb4eb601ed182bf25[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 19 13:41:32 2024 +0300
+
+    crate signup cubit and states
+    make get it serves
+
+[33mcommit 92e75d63179ea6523c707c2aee846e4eadbad771[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Tue Sep 17 12:53:51 2024 +0300
+
+    Add custom ValidatorsErrors class, create and implement repository, and define UserModel
+    
+    - Implemented a custom `ValidatorsErrors` class to handle validation errors.
+    - Created a new repository and integrated it into the project.
+    - Developed the repository to manage data operations.
+    - Defined a `UserModel` class to represent and manage user data.
+
+[33mcommit 402e6e8bce88444775ab1e25f9e9cccaa3019f2d[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Sep 14 11:16:31 2024 +0300
+
+    write FirbaseAuthService class and Exception massage
+
+[33mcommit a921f49acf7d0f8acc246c6aa06526d9f70d1040[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Sep 14 10:06:21 2024 +0300
+
+    create auth repo and user entities
+
+[33mcommit 2b4459e6e728af68c0061db889c0b6ef522bab44[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Sep 14 08:55:11 2024 +0300
+
+    add firebase to app
+
+[33mcommit 08a827e8459fe33dc7e8acf5c0ef6a9002bcf2fd[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:53:22 2024 +0300
+
+    add functionality to close the app on AppBar button tap
+    
+    - Implemented `SystemNavigator.pop()` to exit the app when the AppBar button is pressed in `LoginViewBody`.
+
+[33mcommit c62cdabb04fdd4fc6d52719681deb1b46b6faf6e[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:41:13 2024 +0300
+
+    make custom TermsAndConditionsCheckbox
+
+[33mcommit fdf1e4cbf19406ea957ef25d161ce6167097d616[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:33:32 2024 +0300
+
+    SignupView and vaidate errors input
+
+[33mcommit e6d3294027523bd1707269dd319636e0b93ed2bc[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:26:30 2024 +0300
+
+    make custom AppBar
+
+[33mcommit 865c667cff8eeb4bb45d9b17e37a2b29f852c514[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:23:04 2024 +0300
+
+    create Navigation to signup
+
+[33mcommit 94c9dc8d2cf2a35c2edacd2c090de3fd50d4d057[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 15:07:22 2024 +0300
+
+    Signup
+
+[33mcommit 4de3359abbe445900e9cb165570348cdadbc90f2[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 14:53:54 2024 +0300
+
+    change imagesFruitBasketSplash1,imagesFruitBasketSplash1,Checkimages
+
+[33mcommit 1fdf512ed1dc01decfd1fa876c76ea2fc4db92a2[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Fri Sep 13 14:47:40 2024 +0300
+
+    Describe your changes here
+
+[33mcommit 95580d95b6e23d21e984771b80d66b3509368f40[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 12 11:39:26 2024 +0300
+
+    make google ,apple,facebook login ui
+
+[33mcommit 74c5ed93addf5dc5d984128345a39437420678ab[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Thu Sep 12 09:44:48 2024 +0300
+
+    first commit
+
+[33mcommit e51c91607da5dfffd5219abdd008c0ed066bdf03[m
+Author: MohamedElmelegy74 <75188929+MohamedElmelegy74@users.noreply.github.com>
+Date:   Sat Aug 31 21:56:41 2024 +0300
+
+    Initial commit with project files

@@ -47,17 +47,17 @@ class DefaultFirebaseOptions {
     projectId: 'furute-fefa1',
     authDomain: 'furute-fefa1.firebaseapp.com',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'furute-fefa1.appspot.com',
+    storageBucket: 'furute-fefa1.firebasestorage.app',
     measurementId: 'G-15MZYMNY32',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
-    appId: '1:244051247756:android:4949f37a25d791ef7c71a9',
+    appId: '1:244051247756:android:c83b13fce76349217c71a9',
     messagingSenderId: '244051247756',
     projectId: 'furute-fefa1',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'furute-fefa1.appspot.com',
+    storageBucket: 'furute-fefa1.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -66,7 +66,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '244051247756',
     projectId: 'furute-fefa1',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'furute-fefa1.appspot.com',
+    storageBucket: 'furute-fefa1.firebasestorage.app',
+    androidClientId: '244051247756-7vjm1s58jmrk01v8opc9ek4orhjpar3v.apps.googleusercontent.com',
+    iosClientId: '244051247756-i8idqh0narptlff19ijn3gnhutpdeonq.apps.googleusercontent.com',
     iosBundleId: 'com.example.furute',
   );
 
@@ -76,7 +78,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '244051247756',
     projectId: 'furute-fefa1',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'furute-fefa1.appspot.com',
+    storageBucket: 'furute-fefa1.firebasestorage.app',
+    androidClientId: '244051247756-7vjm1s58jmrk01v8opc9ek4orhjpar3v.apps.googleusercontent.com',
+    iosClientId: '244051247756-fuumk4khn8ittd8es1dbf8gkbnhm7ft3.apps.googleusercontent.com',
     iosBundleId: 'com.example.frutesApp',
   );
 
@@ -87,7 +91,8 @@ class DefaultFirebaseOptions {
     projectId: 'furute-fefa1',
     authDomain: 'furute-fefa1.firebaseapp.com',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'furute-fefa1.appspot.com',
+    storageBucket: 'furute-fefa1.firebasestorage.app',
     measurementId: 'G-PJHEDFV6LF',
   );
+
 }

@@ -7,16 +7,9 @@ import '../../Features/auth/domain/repositories/auth_repo.dart';
 
 final getIt = GetIt.instance;
 void getItSetup() {
-  getIt.registerLazySingleton<FirbaseAuthService>(
-    () => FirbaseAuthService(),
-  );
-  getIt.registerLazySingleton<DatabaseService>(
-    () => FirebaseFirestoreService(),
-  );
-  getIt.registerLazySingleton<AuthRepo>(
-    () => AuthRepoImpl(
-      getIt<FirbaseAuthService>(),
-      getIt<DatabaseService>(),
-    ),
-  );
+  getIt.registerLazySingleton<FirbaseAuthService>(() => FirbaseAuthService());
+  getIt
+      .registerLazySingleton<DatabaseService>(() => FirebaseFirestoreService());
+  getIt.registerLazySingleton<AuthRepo>(() =>
+      AuthRepoImpl(getIt<FirbaseAuthService>(), getIt<DatabaseService>()));
 }
