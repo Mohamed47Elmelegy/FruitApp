@@ -172,7 +172,7 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<UserEntities> getUserData({required String userId}) async {
     var userData = await databaseService.getData(
-      path: BackendPoint.getDataFromUsersCollection,
+      path: BackendPoint.getUser,
       documentId: userId,
     );
     return UserModel.fromJson(userData);
@@ -188,7 +188,7 @@ class AuthRepoImpl extends AuthRepo {
     required UserEntities user,
   }) async {
     await databaseService.addData(
-        path: BackendPoint.addDataToUsersCollection,
+        path: BackendPoint.addUser,
         data: UserModel.fromEntity(user).toMap(),
         documentId: user.uId);
   }

@@ -1,3 +1,5 @@
+import 'package:frutes_app/core/entities/proudcuts_entity.dart';
+
 import '../../entities/reviews_entity.dart';
 
 class ReviewsModel {
@@ -29,6 +31,15 @@ class ReviewsModel {
         date: reviewsEntity.date,
         description: reviewsEntity.description);
   }
+  ReviewsEntity toEntity() {
+    return ReviewsEntity(
+        name: name,
+        image: image,
+        rating: rating,
+        date: date,
+        description: description);
+  }
+
   toJson() {
     return {
       'name': name,

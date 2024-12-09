@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:frutes_app/core/entities/proudcuts_entity.dart';
+
 import 'reviews_model.dart';
 
 class ProductModel {
@@ -54,6 +56,25 @@ class ProductModel {
       sellingCount: json['sellingCount'],
     );
   }
+  ProductsEntity toEntity() {
+    return ProductsEntity(
+      productName: productName,
+      productPrice: productPrice,
+      productCode: productCode,
+      productDescription: productDescription,
+      isFeatured: isFeatured,
+      imageUrl: imageUrl,
+      expiryDateMonths: expiryDateMonths,
+      calorieDensity: calorieDensity,
+      caloriesReferenceWeight: caloriesReferenceWeight,
+      productRating: productRating,
+      ratingCount: ratingCount,
+      isOrganic: isOrganic,
+      productImage: productImage,
+      reviews: reviews.map((e) => e.toEntity()).toList(),
+    );
+  }
+
   toJson() {
     return {
       'productName': productName,

@@ -20,7 +20,7 @@ class FirebaseFirestoreService implements DatabaseService {
   Future<dynamic> getData({required String path, String? documentId}) async {
     if (documentId != null) {
       var data = await firestore
-          .collection(BackendPoint.getDataFromUsersCollection)
+          .collection(BackendPoint.getUser)
           .doc(documentId)
           .get();
       return data.data();
