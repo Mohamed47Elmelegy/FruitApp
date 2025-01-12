@@ -13,6 +13,7 @@ class FruitItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: ShapeDecoration(
+        color: AppColors.grayscale50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.r),
         ),

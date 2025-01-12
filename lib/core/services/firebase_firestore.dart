@@ -28,12 +28,37 @@ class FirebaseFirestoreService implements DatabaseService {
           .get();
       return data.data();
     } else {
-      var data = await firestore.collection(path).get();
-      return data.docs.map((e) => e.data()).toList();
+      Query<Map<String, dynamic>> data = firestore.collection(path);
+      if (query != null) {
+        var orderByField = query['orderBy'];
+        var desending = query['desending'];
+        if (orderByField != null) {
+          data = data.orderBy(orderByField, descending: desending);
+        }
+      }
+      if (query != null) {
+        var limit = query['limit'];
+        if (limit != null) {
+          data = data.limit(limit);
+        }
+      }
+      var result = await data.get();
+      return result.docs.map((e) => e.data()).toList();
     }
   }
 
   @override
+
+  /// Checks if a document exists in the specified Firestore collection.
+  ///
+  /// This method queries the Firestore collection at the given `path`
+  /// and checks for the existence of a document with the specified `documentId`.
+  ///
+  /// Returns a [Future<bool>] indicating whether the document exists.
+  ///
+  /// [path] is the Firestore collection path.
+  /// [documentId] is the ID of the document to check.
+
   Future<bool> checkIfDataExists(
       {required String path, required String documentId}) async {
     var data = await firestore.collection(path).doc(documentId).get();

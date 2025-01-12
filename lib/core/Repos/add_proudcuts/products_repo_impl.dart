@@ -30,8 +30,22 @@ class ProductsRepoImpl implements ProductsRepo {
   }
 
   @override
-  Future<Either<Failure, List<ProductsEntity>>> getBestSellingProducts() {
-    // TODO: implement getBestSellingProducts
-    throw UnimplementedError();
+  Future<Either<Failure, List<ProductsEntity>>> getBestSellingProducts() async {
+    try {
+      var data = await databaseService.getData(
+        path: BackendPoint.getProduct,
+        query: {
+          'lemit': 10,
+          'orderBy': 'sellingCount',
+          'desending': true,
+        },
+      ) as List<
+          Map<String, dynamic>>; //as Write if you Know what data are comeing
+      List<ProductsEntity> products =
+          data.map((e) => ProductModel.fromJson(e).toEntity()).toList();
+      return Right(products);
+    } catch (e) {
+      return Left(ServerFailure('Faild to get products'));
+    }
   }
 }
