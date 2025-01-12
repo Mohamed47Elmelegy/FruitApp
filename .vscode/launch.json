@@ -24,16 +24,16 @@
                 "Prod"
             ]
         },
-        {
-            "name": "[Release] Production App",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release",
-            "program" : "lib/main_prod.dart",
-            "args": [
-                "--flavor",
-                "Prod"
-            ]
-        },
+        // {
+        //     "name": "[Release] Production App",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release",
+        //     "program" : "lib/main_prod.dart",
+        //     "args": [
+        //         "--flavor",
+        //         "Prod"
+        //     ]
+        // },
     ]
 }

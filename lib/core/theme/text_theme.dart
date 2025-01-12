@@ -97,6 +97,11 @@ class AppTextStyles {
     fontWeight: FontWeight.w600, // SemiBold
     fontSize: 16,
   );
+  static const TextStyle bodyBaseSemiBold13 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 13,
+  );
 
   // Body Small Styles
   static const TextStyle bodySmallRegular13 = TextStyle(

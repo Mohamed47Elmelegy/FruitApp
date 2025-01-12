@@ -14,7 +14,7 @@ import '../../domain/Entities/user_entities.dart';
 import '../../domain/repositories/auth_repo.dart';
 import '../models/user_model.dart';
 
-class AuthRepoImpl extends AuthRepo {
+class AuthRepoImpl implements AuthRepo {
   final FirbaseAuthService firbaseAuthService;
   final DatabaseService databaseService;
   AuthRepoImpl(

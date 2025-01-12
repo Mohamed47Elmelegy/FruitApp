@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/core/theme/application_theme_manager.dart';
 import 'package:frutes_app/core/utils/config_reader.dart';
-import 'core/config/ansicolor.dart';
 import 'core/routes/page_routes_name.dart';
 import 'core/routes/routes.dart';
 import 'core/services/bloc_observer_service.dart';
@@ -22,27 +20,15 @@ Future<void> mainCommon(String env) async {
   Bloc.observer = BlocObserverService();
 
   // Firebase configuration based on environment
-  if (env == 'dev') {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
-        appId: '1:244051247756:android:c83b13fce76349217c71a9',
-        messagingSenderId: '244051247756',
-        projectId: 'furute-fefa1',
-      ),
-    );
-    log(DebugConsoleMessages.debug('Dev'));
-  } else {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
-        appId: '1:244051247756:android:4949f37a25d791ef7c71a9',
-        messagingSenderId: '244051247756',
-        projectId: 'furute-fefa1',
-      ),
-    );
-    log('Prod');
-  }
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
+      appId: '1:244051247756:android:4949f37a25d791ef7c71a9',
+      messagingSenderId: '244051247756',
+      projectId: 'furute-fefa1',
+    ),
+  );
+  // log(DebugConsoleMessages.debug(env == 'dev' ? 'Dev' : 'Prod'));
 
   await Prefs.init();
   getItSetup();
@@ -54,23 +40,28 @@ class FruitApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: EasyLoading.init(
-        builder: BotToastInit(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp(
+        builder: EasyLoading.init(
+          builder: BotToastInit(),
+        ),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: const Locale('ar'),
+        supportedLocales: S.delegate.supportedLocales,
+        debugShowCheckedModeBanner: ConfigReader.isDevMode(),
+        onGenerateRoute: Routes.generateRoute,
+        initialRoute: PageRoutesName.initial,
+        navigatorKey: navigatorKey,
+        theme: ApplicationThemeManager.applicationThemeData,
       ),
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: const Locale('ar'),
-      supportedLocales: S.delegate.supportedLocales,
-      debugShowCheckedModeBanner: ConfigReader.isDevMode(),
-      onGenerateRoute: Routes.generateRoute,
-      initialRoute: PageRoutesName.initial,
-      navigatorKey: navigatorKey,
-      theme: ApplicationThemeManager.applicationThemeData,
     );
   }
 }

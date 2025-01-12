@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/widgets/fruit_item.dart';
 
 class ProductsGridView extends StatelessWidget {
@@ -7,9 +8,10 @@ class ProductsGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio:
+              ScreenUtil().screenWidth / (ScreenUtil().screenHeight / 1.7.h),
           crossAxisCount: 2,
-          childAspectRatio: 163 / 214,
           mainAxisSpacing: 8,
           crossAxisSpacing: 16,
         ),
