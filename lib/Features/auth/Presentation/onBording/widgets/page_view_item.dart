@@ -27,59 +27,57 @@ class PageViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          SizedBox(
-            width: Constants.mediaQuery.width,
-            height: Constants.mediaQuery.height * 0.4,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: SvgPicture.asset(
-                    backgroundImage,
-                    fit: BoxFit.fill,
+    return Column(
+      children: [
+        SizedBox(
+          width: Constants.mediaQuery.width,
+          height: Constants.mediaQuery.height * 0.4,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: SvgPicture.asset(
+                  backgroundImage,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: SvgPicture.asset(image),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Prefs.setBool(SharedPrefs.hasSeenOnboarding, true);
+                  navigatorKey.currentState?.pushNamed(PageRoutesName.signin);
+                },
+                child: Visibility(
+                  visible: isVisable,
+                  child: Text(
+                    'تخط',
+                    style: AppTextStyles.bodySmallRegular13
+                        .copyWith(color: AppColors.grayscale400),
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: SvgPicture.asset(image),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Prefs.setBool(SharedPrefs.hasSeenOnboarding, true);
-                    navigatorKey.currentState?.pushNamed(PageRoutesName.signin);
-                  },
-                  child: Visibility(
-                    visible: isVisable,
-                    child: Text(
-                      'تخط',
-                      style: AppTextStyles.bodySmallRegular13
-                          .copyWith(color: AppColors.grayscale400),
-                    ),
-                  ),
-                ).setAllPadding(context, 16, enableMediaQuery: false),
-              ],
-            ),
+              ).setAllPadding(context, 16, enableMediaQuery: false),
+            ],
           ),
-          const Gap(30),
-          title,
-          const Gap(24),
-          Expanded(
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.bodySmallSemiBold13,
-            ).setHorizontalPadding(
-              context,
-              37,
-              enableMediaQuery: false,
-            ),
+        ),
+        const Gap(30),
+        title,
+        const Gap(24),
+        Expanded(
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodySmallSemiBold13,
+          ).setHorizontalPadding(
+            context,
+            37,
+            enableMediaQuery: false,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

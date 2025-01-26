@@ -38,7 +38,7 @@ class ReviewsModel {
         description: description);
   }
 
-  toJson() {
+ toJson() {
     return {
       'name': name,
       'image': image,

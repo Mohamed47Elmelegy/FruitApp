@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
-
 import 'reviews_entity.dart';
 
 class ProductsEntity {
@@ -8,7 +5,6 @@ class ProductsEntity {
   final num productPrice;
   final String productCode;
   final String productDescription;
-  final File productImage;
   final bool isFeatured;
   String? imageUrl;
   final int expiryDateMonths;
@@ -23,7 +19,6 @@ class ProductsEntity {
     required this.productPrice,
     required this.productCode,
     required this.productDescription,
-    required this.productImage,
     this.isFeatured = false,
     this.imageUrl,
     required this.expiryDateMonths,

@@ -30,6 +30,12 @@ class _SignupViewBodyState extends State<SignupViewBody> {
   var passwordController = TextEditingController();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String name, password, email;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

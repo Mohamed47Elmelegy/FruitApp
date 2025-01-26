@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:frutes_app/core/constants/backend_point.dart';
+import 'package:frutes_app/core/config/ansicolor.dart';
 import 'package:frutes_app/core/services/database_service.dart';
 
 class FirebaseFirestoreService implements DatabaseService {
@@ -17,48 +19,43 @@ class FirebaseFirestoreService implements DatabaseService {
   }
 
   @override
-  Future<dynamic> getData(
-      {required String path,
-      String? documentId,
-      Map<String, dynamic>? query}) async {
+  Future<dynamic> getData({
+    required String path,
+    String? documentId,
+    Map<String, dynamic>? query,
+  }) async {
+    log(DebugConsoleMessages.info('Path: $path, DocumentId: $documentId, Query: $query'));
+    try {
     if (documentId != null) {
-      var data = await firestore
-          .collection(BackendPoint.getUser)
-          .doc(documentId)
-          .get();
+      var data = await firestore.collection(path).doc(documentId).get();
+        log(DebugConsoleMessages.error("Document Data: ${data.data()}")); // Print data to verify
       return data.data();
     } else {
       Query<Map<String, dynamic>> data = firestore.collection(path);
       if (query != null) {
-        var orderByField = query['orderBy'];
-        var desending = query['desending'];
-        if (orderByField != null) {
-          data = data.orderBy(orderByField, descending: desending);
+        if (query['orderBy'] != null) {
+          var orderByField = query['orderBy'];
+            var descending = query['descending'] ?? false;
+          data = data.orderBy(orderByField, descending: descending);
         }
-      }
-      if (query != null) {
-        var limit = query['limit'];
-        if (limit != null) {
+        if (query['limit'] != null) {
+          var limit = query['limit'];
           data = data.limit(limit);
         }
       }
       var result = await data.get();
+        log(DebugConsoleMessages.info("Total documents found: ${result.docs.length}"));
+      log(DebugConsoleMessages.success(
+            "Query Data: ${result.docs.map((e) => e.data()).toList()}")); // Print data to verify
       return result.docs.map((e) => e.data()).toList();
+    }
+    } catch (e) {
+      log(DebugConsoleMessages.error('Error in getData: $e'));
+      rethrow;
     }
   }
 
   @override
-
-  /// Checks if a document exists in the specified Firestore collection.
-  ///
-  /// This method queries the Firestore collection at the given `path`
-  /// and checks for the existence of a document with the specified `documentId`.
-  ///
-  /// Returns a [Future<bool>] indicating whether the document exists.
-  ///
-  /// [path] is the Firestore collection path.
-  /// [documentId] is the ID of the document to check.
-
   Future<bool> checkIfDataExists(
       {required String path, required String documentId}) async {
     var data = await firestore.collection(path).doc(documentId).get();

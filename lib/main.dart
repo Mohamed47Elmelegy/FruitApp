@@ -31,7 +31,7 @@ Future<void> mainCommon(String env) async {
   // log(DebugConsoleMessages.debug(env == 'dev' ? 'Dev' : 'Prod'));
 
   await Prefs.init();
-  getItSetup();
+  setupGetit();
   runApp(const FruitApp());
 }
 

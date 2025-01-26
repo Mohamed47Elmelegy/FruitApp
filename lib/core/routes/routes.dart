@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frutes_app/Features/Home/presentation/view/home_view.dart';
+import 'package:frutes_app/Features/Home/presentation/view/main_view.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import '../../Features/auth/Presentation/Splash/view/splash_view.dart';
 import '../../Features/auth/Presentation/signIn/view/signin_view.dart';
@@ -17,7 +17,7 @@ class Routes {
       case PageRoutesName.signup:
         return MaterialPageRoute(builder: (context) => const SignupView());
       case PageRoutesName.home:
-        return MaterialPageRoute(builder: (context) => const HomeView());
+        return MaterialPageRoute(builder: (context) => const MainView());
       case PageRoutesName.bestSellingView:
         return MaterialPageRoute(builder: (context) => const BestSellingView());
       case PageRoutesName.onBording:

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
+import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
+import '../config/constants.dart';
 import '../theme/colors_theme.dart';
 import '../theme/text_theme.dart';
-import '../utils/app_images.dart';
 
 class FruitItem extends StatelessWidget {
-  const FruitItem({super.key});
-
+  const FruitItem({super.key, required this.products});
+  final ProductsEntity products;
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 163.w,
+      height: 214.h,
       decoration: ShapeDecoration(
         color: AppColors.grayscale50,
         shape: RoundedRectangleBorder(
@@ -20,36 +24,32 @@ class FruitItem extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-                iconSize: 16.w,
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_outline,
-                )),
-          ),
           Positioned.fill(
             child: Column(
               children: [
-                const Gap(20),
+                const Gap(5),
                 SizedBox(
-                    width: 114.w,
-                    height: 105.h,
-                    child: Image.asset(Assets.imagesStrawberryPng)),
-                const Gap(24),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
+                  height: Constants.mediaQuery.height * 0.2,
+                  width: double.infinity,
+                  child: products.imageUrl != null
+                      ? CusomtNetwarkImage(products: products)
+                      : Container(
+                          width: 50.h,
+                          height: 50.h,
+                          color: AppColors.grayscale50,
+                        ),
+                ),
+                const Gap(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
                         spacing: 4.h,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'فراولة',
+                          Text(
+                            products.productName,
                             textAlign: TextAlign.right,
                             style: AppTextStyles.bodyBaseSemiBold13,
                             overflow: TextOverflow.ellipsis,
@@ -58,7 +58,7 @@ class FruitItem extends StatelessWidget {
                             spacing: 2.w,
                             children: [
                               Text(
-                                '100',
+                                products.productPrice.toString(),
                                 style: AppTextStyles.bodyBaseSemiBold13
                                     .copyWith(color: AppColors.orange500),
                               ),
@@ -79,21 +79,23 @@ class FruitItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: CircleAvatar(
-                          maxRadius: 19.w,
-                          backgroundColor: AppColors.green1_500,
+                        ]),
+                    GestureDetector(
+                      onTap: () {},
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100.r),
+                        child: Container(
+                          color: AppColors.green1_500,
+                          width: 36.w,
+                          height: 36.h,
                           child: const Icon(
                             Icons.add,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ).setHorizontalPadding(
@@ -101,6 +103,16 @@ class FruitItem extends StatelessWidget {
               8.5.w,
               enableMediaQuery: false,
             ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+                iconSize: 20.w,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.favorite_outline,
+                )),
           ),
         ],
       ),

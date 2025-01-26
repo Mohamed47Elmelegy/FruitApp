@@ -1,6 +1,5 @@
-import 'dart:io';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
-
+import '../../functions/avg_rating.dart';
 import 'reviews_model.dart';
 
 class ProductModel {
@@ -8,7 +7,7 @@ class ProductModel {
   final num productPrice;
   final String productCode;
   final String productDescription;
-  final File productImage;
+
   final bool isFeatured;
   String? imageUrl;
   final int expiryDateMonths;
@@ -24,7 +23,6 @@ class ProductModel {
     required this.productPrice,
     required this.productCode,
     required this.productDescription,
-    required this.productImage,
     this.isFeatured = false,
     this.imageUrl,
     required this.expiryDateMonths,
@@ -48,12 +46,16 @@ class ProductModel {
       expiryDateMonths: json['expiryDateMonths'],
       calorieDensity: json['calories'],
       caloriesReferenceWeight: json['caloriesPerServing'],
-      productRating: json['productRating'],
+      productRating: getAvgRating(json['reviews'] != null
+          ? List<ReviewsModel>.from(
+              json['reviews'].map((e) => ReviewsModel.fromJson(e)))
+          : []),
       ratingCount: json['ratingCount'],
       isOrganic: json['isOrganic'],
-      productImage: json['productImage'],
-      reviews: json['reviews'].map((e) => ReviewsModel.fromJson(e)).toList(),
-      sellingCount: json['sellingCount'],
+reviews: json['reviews'] != null
+        ? List<ReviewsModel>.from(
+            (json['reviews'] as List).map((e) => ReviewsModel.fromJson(e)))
+        : [],      sellingCount: json['sellingCount'],
     );
   }
   ProductsEntity toEntity() {
@@ -70,7 +72,6 @@ class ProductModel {
       productRating: productRating,
       ratingCount: ratingCount,
       isOrganic: isOrganic,
-      productImage: productImage,
       reviews: reviews.map((e) => e.toEntity()).toList(),
     );
   }
