@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/widgets/fruit_item.dart';
 import '../../../../core/entities/proudcuts_entity.dart';
-
 class ProductsGridView extends StatelessWidget {
   const ProductsGridView({
     super.key,
@@ -27,3 +26,4 @@ class ProductsGridView extends StatelessWidget {
         });
   }
 }
+

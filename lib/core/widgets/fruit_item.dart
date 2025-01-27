@@ -30,7 +30,7 @@ class FruitItem extends StatelessWidget {
                   height: Constants.mediaQuery.height * 0.2,
                   width: double.infinity,
                   child: products.imageUrl != null
-                      ? CusomtNetwarkImage(products: products)
+                      ? CustomNetworkImage(products: products)
                       : Container(
                           width: 50.h,
                           height: 50.h,

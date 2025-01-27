@@ -2,10 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 
-class CusomtNetwarkImage extends StatelessWidget {
-  const CusomtNetwarkImage({
+class CustomNetworkImage extends StatelessWidget {
+  const CustomNetworkImage({
     super.key,
-  
     required this.products,
   });
 
