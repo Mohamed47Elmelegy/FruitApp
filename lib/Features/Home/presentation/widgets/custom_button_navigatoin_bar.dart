@@ -42,16 +42,19 @@ class _CustomButtonNavigationBarState extends State<CustomButtonNavigationBar> {
             var entity = e.value;
             return Expanded(
                 flex: index == selectedIndex ? 3 : 2,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                      widget.onItemTapped(index);
-                    });
-                  },
-                  child: NavigationBarItem(
-                    bottomNavigationBarEntity: entity,
-                    isSelected: selectedIndex == index,
+                child: Container(
+                  color: Colors.transparent,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                        widget.onItemTapped(index);
+                      });
+                    },
+                    child: NavigationBarItem(
+                      bottomNavigationBarEntity: entity,
+                      isSelected: selectedIndex == index,
+                    ),
                   ),
                 ));
           }).toList(),

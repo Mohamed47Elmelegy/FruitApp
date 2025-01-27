@@ -14,8 +14,6 @@ class FruitItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 163.w,
-      height: 214.h,
       decoration: ShapeDecoration(
         color: AppColors.grayscale50,
         shape: RoundedRectangleBorder(
@@ -39,7 +37,7 @@ class FruitItem extends StatelessWidget {
                           color: AppColors.grayscale50,
                         ),
                 ),
-                const Gap(10),
+                const Gap(7),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

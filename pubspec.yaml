@@ -1,6 +1,6 @@
 name: frutes_app
 description: "A new Flutter project."
-version: 1.0.2+1
+version: 1.0.3+1
 
 environment:
   sdk: ^3.5.1

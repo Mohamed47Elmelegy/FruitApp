@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/cubit/products_cubit.dart';
 import '/Features/Home/presentation/widgets/discount_offers.dart';
 import 'package:gap/gap.dart';
@@ -26,9 +27,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Column(
             children: [
               CustomHomeAppBar(),
@@ -42,7 +43,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             ],
           ),
         ),
-        ProductsGridViewBolcBilder(),
+        const ProductsGridViewBolcBilder(),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 40.h,
+          ),
+        ),
       ],
     );
   }

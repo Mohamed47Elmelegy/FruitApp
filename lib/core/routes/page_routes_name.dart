@@ -6,4 +6,10 @@ class PageRoutesName {
   static const signup = "/signup";
   static const home = "/home";
   static const bestSellingView = '/bestSellingView';
+  static const productDetails = '/productDetails';
+  static const cartView = '/cartView';
+  static const searchView = '/searchView';
+  static const orderView = '/orderView';
+  static const profileView = '/profileView';
+  static const productView = '/ProductView';
 }
