@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-
+import 'package:frutes_app/core/extensions/padding_ext.dart';
 import '../../../../../core/entities/proudcuts_entity.dart';
 import '../../../../../core/theme/colors_theme.dart';
 import '../../../../../core/widgets/netwark_image.dart';
@@ -15,10 +14,14 @@ class ProdctsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipPath(
-      child: Column(spacing: 7.h,
-        children: [
-          Container(
+    return Column(
+      spacing: 7,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.all(
+            Radius.circular(50.r),
+          ),
+          child: Container(
             height: 64.h,
             width: 64.w,
             decoration: ShapeDecoration(
@@ -46,10 +49,9 @@ class ProdctsItems extends StatelessWidget {
                     ),
                   ),
           ),
-          
-          Text(products.productName),
-        ],
-      ),
+        ).setAllPadding(context, 7, enableMediaQuery: false),
+        Text(products.productName),
+      ],
     );
   }
 }

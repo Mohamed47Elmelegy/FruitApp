@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/entities/proudcuts_entity.dart';
-import 'prodcts_items.dart';
+import 'prodcts.dart';
 
 class ProductItemsListView extends StatelessWidget {
   const ProductItemsListView({super.key, required this.products});

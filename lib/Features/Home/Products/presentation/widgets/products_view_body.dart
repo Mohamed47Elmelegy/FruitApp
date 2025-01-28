@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:frutes_app/core/widgets/custom_header.dart';
 import '../../../../../core/cubit/products_cubit.dart';
+import '../../../../../core/functions/filter_bottom_sheet.dart';
 import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/utils/app_images.dart';
 import '../../../../../core/widgets/search_text_field.dart';
@@ -55,7 +56,10 @@ class _ProductsViewBodyState extends State<ProductsViewBody> {
                     Padding(
                       padding: const EdgeInsets.only(left: 13),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          // Show the bottom sheet
+                          showFilterBottomSheet(context);
+                        },
                         child: SvgPicture.asset(
                           Assets.imagesFilter2,
                         ),
@@ -86,4 +90,3 @@ class _ProductsViewBodyState extends State<ProductsViewBody> {
     );
   }
 }
-

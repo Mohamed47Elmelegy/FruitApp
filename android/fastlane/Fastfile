@@ -11,7 +11,7 @@ platform :android do
             android_artifact_type: "APK",
             android_artifact_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
             testers: "mohamedelmelegydeveloper@gmail.com",
-            release_notes: "Bottom Navigation Bar Test",
+            release_notes: "Test Products Page",
             )
     end
   end

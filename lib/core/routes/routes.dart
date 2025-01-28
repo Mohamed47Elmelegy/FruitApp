@@ -25,16 +25,14 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const BestSellingView());
       case PageRoutesName.productView:
         return MaterialPageRoute(builder: (context) => const ProductsView());
-
       case PageRoutesName.cartView:
         return MaterialPageRoute(builder: (context) => const CartView());
       case PageRoutesName.profileView:
         return MaterialPageRoute(builder: (context) => const ProfileView());
-
-
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());
+
       default:
         return MaterialPageRoute(builder: (context) => const SplashView());
     }
