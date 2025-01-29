@@ -140,3 +140,4 @@ class AppTextStyles {
     fontSize: 11,
   );
 }
+

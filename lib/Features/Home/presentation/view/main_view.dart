@@ -22,7 +22,8 @@ class _MainViewState extends State<MainView> {
         },
       ),
       body: SafeArea(
-        child: MainViewBody(currentViewIndex: currentViewIndex).setHorizontalPadding(
+        child: MainViewBody(currentViewIndex: currentViewIndex)
+            .setHorizontalPadding(
           context,
           16,
           enableMediaQuery: false,

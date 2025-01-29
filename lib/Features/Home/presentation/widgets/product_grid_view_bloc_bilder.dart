@@ -5,7 +5,6 @@ import '../../../../core/cubit/products_cubit.dart';
 import '../../../../core/errors/error_widget.dart';
 import '../../../../core/functions/get_dummy_products.dart';
 import '../../../../core/theme/colors_theme.dart';
-import '../../Products/presentation/widgets/product_item_list_view.dart';
 import 'products_grid_view.dart';
 
 class ProductsGridViewBolcBilder extends StatelessWidget {

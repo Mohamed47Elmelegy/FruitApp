@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frutes_app/Features/Home/Cart/presentation/view/cart_view.dart';
 import 'package:frutes_app/core/routes/page_routes_name.dart';
 import '../../Features/Home/Products/presentation/view/products_view.dart';
+import '../../Features/Home/Products/presentation/widgets/product_info/product_details_view.dart';
 import '../../Features/Home/Profile/presentation/view/profile_view.dart';
 import '../../Features/Home/presentation/view/main_view.dart';
 import '../../Features/auth/Presentation/Splash/view/splash_view.dart';
@@ -9,6 +10,7 @@ import '../../Features/auth/Presentation/signIn/view/signin_view.dart';
 import '../../Features/auth/Presentation/onBording/widgets/onbording_view_body.dart';
 import '../../Features/auth/Presentation/signUp/view/signup_view.dart';
 import '../../Features/best_selling_view/Presentation/views/best_selling_view.dart';
+import '../functions/get_dummy_products.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,10 +31,14 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const CartView());
       case PageRoutesName.profileView:
         return MaterialPageRoute(builder: (context) => const ProfileView());
+      case PageRoutesName.productDetails:
+        return MaterialPageRoute(
+            builder: (context) => ProductDetails(
+                  product: getDummyProducts()[0],
+                ));
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());
-
       default:
         return MaterialPageRoute(builder: (context) => const SplashView());
     }

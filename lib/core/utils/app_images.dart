@@ -72,4 +72,8 @@ class Assets {
   static const String imagesBoldUser = 'assets/images/vuesax/bold/user.svg';
   static const String imagesOutlineUser =
       'assets/images/vuesax/outline/user.svg';
+  static const String imagesIsOrganic = 'assets/images/isOrganic.svg';
+  static const String imagesCalendar = "assets/images/calendar.jpg";
+  static const String imagesRating = "assets/images/rating.svg";
+  static const String imagesCalorie = "assets/images/calorie.svg";
 }

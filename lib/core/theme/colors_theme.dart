@@ -14,7 +14,6 @@ class AppColors {
   static const Color grayscale800 = Color(0xFF313535);
   static const Color grayscale900 = Color(0xFF181A1B);
   static const Color 	antiFlashWhite = Color(0xFFF3F5F7);
-
   // Green Colors
   static const Color green500 = Color(0xFF6CDC46);
   static const Color green50 = Color(0xFFEEFBEA);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
 
@@ -9,6 +8,5 @@ class ProfileViewBody extends StatelessWidget {
     return const Center(
       child: Text('Profile View Body'),
     );
-  
   }
 }
