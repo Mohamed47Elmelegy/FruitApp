@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/functions/get_dummy_products.dart';
 import '../widget/cart_view_body.dart';
 
 class CartView extends StatelessWidget {
@@ -7,6 +8,9 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(backgroundColor: Colors.white,body: CartViewBody(),);
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      body: CartViewBody( products: getDummyProduct() ),
+    );
   }
 }
