@@ -178,6 +178,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future signOut() async {
     await firbaseAuthService.signOut();
+    await Prefs.clear();
   }
 
   @override

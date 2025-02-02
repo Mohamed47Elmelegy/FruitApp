@@ -42,9 +42,26 @@ class CartViewBody extends StatelessWidget {
               ),
               const Gap(24),
               CartItem(products: products),
+              const Gap(16),
+              SizedBox(
+                width: double.infinity,
+                height: 54.h,
+                child: FloatingActionButton(
+                  isExtended: true,
+                  onPressed: () {},
+                  backgroundColor: AppColors.green1_500,
+                  child: Center(
+                    child: Text(
+                      '140 جنية',
+                      style: AppTextStyles.bodyBaseBold16
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
-        )
+        ),
       ],
     );
   }
