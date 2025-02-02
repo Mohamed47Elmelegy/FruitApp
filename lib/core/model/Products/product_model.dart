@@ -7,7 +7,6 @@ class ProductModel {
   final num productPrice;
   final String productCode;
   final String productDescription;
-
   final bool isFeatured;
   String? imageUrl;
   final int expiryDateMonths;
@@ -52,10 +51,11 @@ class ProductModel {
           : []),
       ratingCount: json['ratingCount'],
       isOrganic: json['isOrganic'],
-reviews: json['reviews'] != null
-        ? List<ReviewsModel>.from(
-            (json['reviews'] as List).map((e) => ReviewsModel.fromJson(e)))
-        : [],      sellingCount: json['sellingCount'],
+      reviews: json['reviews'] != null
+          ? List<ReviewsModel>.from(
+              (json['reviews'] as List).map((e) => ReviewsModel.fromJson(e)))
+          : [],
+      sellingCount: json['sellingCount'],
     );
   }
   ProductsEntity toEntity() {

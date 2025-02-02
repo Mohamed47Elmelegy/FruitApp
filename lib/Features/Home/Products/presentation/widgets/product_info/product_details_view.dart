@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +17,7 @@ import 'product_discriptions.dart';
 import 'product_info_grid_view.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key, required this.product});
+  const ProductDetails({super.key, required this.product, });
   final ProductsEntity product;
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class ProductDetails extends StatelessWidget {
                       const Spacer(
                         flex: 1,
                       ),
-                      const AddRemoveItem(),
+                      AddRemoveItem(),
                     ],
                   ),
                   const Gap(8),

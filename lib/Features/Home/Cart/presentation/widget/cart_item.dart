@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/Features/Home/presentation/widgets/add_remove_item.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
@@ -12,8 +13,8 @@ import '../../../../../core/config/constants.dart';
 import '../../../../../core/theme/text_theme.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem({super.key, required this.products});
-  final ProductsEntity products;
+  const CartItem({super.key, required this.cartItem});
+  final CartItemEntity cartItem;
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -25,7 +26,8 @@ class CartItem extends StatelessWidget {
           children: [
             SizedBox(
               width: 73.w,
-              child: CustomNetworkImage(products: products).setAllPadding(
+              child: CustomNetworkImage(products: cartItem.productsEntity)
+                  .setAllPadding(
                 context,
                 5,
                 enableMediaQuery: false,
@@ -40,7 +42,7 @@ class CartItem extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        products.productName,
+                        cartItem.productsEntity.productName,
                         style: AppTextStyles.bodySmallBold13,
                       ),
                       const Spacer(),
@@ -53,7 +55,7 @@ class CartItem extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '2 كجم',
+                    '${cartItem.totalUnitAmount} كجم',
                     style: AppTextStyles.bodyBaseBold16.copyWith(
                       color: AppColors.orange500,
                     ),
@@ -63,13 +65,13 @@ class CartItem extends StatelessWidget {
                       SizedBox(
                         width: Constants.mediaQuery.width * 0.3.w,
                         height: 36.h,
-                        child: const AddRemoveItem(),
+                        child: AddRemoveItem(),
                       ),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '${products.productPrice.toString()} جنيه',
+                          '${cartItem.totalPrice.toString()} جنيه',
                           style: AppTextStyles.bodyBaseBold16.copyWith(
                             color: AppColors.orange500,
                           ),
