@@ -16,44 +16,45 @@ class ProductDescription extends StatefulWidget {
 class _ProductDescriptionState extends State<ProductDescription> {
   bool _isExpanded = false;
   int maxline = 3;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        AnimatedCrossFade(
-          duration: const Duration(milliseconds: 300),
-          crossFadeState: _isExpanded
-              ? CrossFadeState.showSecond
-              : CrossFadeState.showFirst,
-          firstChild: Text(
-            widget.product.productDescription,
-            maxLines: maxline,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodySmallRegular13,
-          ),
-          secondChild: Text(
-            widget.product.productDescription,
-            style: AppTextStyles.bodySmallRegular13,
-          ),
-        ),
-        Visibility(
-          visible: widget.product.productDescription.length > maxline,
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                _isExpanded = !_isExpanded;
-              });
-            },
-            child: Text(
-              _isExpanded ? 'عرض أقل' : 'عرض المزيد',
-              style: AppTextStyles.bodySmallRegular13.copyWith(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: AnimatedCrossFade(
+            duration: const Duration(milliseconds: 300),
+            crossFadeState: _isExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            firstChild: Text(
+              widget.product.productDescription,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.bodySmallRegular13,
+            ),
+            secondChild: Text(
+              widget.product.productDescription,
+              style: AppTextStyles.bodySmallRegular13,
             ),
           ),
         ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isExpanded = !_isExpanded;
+            });
+          },
+          child: Text(
+            _isExpanded ? 'عرض أقل' : 'عرض المزيد',
+            style: AppTextStyles.bodySmallRegular13.copyWith(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
       ],
     );
   }

@@ -26,4 +26,16 @@ class Prefs {
   static remove(String key) {
     _prefs.remove(key);
   }
+
+  static clear() {
+    _prefs.clear();
+  }
+  
+  static setInt(String key, int value) async {
+    await _prefs.setInt(key, value);
+  }
+  
+  static getInt(String key) {
+    return _prefs.getInt(key) ?? 0;
+  }
 }

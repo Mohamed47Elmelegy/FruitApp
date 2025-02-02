@@ -9,6 +9,7 @@ abstract class AuthRepo {
     String email,
     String password,
   );
+  Future<void> sendEmailVerification();
 
   Future<Either<Failure, UserEntities>> signInWithEmailAndPassword(
     String email,

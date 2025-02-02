@@ -61,4 +61,5 @@ class FirebaseFirestoreService implements DatabaseService {
     var data = await firestore.collection(path).doc(documentId).get();
     return data.exists;
   }
+  
 }

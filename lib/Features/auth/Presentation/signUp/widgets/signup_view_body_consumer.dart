@@ -18,7 +18,8 @@ class SignupViewBodyConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is SignupSuccess) {
           SnackBarService.showSuccessMessage('تم انشاء حسابك بنجاح');
-          navigatorKey.currentState?.pushReplacementNamed(PageRoutesName.home);
+          navigatorKey.currentState
+              ?.pushReplacementNamed(PageRoutesName.signin);
         } else if (state is SignupFailure) {
           SnackBarService.showErrorMessage(state.exception);
         }

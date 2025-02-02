@@ -34,27 +34,26 @@ class AuthRepoImpl implements AuthRepo {
         email: email,
         password: password,
       );
+      await sendEmailVerification();
       var userEntity = UserEntities(
         uId: user.uid,
         name: name,
         email: email,
       );
-      addUserData(
-        user: userEntity,
+      await syncUserData(
+        user,
+        userEntity,
       );
-      saveUserData(user: userEntity);
-      var fetchedUserEntity = await getUserData(userId: user.uid);
-
-      return Right(fetchedUserEntity);
+      return Right(userEntity);
     } on CustomException catch (e) {
-      deleteUser(user);
+      await deleteUser(user);
       return Left(
         ServerFailure(
           e.message,
         ),
       );
     } catch (e) {
-      deleteUser(user);
+      await deleteUser(user);
       log(DebugConsoleMessages.error(
           'An Exception occurred in AuthRepoImpl.creatUserWithEmailAndPassword: $e'));
       return Left(
@@ -65,7 +64,7 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-  void deleteUser(User? user) {
+  Future<void> deleteUser(User? user) async {
     if (user != null) {
       firbaseAuthService.deleteUser();
     }
@@ -79,6 +78,9 @@ class AuthRepoImpl implements AuthRepo {
         email: email,
         password: password,
       );
+      if (!user.emailVerified) {
+        return Left(ServerFailure('يرجى التحقق من البريد الالكتروني والتفعيل'));
+      }
       var userEntity = await getUserData(userId: user.uid);
       saveUserData(user: userEntity);
       return Right(userEntity);
@@ -91,7 +93,6 @@ class AuthRepoImpl implements AuthRepo {
     } catch (e) {
       log(DebugConsoleMessages.error(
           'An Exception occurred in AuthRepoImpl.signInWithEmailAndPassword: ${e.toString()}'));
-      // Return a Left containing a ServerFailure if the operation fails.
       return Left(
         ServerFailure(
           'حدث خطأ  في الاتصال بالسيرفر, حاول مرة ثانية',
@@ -123,11 +124,7 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-  /// يتحقق من وجود المستخدم في قاعدة البيانات بعد تسجيل الدخول.
-  /// إذا كان المستخدم موجودًا، يتم جلب بياناته من Firestore.
-  /// إذا لم يكن موجودًا، يتم إضافة بياناته الجديدة إلى قاعدة البيانات.
-
-  Future<void> syncUserData(User user, UserModel userEntity) async {
+  Future<void> syncUserData(User user, UserEntities userEntity) async {
     var isUserExist = await databaseService.checkIfDataExists(
         path: BackendPoint.isUserExists, documentId: user.uid);
     if (isUserExist) {
@@ -197,5 +194,10 @@ class AuthRepoImpl implements AuthRepo {
   Future saveUserData({required UserEntities user}) async {
     var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
     await Prefs.setString(SharedPrefs.userData, jsonData);
+  }
+
+  @override
+  Future<void> sendEmailVerification() async {
+    return await firbaseAuthService.sendEmailVerification();
   }
 }

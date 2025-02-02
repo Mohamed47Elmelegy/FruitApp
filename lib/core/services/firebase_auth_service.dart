@@ -173,4 +173,28 @@ class FirbaseAuthService {
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+   Future<void> sendEmailVerification() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+
+      if (user != null) {
+        log(DebugConsoleMessages.success(
+            'User is logged in, proceeding to send email verification.'));
+        // إرسال البريد الإلكتروني للتحقق
+        await user.sendEmailVerification();
+        log(DebugConsoleMessages.success(
+            'Verification email sent successfully to ${user.email}'));
+      } else {
+        // في حالة عدم وجود مستخدم مسجل الدخول
+        log(DebugConsoleMessages.error('No user logged in.'));
+        throw CustomException(message: 'User is not logged in.');
+      }
+    } catch (e) {
+      // في حالة حدوث خطأ
+      log(DebugConsoleMessages.error('Error sending email verification: $e'));
+      throw CustomException(
+          message: 'There was an error sending the verification email.');
+    }
+  }
+
 }
