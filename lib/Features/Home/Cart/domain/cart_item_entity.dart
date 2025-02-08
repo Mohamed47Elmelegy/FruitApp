@@ -1,15 +1,39 @@
+// هذا الكلاس يمثل عنصر في السلة
+// يحتوي على ProductsEntity وعدد هذا المنتج في السلة
+// يتم حساب المجموع الكلي لوحدة القياس والسعر الكلي للعنصر حسب العدد
+import 'package:equatable/equatable.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 
-class CartItemEntity {
+class CartItemEntity extends Equatable {
   final ProductsEntity productsEntity;
   int count;
-  CartItemEntity({required this.productsEntity, this.count = 0});
+  CartItemEntity({
+    required this.productsEntity,
+    this.count = 0,
+  });
 
-  num get totalPrice => productsEntity.productPrice * count;
+  /// يحسب المجموع الكلي لوحدة القياس
+  /// من خلال ضرب وحدة القياس للمنتج مع العدد
+  num totalUnitAmount() {
+    return productsEntity.unitAmount * count;
+  }
 
-  num get totalUnitAmount => productsEntity.caloriesReferenceWeight * count;
+  /// يحسب السعر الكلي للعنصر
+  /// من خلال ضرب سعر المنتج مع العدد
+  num totalPrice() {
+    return productsEntity.productPrice * count;
+  }
 
-  incrementCount() => count++;
-  decrementCount() => count--;
+  /// يزيد العدد ب 1
+  void increaseItemCount() {
+    count++;
+  }
 
+  /// يقلص العدد ب 1
+  void decreaseItemCount() {
+    if (count > 0) count--;
+  }
+
+  @override
+  List<Object?> get props => [productsEntity];
 }

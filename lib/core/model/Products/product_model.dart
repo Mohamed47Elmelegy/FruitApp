@@ -11,7 +11,7 @@ class ProductModel {
   String? imageUrl;
   final int expiryDateMonths;
   final int calorieDensity;
-  final int caloriesReferenceWeight;
+  final int unitAmount;
   final num productRating;
   final num ratingCount;
   final bool isOrganic;
@@ -26,7 +26,7 @@ class ProductModel {
     this.imageUrl,
     required this.expiryDateMonths,
     required this.calorieDensity,
-    required this.caloriesReferenceWeight,
+    required this.unitAmount,
     this.productRating = 0,
     this.ratingCount = 0,
     this.isOrganic = false,
@@ -44,7 +44,7 @@ class ProductModel {
       imageUrl: json['imageUrl'],
       expiryDateMonths: json['expiryDateMonths'],
       calorieDensity: json['calories'],
-      caloriesReferenceWeight: json['caloriesPerServing'],
+      unitAmount: json['unitAmount'],
       productRating: getAvgRating(json['reviews'] != null
           ? List<ReviewsModel>.from(
               json['reviews'].map((e) => ReviewsModel.fromJson(e)))
@@ -68,7 +68,7 @@ class ProductModel {
       imageUrl: imageUrl,
       expiryDateMonths: expiryDateMonths,
       calorieDensity: calorieDensity,
-      caloriesReferenceWeight: caloriesReferenceWeight,
+      unitAmount: unitAmount,
       productRating: productRating,
       ratingCount: ratingCount,
       isOrganic: isOrganic,
@@ -87,7 +87,7 @@ class ProductModel {
       'imageUrl': imageUrl,
       'expiryDateMonths': expiryDateMonths,
       'calories': calorieDensity,
-      'caloriesPerServing': caloriesReferenceWeight,
+      'unitAmount': unitAmount,
       'productRating': productRating,
       'ratingCount': ratingCount,
       'isOrganic': isOrganic,

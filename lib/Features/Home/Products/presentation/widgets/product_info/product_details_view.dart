@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
@@ -111,7 +110,7 @@ class ProductDetails extends StatelessWidget {
                       const Spacer(
                         flex: 1,
                       ),
-                      AddRemoveItem(),
+                    //  const AddRemoveItem(cartItemEntity: '',),
                     ],
                   ),
                   const Gap(8),

@@ -72,10 +72,10 @@ class _ProductsViewBodyState extends State<ProductsViewBody> {
             ),
           ),
           // Product List View - for horizontal scrolling
-          const SliverToBoxAdapter(child: ProductListViewBlocBuilder()),
+          // const SliverToBoxAdapter(child: ProductListViewBlocBuilder()),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 20.h,
+              height: 30.h,
             ),
           ),
           // Products Grid View - for vertical scrolling

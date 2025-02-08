@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/core/config/constants.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
@@ -6,14 +7,13 @@ import 'package:gap/gap.dart';
 import '../../../../../core/theme/colors_theme.dart';
 import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/widgets/custom_header.dart';
-import '../../domain/cart_item_entity.dart';
+import '../manager/cubit/cart_cubit.dart';
 import 'cart_items_list.dart';
 
 class CartViewBody extends StatelessWidget {
   const CartViewBody({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -40,7 +40,7 @@ class CartViewBody extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'لديك 4 منتجات في سلة التسوق',
+                              'لديك ${context.watch<CartCubit>().cartEntity.cartItems.length} منتجات في سلة التسوق',
                               textAlign: TextAlign.center,
                               style: AppTextStyles.bodySmallRegular13
                                   .copyWith(color: AppColors.green1_500),
@@ -54,8 +54,8 @@ class CartViewBody extends StatelessWidget {
                 ],
               ),
             ),
-            const CartItemsList(
-              cartItems: [],
+            CartItemsList(
+              cartItems: context.read<CartCubit>().cartEntity.cartItems,
             ),
           ],
         ),
@@ -64,7 +64,8 @@ class CartViewBody extends StatelessWidget {
           right: 0,
           left: 0,
           child: Butn(
-            text: 'جنيه',
+            text:
+                '${context.watch<CartCubit>().cartEntity.calculateTotalPrice()} جنيه',
             color: AppColors.green1_500,
             onPressed: () {},
           ),

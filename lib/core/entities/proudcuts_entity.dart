@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import 'reviews_entity.dart';
 
-class ProductsEntity {
+class ProductsEntity extends Equatable {
   final String productName;
   final num productPrice;
   final String productCode;
@@ -9,7 +11,7 @@ class ProductsEntity {
   String? imageUrl;
   final int expiryDateMonths;
   final int calorieDensity;
-  final int caloriesReferenceWeight;
+  final int unitAmount;
   final num productRating;
   final num ratingCount;
   final bool isOrganic;
@@ -23,10 +25,13 @@ class ProductsEntity {
     this.imageUrl,
     required this.expiryDateMonths,
     required this.calorieDensity,
-    required this.caloriesReferenceWeight,
+    required this.unitAmount,
     this.productRating = 0,
     this.ratingCount = 0,
     this.isOrganic = false,
     required this.reviews,
   });
+
+  @override
+  List<Object?> get props => [productCode];
 }

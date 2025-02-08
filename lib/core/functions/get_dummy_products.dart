@@ -28,7 +28,7 @@ ProductsEntity getDummyProduct() {
     ratingCount: 10,
     expiryDateMonths: 6,
     calorieDensity: 75,
-    caloriesReferenceWeight: 100,
+    unitAmount: 1,
     isOrganic: true,
     isFeatured: true,
     imageUrl:

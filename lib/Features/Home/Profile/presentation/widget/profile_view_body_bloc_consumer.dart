@@ -8,7 +8,6 @@ import '../../../../../core/services/shared_preferences_sengltion.dart';
 import '../../../../../core/services/snack_bar_service.dart';
 import '../../../../../core/widgets/model_progress_hud.dart';
 import '../../../../../main.dart';
-import 'profile_view_body.dart';
 
 class ProfileViewBodyBlocConsumer extends StatelessWidget {
   const ProfileViewBodyBlocConsumer({super.key});

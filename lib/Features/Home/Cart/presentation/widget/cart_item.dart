@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/Features/Home/presentation/widgets/add_remove_item.dart';
-import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/utils/app_images.dart';
@@ -11,6 +11,7 @@ import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/theme/text_theme.dart';
+import '../manager/cubit/cart_cubit.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.cartItem});
@@ -47,7 +48,9 @@ class CartItem extends StatelessWidget {
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartCubit>().removeCartItem(cartItem);
+                        },
                         icon: SvgPicture.asset(
                           Assets.imagesTrash,
                         ),
@@ -55,7 +58,7 @@ class CartItem extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${cartItem.totalUnitAmount} كجم',
+                    '${cartItem.totalUnitAmount()} كجم',
                     style: AppTextStyles.bodyBaseBold16.copyWith(
                       color: AppColors.orange500,
                     ),
@@ -65,13 +68,15 @@ class CartItem extends StatelessWidget {
                       SizedBox(
                         width: Constants.mediaQuery.width * 0.3.w,
                         height: 36.h,
-                        child: AddRemoveItem(),
+                        child: AddRemoveItem(
+                          cartItemEntity: cartItem,
+                        ),
                       ),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '${cartItem.totalPrice.toString()} جنيه',
+                          '${cartItem.totalPrice().toStringAsFixed(1)} جنيه',
                           style: AppTextStyles.bodyBaseBold16.copyWith(
                             color: AppColors.orange500,
                           ),

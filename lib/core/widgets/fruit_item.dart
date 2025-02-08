@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
+import '../../Features/Home/Cart/presentation/manager/cubit/cart_cubit.dart';
 import '../config/constants.dart';
 import '../routes/page_routes_name.dart';
 import '../theme/colors_theme.dart';
@@ -85,7 +87,9 @@ class FruitItem extends StatelessWidget {
                             ),
                           ]),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          context.read<CartCubit>().addToCart(products);
+                        },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100.r),
                           child: Container(

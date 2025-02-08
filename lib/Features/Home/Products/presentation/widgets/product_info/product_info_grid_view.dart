@@ -16,7 +16,7 @@ class ProductInfoGridView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, // عدد الأعمدة
-        childAspectRatio: 2.5, // نسبة العرض إلى الارتفاع
+        childAspectRatio: 2, // نسبة العرض إلى الارتفاع
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
       ),
@@ -28,7 +28,7 @@ class ProductInfoGridView extends StatelessWidget {
         _buildGridItem(Assets.imagesRating,
             "${product.productRating} (${product.ratingCount})", "التقييم"),
         _buildGridItem(Assets.imagesCalorie, "${product.calorieDensity} كالوري",
-            "${product.caloriesReferenceWeight} جرام"),
+            "${product.unitAmount} جرام"),
       ],
     );
   }
