@@ -11,7 +11,7 @@ platform :android do
             android_artifact_type: "APK",
             android_artifact_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
             testers: "mohamedelmelegydeveloper@gmail.com",
-            release_notes: "Test LogOut Feature ", 
+            release_notes: "Test Cart", 
             )
     end
   end

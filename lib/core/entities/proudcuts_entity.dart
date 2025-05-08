@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'reviews_entity.dart';
 
 class ProductsEntity extends Equatable {

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import '../widgets/custom_button_navigatoin_bar.dart';
-import '../widgets/main_view_body.dart';
 import '../widgets/main_view_body_bloc_consumer.dart';
 
 class MainView extends StatefulWidget {
@@ -27,15 +26,21 @@ class _MainViewState extends State<MainView> {
           },
         ),
         body: SafeArea(
-          child: MainViewBodyBlocConsumer(currentViewIndex: currentViewIndex)
-              .setHorizontalPadding(
-            context,
-            16,
-            enableMediaQuery: false,
+          key: ValueKey<int>(currentViewIndex),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: MainViewBodyBlocConsumer(currentViewIndex: currentViewIndex)
+                  .setHorizontalPadding(
+                context,
+                16,
+                enableMediaQuery: false,
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 }
-

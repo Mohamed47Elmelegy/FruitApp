@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
-
-import '../../Cart/presentation/manager/cubit/cart_cubit.dart';
-
 class AddRemoveItem extends StatelessWidget {
   const AddRemoveItem({
     super.key,

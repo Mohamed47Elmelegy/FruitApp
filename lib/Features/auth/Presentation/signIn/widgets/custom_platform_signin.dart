@@ -28,7 +28,6 @@ class PlatformSignin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      iconAlignment: IconAlignment.start,
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         backgroundColor: color, // لون الخلفية
