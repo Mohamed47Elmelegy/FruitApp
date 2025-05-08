@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubits/Cart_item_cubit/cart_item_cubit.dart';
 import 'package:frutes_app/core/config/constants.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:gap/gap.dart';
 import '../../../../../core/theme/colors_theme.dart';
 import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/widgets/custom_header.dart';
-import '../manager/cubit/cart_cubit.dart';
+import '../manager/cubits/Cart_cubit/cart_cubit.dart';
 import 'cart_items_list.dart';
 
 class CartViewBody extends StatelessWidget {
@@ -63,11 +64,15 @@ class CartViewBody extends StatelessWidget {
           bottom: Constants.mediaQuery.height * 0.05,
           right: 0,
           left: 0,
-          child: Butn(
-            text:
-                '${context.watch<CartCubit>().cartEntity.calculateTotalPrice()} جنيه',
-            color: AppColors.green1_500,
-            onPressed: () {},
+          child: BlocBuilder<CartItemCubit, CartItemState>(
+            builder: (context, state) {
+              return Butn(
+                text:
+                    '${context.watch<CartCubit>().cartEntity.calculateTotalPrice()} جنيه',
+                color: AppColors.green1_500,
+                onPressed: () {},
+              );
+            },
           ),
         )
       ],

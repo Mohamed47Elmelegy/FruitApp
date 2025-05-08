@@ -11,85 +11,100 @@ import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/theme/text_theme.dart';
-import '../manager/cubit/cart_cubit.dart';
+import '../manager/cubits/Cart_cubit/cart_cubit.dart';
+import '../manager/cubits/Cart_item_cubit/cart_item_cubit.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.cartItem});
   final CartItemEntity cartItem;
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.grayscale200)),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 73.w,
-              child: CustomNetworkImage(products: cartItem.productsEntity)
-                  .setAllPadding(
-                context,
-                5,
-                enableMediaQuery: false,
-              ),
-            ),
-            const Gap(17),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        cartItem.productsEntity.productName,
-                        style: AppTextStyles.bodySmallBold13,
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          context.read<CartCubit>().removeCartItem(cartItem);
-                        },
-                        icon: SvgPicture.asset(
-                          Assets.imagesTrash,
-                        ),
-                      ),
-                    ],
+    return BlocBuilder<CartItemCubit, CartItemState>(
+      buildWhen: (prev, currentState) {
+        if (currentState is CartItemUpdated) {
+          if (currentState.cartItemEntity == cartItem) {
+            return true;
+          }
+        }
+        return false;
+      },
+      builder: (context, state) {
+        return IntrinsicHeight(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.grayscale200)),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 73.w,
+                  child: CustomNetworkImage(products: cartItem.productsEntity)
+                      .setAllPadding(
+                    context,
+                    5,
+                    enableMediaQuery: false,
                   ),
-                  Text(
-                    '${cartItem.totalUnitAmount()} كجم',
-                    style: AppTextStyles.bodyBaseBold16.copyWith(
-                      color: AppColors.orange500,
-                    ),
-                  ),
-                  Row(
+                ),
+                const Gap(17),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: Constants.mediaQuery.width * 0.3.w,
-                        height: 36.h,
-                        child: AddRemoveItem(
-                          cartItemEntity: cartItem,
-                        ),
-                      ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${cartItem.totalPrice().toStringAsFixed(1)} جنيه',
-                          style: AppTextStyles.bodyBaseBold16.copyWith(
-                            color: AppColors.orange500,
+                      Row(
+                        children: [
+                          Text(
+                            cartItem.productsEntity.productName,
+                            style: AppTextStyles.bodySmallBold13,
                           ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<CartCubit>()
+                                  .removeCartItem(cartItem);
+                            },
+                            icon: SvgPicture.asset(
+                              Assets.imagesTrash,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${cartItem.totalUnitAmount()} كجم',
+                        style: AppTextStyles.bodyBaseBold16.copyWith(
+                          color: AppColors.orange500,
                         ),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: Constants.mediaQuery.width * 0.3.w,
+                            height: 36.h,
+                            child: AddRemoveItem(
+                              cartItemEntity: cartItem,
+                            ),
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${cartItem.totalPrice().toStringAsFixed(1)} جنيه',
+                              style: AppTextStyles.bodyBaseBold16.copyWith(
+                                color: AppColors.orange500,
+                              ),
+                            ),
+                          )
+                        ],
                       )
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

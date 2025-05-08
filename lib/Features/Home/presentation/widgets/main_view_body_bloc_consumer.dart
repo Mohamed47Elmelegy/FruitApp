@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubit/cart_cubit.dart';
+import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 
 import '../../../../core/services/snack_bar_service.dart';
 import 'main_view_body.dart';

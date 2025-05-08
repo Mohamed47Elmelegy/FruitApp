@@ -6,7 +6,7 @@ import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
-import '../../Features/Home/Cart/presentation/manager/cubit/cart_cubit.dart';
+import '../../Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 import '../config/constants.dart';
 import '../routes/page_routes_name.dart';
 import '../theme/colors_theme.dart';

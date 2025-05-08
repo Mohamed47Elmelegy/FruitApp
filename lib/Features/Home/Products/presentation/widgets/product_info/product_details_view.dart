@@ -4,7 +4,6 @@ import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/widgets/netwark_image.dart';
 import 'package:gap/gap.dart';
 import '/../Features/Home/Products/presentation/widgets/rating_row.dart';
-import '/../Features/Home/presentation/widgets/add_remove_item.dart';
 import '/../core/config/constants.dart';
 import '/../core/entities/proudcuts_entity.dart';
 import '/../core/extensions/padding_ext.dart';

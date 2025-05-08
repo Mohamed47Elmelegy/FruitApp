@@ -10,7 +10,6 @@ import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/utils/app_images.dart';
 import '../../../../../core/widgets/search_text_field.dart';
 import '../../../presentation/widgets/product_grid_view_bloc_bilder.dart';
-import 'product_items_list_view_bloc_builder.dart';
 
 class ProductsViewBody extends StatefulWidget {
   const ProductsViewBody({super.key});
