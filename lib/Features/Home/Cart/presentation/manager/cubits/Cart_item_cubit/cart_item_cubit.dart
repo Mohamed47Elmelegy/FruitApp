@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 
 part 'cart_item_state.dart';

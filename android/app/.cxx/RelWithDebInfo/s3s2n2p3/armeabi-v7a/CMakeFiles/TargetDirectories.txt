@@ -1,0 +1,2 @@
+D:/Route/tharwat samy/Fruit App/android/app/.cxx/RelWithDebInfo/s3s2n2p3/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Route/tharwat samy/Fruit App/android/app/.cxx/RelWithDebInfo/s3s2n2p3/armeabi-v7a/CMakeFiles/rebuild_cache.dir

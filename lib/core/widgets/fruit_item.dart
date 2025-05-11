@@ -19,7 +19,10 @@ class FruitItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigatorKey.currentState!.pushNamed(PageRoutesName.productDetails);
+        navigatorKey.currentState!.pushNamed(
+          PageRoutesName.productDetails,
+          arguments: products,
+        );
       },
       child: Container(
         decoration: ShapeDecoration(
