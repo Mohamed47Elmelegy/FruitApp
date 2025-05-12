@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubits/Cart_item_cubit/cart_item_cubit.dart';
 import 'package:frutes_app/core/config/constants.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
+import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
+import '../../../../../core/routes/page_routes_name.dart';
+import '../../../../../core/services/snack_bar_service.dart';
 import '../../../../../core/theme/colors_theme.dart';
 import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/widgets/custom_header.dart';
@@ -70,7 +73,14 @@ class CartViewBody extends StatelessWidget {
                 text:
                     '${context.watch<CartCubit>().cartEntity.calculateTotalPrice()} جنيه',
                 color: AppColors.green1_500,
-                onPressed: () {},
+                onPressed: () {
+                  if (context.read<CartCubit>().cartEntity.cartItems.isNotEmpty) {
+                    navigatorKey.currentState
+                        ?.pushNamed(PageRoutesName.checkoutView);
+                  } else {
+                    SnackBarService.showErrorMessage('لا يوجد منتجات في السلة');
+                  }
+                },
               );
             },
           ),

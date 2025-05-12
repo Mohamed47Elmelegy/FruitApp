@@ -10,6 +10,7 @@ import '../../Features/auth/Presentation/signIn/view/signin_view.dart';
 import '../../Features/auth/Presentation/onBording/widgets/onbording_view_body.dart';
 import '../../Features/auth/Presentation/signUp/view/signup_view.dart';
 import '../../Features/best_selling_view/Presentation/views/best_selling_view.dart';
+import '../../Features/check_out/presentation/view/checkout_view.dart';
 import '../entities/proudcuts_entity.dart';
 
 class Routes {
@@ -40,6 +41,10 @@ class Routes {
       case PageRoutesName.onBording:
         return MaterialPageRoute(
             builder: (context) => const OnBordingViewBody());
+      case PageRoutesName.checkoutView:
+        return MaterialPageRoute(builder: (context) => const CheckoutView());
+      // case PageRoutesName.paymentView:
+      //   return MaterialPageRoute(builder: (context) => const PaymentView());
       default:
         return MaterialPageRoute(builder: (context) => const SplashView());
     }

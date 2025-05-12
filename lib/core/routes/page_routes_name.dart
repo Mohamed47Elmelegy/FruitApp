@@ -12,4 +12,7 @@ class PageRoutesName {
   static const orderView = '/orderView';
   static const profileView = '/profileView';
   static const productView = '/ProductView';
+  static const checkoutView = '/checkoutView';
+  static const paymentView = '/paymentView';
+  
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
+import '../../../../../core/Repos/add_proudcuts/products_repo.dart';
+import '../../../../../core/cubit/products_cubit.dart';
 import '../../../../../core/entities/proudcuts_entity.dart';
+import '../../../../../core/services/get_it_services.dart';
 import '../widgets/product_info/product_details_view_body.dart';
 
 class ProductsDeatalisView extends StatelessWidget {
@@ -12,7 +14,8 @@ class ProductsDeatalisView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => CartCubit(
+        create: (context) => ProductsCubit(
+          getIt.get<ProductsRepo>(),
         ),
         child: ProductDetailsViewBody(product: product),
       ),
