@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/main.dart';
 import 'package:gap/gap.dart';
 
@@ -29,8 +28,8 @@ class _CheckoutViewBodyState extends State<CheckoutViewBody> {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  SizedBox(height: 130.h), // Space for fixed header
-                  CheckoutSteops(
+                  Gap(130.h),
+                  CheckoutSteps(
                     currentStep: currentStep,
                     onStepTapped: (index) {
                       setState(() {

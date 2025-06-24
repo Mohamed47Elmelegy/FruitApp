@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/Features/check_out/presentation/widgets/animated_step_item.dart';
 
-class CheckoutSteops extends StatelessWidget {
-  const CheckoutSteops({
+class CheckoutSteps extends StatelessWidget {
+  const CheckoutSteps({
     super.key,
     required this.currentStep,
     required this.onStepTapped,

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frutes_app/Features/check_out/presentation/view/shipping_page_view.dart';
-import 'package:gap/gap.dart';
-
-import '../../../../core/theme/colors_theme.dart';
-import '../../../../core/theme/text_theme.dart';
+import 'package:frutes_app/Features/check_out/presentation/widgets/shipping_page_view.dart';
+import 'checkout_page_base.dart';
 
 class CheckoutStepsPageView extends StatefulWidget {
   const CheckoutStepsPageView({
@@ -22,7 +19,6 @@ class CheckoutStepsPageView extends StatefulWidget {
 
 class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
   late PageController _pageController;
-  int selectedPaymentMethod = 0; // 0 for cash, 1 for card
 
   @override
   void initState() {
@@ -48,6 +44,18 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
     super.dispose();
   }
 
+  void _goToNextPage() {
+    final nextPage = widget.currentStep + 1;
+    if (nextPage < 4) {
+      _pageController.animateToPage(
+        nextPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      widget.onPageChanged(nextPage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -57,7 +65,7 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: widget.onPageChanged,
         children: [
-        const ShippingPageView(),
+          ShippingPageView(onNext: _goToNextPage),
           _buildAddressPage(),
           _buildPaymentPage(),
           _buildDeliveryPage(),
@@ -66,23 +74,33 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
     );
   }
 
-
-
   Widget _buildAddressPage() {
-    return const Center(
-      child: Text('صفحة العنوان'),
+    return CheckoutPageBase(
+      onNext: _goToNextPage,
+      child: const Center(
+        child: Text('صفحة العنوان'),
+      ),
     );
   }
 
   Widget _buildPaymentPage() {
-    return const Center(
-      child: Text('صفحة المدفوع'),
+    return CheckoutPageBase(
+      onNext: _goToNextPage,
+      child: const Center(
+        child: Text('صفحة المدفوع'),
+      ),
     );
   }
 
   Widget _buildDeliveryPage() {
-    return const Center(
-      child: Text('صفحة التوصيل'),
+    return CheckoutPageBase(
+      onNext: () {
+        // Handle order confirmation
+      },
+      isLastStep: true,
+      child: const Center(
+        child: Text('صفحة التوصيل'),
+      ),
     );
   }
 }

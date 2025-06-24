@@ -4,9 +4,16 @@ import 'package:gap/gap.dart';
 
 import '../../../../core/theme/colors_theme.dart';
 import '../../../../core/theme/text_theme.dart';
+import '../../../../core/widgets/custom_radio_button.dart';
+import 'checkout_page_base.dart';
 
 class ShippingPageView extends StatefulWidget {
-  const ShippingPageView({super.key});
+  const ShippingPageView({
+    super.key,
+    required this.onNext,
+  });
+
+  final VoidCallback onNext;
 
   @override
   State<ShippingPageView> createState() => _ShippingPageViewState();
@@ -17,34 +24,32 @@ class _ShippingPageViewState extends State<ShippingPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildShippingPage();
+    return CheckoutPageBase(
+      onNext: widget.onNext,
+      child: _buildShippingPage(),
+    );
   }
 
   Widget _buildShippingPage() {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            children: [
-              _buildPaymentMethodItem(
-                isSelected: selectedPaymentMethod == 0,
-                index: 0,
-                icon: Icons.payments_outlined,
-                title: 'الدفع عند الاستلام',
-                amount: '100 جنيه',
-              ),
-              Gap(16.h),
-              _buildPaymentMethodItem(
-                isSelected: selectedPaymentMethod == 1,
-                index: 1,
-                icon: Icons.credit_card,
-                title: 'اشتري الآن وادفع لاحقاً',
-              ),
-            ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Column(
+        children: [
+          _buildPaymentMethodItem(
+              isSelected: selectedPaymentMethod == 0,
+              index: 0,
+              icon: Icons.payments_outlined,
+              title: 'الدفع عند الاستلام',
+              amount: '100'),
+          Gap(16.h),
+          _buildPaymentMethodItem(
+            isSelected: selectedPaymentMethod == 1,
+            index: 1,
+            icon: Icons.credit_card,
+            title: 'اشتري الآن وادفع لاحقاً',
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -77,7 +82,7 @@ class _ShippingPageViewState extends State<ShippingPageView> {
         },
         child: Row(
           children: [
-            _buildRadioButton(isSelected),
+            CustomRadioButton(isSelected: isSelected),
             Gap(12.w),
             Icon(
               icon,
@@ -103,33 +108,6 @@ class _ShippingPageViewState extends State<ShippingPageView> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildRadioButton(bool isSelected) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      width: 24.w,
-      height: 24.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isSelected ? AppColors.grayscale50 : AppColors.grayscale400,
-          width: 2,
-        ),
-      ),
-      child: isSelected
-          ? Center(
-              child: Container(
-                width: 12.w,
-                height: 12.w,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.green1_500,
-                ),
-              ),
-            )
-          : null,
     );
   }
 }
