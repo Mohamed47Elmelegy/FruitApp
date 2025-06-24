@@ -130,8 +130,8 @@ class ProductDetailsViewBody extends StatelessWidget {
                       text: 'أضف الي السلة',
                       color: AppColors.green1_500,
                       onPressed: () {
-                       
-                      })
+                        context.read<CartCubit>().addToCart(product);
+                      }),
                 ],
               ).setHorizontalPadding(context, 20, enableMediaQuery: false),
             ),

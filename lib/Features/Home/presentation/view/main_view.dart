@@ -16,27 +16,24 @@ class _MainViewState extends State<MainView> {
   int currentViewIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartCubit(),
-      child: Scaffold(
-        bottomNavigationBar: CustomButtonNavigationBar(
-          onItemTapped: (index) {
-            currentViewIndex = index;
-            setState(() {});
-          },
-        ),
-        body: SafeArea(
-          key: ValueKey<int>(currentViewIndex),
+    return Scaffold(
+      bottomNavigationBar: CustomButtonNavigationBar(
+        onItemTapped: (index) {
+          currentViewIndex = index;
+          setState(() {});
+        },
+      ),
+      body: SafeArea(
+        key: ValueKey<int>(currentViewIndex),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: MainViewBodyBlocConsumer(currentViewIndex: currentViewIndex)
-                  .setHorizontalPadding(
-                context,
-                16,
-                enableMediaQuery: false,
-              ),
+            duration: const Duration(milliseconds: 200),
+            child: MainViewBodyBlocConsumer(currentViewIndex: currentViewIndex)
+                .setHorizontalPadding(
+              context,
+              16,
+              enableMediaQuery: false,
             ),
           ),
         ),

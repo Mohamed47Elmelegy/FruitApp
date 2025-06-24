@@ -13,6 +13,8 @@ import 'core/services/get_it_services.dart';
 import 'core/services/shared_preferences_sengltion.dart';
 import 'generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> mainCommon(String env) async {
@@ -32,7 +34,14 @@ Future<void> mainCommon(String env) async {
 
   await Prefs.init();
   setupGetit();
-  runApp(const FruitApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<CartCubit>(create: (_) => CartCubit()),
+      ],
+      child: const FruitApp(),
+    ),
+  );
 }
 
 class FruitApp extends StatelessWidget {
