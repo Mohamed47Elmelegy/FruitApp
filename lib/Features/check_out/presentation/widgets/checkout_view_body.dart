@@ -31,11 +31,6 @@ class _CheckoutViewBodyState extends State<CheckoutViewBody> {
                   Gap(130.h),
                   CheckoutSteps(
                     currentStep: currentStep,
-                    onStepTapped: (index) {
-                      setState(() {
-                        currentStep = index;
-                      });
-                    },
                   ),
                   const Gap(32),
                   CheckoutStepsPageView(

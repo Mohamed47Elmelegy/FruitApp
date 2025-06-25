@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/theme/colors_theme.dart';
 import '../../../../core/theme/text_theme.dart';
 import '../../../../core/widgets/custom_radio_button.dart';
+import '../../../Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 import 'checkout_page_base.dart';
 
 class ShippingPageView extends StatefulWidget {
@@ -40,7 +42,8 @@ class _ShippingPageViewState extends State<ShippingPageView> {
               index: 0,
               icon: Icons.payments_outlined,
               title: 'الدفع عند الاستلام',
-              amount: '100'),
+              amount:
+                  '${context.read<CartCubit>().cartEntity.calculateTotalPrice().toInt()} جنيه'),
           Gap(16.h),
           _buildPaymentMethodItem(
             isSelected: selectedPaymentMethod == 1,

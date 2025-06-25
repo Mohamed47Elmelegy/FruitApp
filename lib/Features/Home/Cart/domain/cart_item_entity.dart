@@ -3,25 +3,31 @@
 // يتم حساب المجموع الكلي لوحدة القياس والسعر الكلي للعنصر حسب العدد
 import 'package:equatable/equatable.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
+import 'package:hive/hive.dart';
+import 'package:frutes_app/core/model/Products/product_model.dart';
+part 'cart_item_entity.g.dart';
 
+@HiveType(typeId: 3)
 class CartItemEntity extends Equatable {
-  final ProductsEntity productsEntity;
+  @HiveField(0)
+  final ProductModel productModel;
+  @HiveField(1)
   int count;
   CartItemEntity({
-    required this.productsEntity,
+    required this.productModel,
     this.count = 0,
   });
 
   /// يحسب المجموع الكلي لوحدة القياس
   /// من خلال ضرب وحدة القياس للمنتج مع العدد
   num totalUnitAmount() {
-    return productsEntity.unitAmount * count;
+    return productModel.unitAmount * count;
   }
 
   /// يحسب السعر الكلي للعنصر
   /// من خلال ضرب سعر المنتج مع العدد
   num totalPrice() {
-    return productsEntity.productPrice * count;
+    return productModel.productPrice * count;
   }
 
   /// يزيد العدد ب 1
@@ -35,5 +41,5 @@ class CartItemEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [productsEntity];
+  List<Object?> get props => [productModel];
 }

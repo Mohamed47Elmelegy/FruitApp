@@ -1,21 +1,39 @@
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import '../../functions/avg_rating.dart';
 import 'reviews_model.dart';
+import 'package:hive/hive.dart';
 
+part 'product_model.g.dart';
+
+@HiveType(typeId: 2)
 class ProductModel {
+  @HiveField(0)
   final String productName;
+  @HiveField(1)
   final num productPrice;
+  @HiveField(2)
   final String productCode;
+  @HiveField(3)
   final String productDescription;
+  @HiveField(4)
   final bool isFeatured;
+  @HiveField(5)
   String? imageUrl;
+  @HiveField(6)
   final int expiryDateMonths;
+  @HiveField(7)
   final int calorieDensity;
+  @HiveField(8)
   final int unitAmount;
+  @HiveField(9)
   final num productRating;
+  @HiveField(10)
   final num ratingCount;
+  @HiveField(11)
   final bool isOrganic;
+  @HiveField(12)
   final List<ReviewsModel> reviews;
+  @HiveField(13)
   final num sellingCount;
   ProductModel({
     required this.productName,
@@ -58,6 +76,26 @@ class ProductModel {
       sellingCount: json['sellingCount'],
     );
   }
+
+  factory ProductModel.fromEntity(ProductsEntity entity) {
+    return ProductModel(
+      productName: entity.productName,
+      productPrice: entity.productPrice,
+      productCode: entity.productCode,
+      productDescription: entity.productDescription,
+      isFeatured: entity.isFeatured,
+      imageUrl: entity.imageUrl,
+      expiryDateMonths: entity.expiryDateMonths,
+      calorieDensity: entity.calorieDensity,
+      unitAmount: entity.unitAmount,
+      productRating: entity.productRating,
+      ratingCount: entity.ratingCount,
+      isOrganic: entity.isOrganic,
+      reviews: entity.reviews.map((e) => ReviewsModel.fromEntity(e)).toList(),
+      sellingCount: 0, // or any default value
+    );
+  }
+
   ProductsEntity toEntity() {
     return ProductsEntity(
       productName: productName,
@@ -94,4 +132,14 @@ class ProductModel {
       'reviews': reviews.map((e) => e.toJson()).toList(),
     };
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductModel &&
+          runtimeType == other.runtimeType &&
+          productCode == other.productCode;
+
+  @override
+  int get hashCode => productCode.hashCode;
 }

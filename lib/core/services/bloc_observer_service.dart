@@ -3,12 +3,15 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../config/ansicolor.dart';
+
 class BlocObserverService extends BlocObserver {
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     if (kDebugMode) {
-      log('${bloc.runtimeType} $change');
+      DebugConsoleMessages.info(
+          '🔄 ${bloc.runtimeType} changed: ${change.currentState.runtimeType} -> ${change.nextState.runtimeType}');
     }
   }
 
@@ -17,14 +20,16 @@ class BlocObserverService extends BlocObserver {
       Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
     super.onTransition(bloc, transition);
     if (kDebugMode) {
-      log('${bloc.runtimeType} $transition');
+      DebugConsoleMessages.info(
+          '🔄 ${bloc.runtimeType} transition: ${transition.event.runtimeType}');
     }
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     if (kDebugMode) {
-      log('${bloc.runtimeType} $error $stackTrace');
+      DebugConsoleMessages.error('❌ ${bloc.runtimeType} error: $error');
+      DebugConsoleMessages.info('📚 Stack trace: $stackTrace');
     }
     super.onError(bloc, error, stackTrace);
   }
@@ -33,7 +38,7 @@ class BlocObserverService extends BlocObserver {
   void onClose(BlocBase<dynamic> bloc) {
     super.onClose(bloc);
     if (kDebugMode) {
-      log('${bloc.runtimeType} closed');
+      DebugConsoleMessages.info('🔒 ${bloc.runtimeType} closed');
     }
   }
 
@@ -41,7 +46,7 @@ class BlocObserverService extends BlocObserver {
   void onCreate(BlocBase<dynamic> bloc) {
     super.onCreate(bloc);
     if (kDebugMode) {
-      log('${bloc.runtimeType} created');
+      DebugConsoleMessages.info('🆕 ${bloc.runtimeType} created');
     }
   }
 }

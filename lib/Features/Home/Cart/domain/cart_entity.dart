@@ -1,7 +1,13 @@
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
+import 'package:hive/hive.dart';
+import 'package:frutes_app/core/model/Products/product_model.dart';
 
+part 'cart_entity.g.dart';
+
+@HiveType(typeId: 4)
 class CartEntity {
+  @HiveField(0)
   final List<CartItemEntity> cartItems;
 
   CartEntity({
@@ -25,21 +31,21 @@ class CartEntity {
   }
 
   /// هذه الدالة يتم استخدامها للتحقق من وجود منتج في السلة
-  bool isExist(ProductsEntity product) {
+  bool isExist(ProductModel product) {
     for (var cartItem in cartItems) {
-      if (cartItem.productsEntity == product) {
+      if (cartItem.productModel == product) {
         return true;
       }
     }
     return false;
   }
 
-  CartItemEntity getCartItem(ProductsEntity product) {
+  CartItemEntity getCartItem(ProductModel product) {
     for (var cartItem in cartItems) {
-      if (cartItem.productsEntity == product) {
+      if (cartItem.productModel == product) {
         return cartItem;
       }
     }
-    return CartItemEntity(productsEntity: product, count: 1);
+    return CartItemEntity(productModel: product, count: 1);
   }
 }

@@ -14,6 +14,7 @@ import '../../../../../../core/theme/colors_theme.dart';
 import '../bottom_circle_clipper.dart';
 import 'product_discriptions.dart';
 import 'product_info_grid_view.dart';
+import 'package:frutes_app/core/model/Products/product_model.dart';
 
 class ProductDetailsViewBody extends StatelessWidget {
   const ProductDetailsViewBody({
@@ -130,7 +131,9 @@ class ProductDetailsViewBody extends StatelessWidget {
                       text: 'أضف الي السلة',
                       color: AppColors.green1_500,
                       onPressed: () {
-                        context.read<CartCubit>().addToCart(product);
+                        context
+                            .read<CartCubit>()
+                            .addToCart(ProductModel.fromEntity(product));
                       }),
                 ],
               ).setHorizontalPadding(context, 20, enableMediaQuery: false),

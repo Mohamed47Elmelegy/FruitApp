@@ -1,13 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 
 import '../../domain/Entities/user_entities.dart';
 
+part 'user_model.g.dart';
+
+@HiveType(typeId: 0)
 class UserModel extends UserEntities {
+  @HiveField(0)
+  @override
+  final String uId;
+
+  @HiveField(1)
+  @override
+  final String name;
+
+  @HiveField(2)
+  @override
+  final String email;
+
   UserModel({
-    required super.uId,
-    required super.name,
-    required super.email,
-  });
+    required this.uId,
+    required this.name,
+    required this.email,
+  }) : super(uId: uId, name: name, email: email);
 
   factory UserModel.fromFirebaseUser(User user) {
     return UserModel(

@@ -1,10 +1,19 @@
 import '../../entities/reviews_entity.dart';
+import 'package:hive/hive.dart';
 
+part 'reviews_model.g.dart';
+
+@HiveType(typeId: 1)
 class ReviewsModel {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String image;
+  @HiveField(2)
   final num rating;
+  @HiveField(3)
   final String date;
+  @HiveField(4)
   final String description;
 
   ReviewsModel(
@@ -38,7 +47,7 @@ class ReviewsModel {
         description: description);
   }
 
- toJson() {
+  toJson() {
     return {
       'name': name,
       'image': image,

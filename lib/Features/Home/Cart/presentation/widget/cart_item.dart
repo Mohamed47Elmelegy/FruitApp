@@ -38,7 +38,7 @@ class CartItem extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 73.w,
-                  child: CustomNetworkImage(products: cartItem.productsEntity)
+                  child: CustomNetworkImage(products: cartItem.productModel.toEntity())
                       .setAllPadding(
                     context,
                     5,
@@ -54,7 +54,7 @@ class CartItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            cartItem.productsEntity.productName,
+                            cartItem.productModel.productName,
                             style: AppTextStyles.bodySmallBold13,
                           ),
                           const Spacer(),

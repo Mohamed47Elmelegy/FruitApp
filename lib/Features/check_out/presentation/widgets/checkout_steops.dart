@@ -5,11 +5,9 @@ class CheckoutSteps extends StatelessWidget {
   const CheckoutSteps({
     super.key,
     required this.currentStep,
-    required this.onStepTapped,
   });
 
   final int currentStep;
-  final Function(int) onStepTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class CheckoutSteps extends StatelessWidget {
               text: getSteps()[index],
               index: index,
               isActive: index == currentStep,
-              onTap: () => onStepTapped(index),
+              isCompleted: index < currentStep,
             ),
           ),
         ],
@@ -33,6 +31,6 @@ class CheckoutSteps extends StatelessWidget {
   }
 
   List<String> getSteps() {
-    return ['الشحن', 'العنوان', 'المدفوع', 'التوصيل'];
+    return ['الشحن', 'العنوان', 'التفاصيل'];
   }
 }

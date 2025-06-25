@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +14,31 @@ import 'generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'Features/auth/data/models/user_model.dart';
+import 'core/model/Products/product_model.dart';
+import 'core/model/Products/reviews_model.dart';
+import 'Features/Home/Cart/domain/cart_item_entity.dart';
+import 'Features/Home/Cart/domain/cart_entity.dart';
+import 'Features/check_out/data/models/address_model.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> mainCommon(String env) async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = BlocObserverService();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(ProductModelAdapter());
+  Hive.registerAdapter(ReviewsModelAdapter());
+  Hive.registerAdapter(CartItemEntityAdapter());
+  Hive.registerAdapter(CartEntityAdapter());
+  Hive.registerAdapter(AddressModelAdapter());
+  await Hive.openBox<UserModel>('userBox');
+  await Hive.openBox<ProductModel>('productBox');
+  await Hive.openBox<CartEntity>('cartBox');
+  await Hive.openBox<AddressModel>('addresses');
 
   // Firebase configuration based on environment
   await Firebase.initializeApp(
@@ -38,6 +57,7 @@ Future<void> mainCommon(String env) async {
     MultiBlocProvider(
       providers: [
         BlocProvider<CartCubit>(create: (_) => CartCubit()),
+        // Add other global providers here if needed
       ],
       child: const FruitApp(),
     ),

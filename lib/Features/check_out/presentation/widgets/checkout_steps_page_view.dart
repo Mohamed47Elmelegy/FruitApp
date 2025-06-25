@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/Features/check_out/presentation/widgets/shipping_page_view.dart';
+import 'ConfirmOrder/custom_comfirm_order.dart';
 import 'checkout_page_base.dart';
+import 'address/custom_address_page.dart';
 
 class CheckoutStepsPageView extends StatefulWidget {
   const CheckoutStepsPageView({
@@ -56,6 +58,18 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
     }
   }
 
+  void _goToPreviousPage() {
+    final prevPage = widget.currentStep - 1;
+    if (prevPage >= 0) {
+      _pageController.animateToPage(
+        prevPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      widget.onPageChanged(prevPage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -66,41 +80,37 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
         onPageChanged: widget.onPageChanged,
         children: [
           ShippingPageView(onNext: _goToNextPage),
-          _buildAddressPage(),
-          _buildPaymentPage(),
-          _buildDeliveryPage(),
+          CustomAddressPage(
+            onNext: _goToNextPage,
+            onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
+          ),
+          // _buildPaymentPage(),
+          const CustomConfirmOrderPage(),
         ],
       ),
     );
   }
 
-  Widget _buildAddressPage() {
-    return CheckoutPageBase(
-      onNext: _goToNextPage,
-      child: const Center(
-        child: Text('صفحة العنوان'),
-      ),
-    );
-  }
+  // Widget _buildPaymentPage() {
+  //   return CheckoutPageBase(
+  //     onNext: _goToNextPage,
+  //     onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
+  //     child: const Center(
+  //       child: Text('صفحة المدفوع'),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildPaymentPage() {
-    return CheckoutPageBase(
-      onNext: _goToNextPage,
-      child: const Center(
-        child: Text('صفحة المدفوع'),
-      ),
-    );
-  }
-
-  Widget _buildDeliveryPage() {
-    return CheckoutPageBase(
-      onNext: () {
-        // Handle order confirmation
-      },
-      isLastStep: true,
-      child: const Center(
-        child: Text('صفحة التوصيل'),
-      ),
-    );
-  }
+  // Widget _buildOrderConfirmationPage() {
+  //   return CheckoutPageBase(
+  //     onNext: () {
+  //       // Handle order confirmation
+  //     },
+  //     isLastStep: true,
+  //     onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
+  //     child: const Center(
+  //       child: Text('صفحة التوصيل'),
+  //     ),
+  //   );
+  // }
 }

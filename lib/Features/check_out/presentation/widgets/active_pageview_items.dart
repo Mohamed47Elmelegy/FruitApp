@@ -5,8 +5,10 @@ import 'package:frutes_app/core/theme/colors_theme.dart';
 import '../../../../core/theme/text_theme.dart';
 
 class ActivePageViewItems extends StatelessWidget {
-  const ActivePageViewItems({super.key, required this.text});
+  const ActivePageViewItems(
+      {super.key, required this.text, this.isCompleted = false});
   final String text;
+  final bool isCompleted;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -16,7 +18,7 @@ class ActivePageViewItems extends StatelessWidget {
         SizedBox(
           width: 23.w,
           height: 23.h,
-          child: const CircleAvatar(
+          child: CircleAvatar(
             backgroundColor: AppColors.green1_500,
             child: Icon(
               Icons.check,

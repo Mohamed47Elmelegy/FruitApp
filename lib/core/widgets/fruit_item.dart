@@ -10,6 +10,7 @@ import '../config/constants.dart';
 import '../routes/page_routes_name.dart';
 import '../theme/colors_theme.dart';
 import '../theme/text_theme.dart';
+import 'package:frutes_app/core/model/Products/product_model.dart';
 
 class FruitItem extends StatelessWidget {
   const FruitItem({super.key, required this.products});
@@ -102,7 +103,9 @@ class FruitItem extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              context.read<CartCubit>().addToCart(products);
+                              context
+                                  .read<CartCubit>()
+                                  .addToCart(ProductModel.fromEntity(products));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100.r),

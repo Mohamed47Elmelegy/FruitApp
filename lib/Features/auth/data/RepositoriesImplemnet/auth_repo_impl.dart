@@ -13,6 +13,7 @@ import '../../../../core/services/shared_preferences_sengltion.dart';
 import '../../domain/Entities/user_entities.dart';
 import '../../domain/repositories/auth_repo.dart';
 import '../models/user_model.dart';
+import 'package:hive/hive.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final FirbaseAuthService firbaseAuthService;
@@ -193,8 +194,8 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future saveUserData({required UserEntities user}) async {
-    var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
-    await Prefs.setString(SharedPrefs.userData, jsonData);
+    var userBox = Hive.box<UserModel>('userBox');
+    await userBox.put('currentUser', UserModel.fromEntity(user));
   }
 
   @override
