@@ -10,15 +10,13 @@ class SignOutCubit extends Cubit<SignOutState> {
   final AuthRepo authRepo;
 
   Future<void> signOut() async {
+    if (isClosed) return;
     emit(SignOutLoading());
     try {
       await authRepo.signOut();
-      emit(SignOutSuccess(
-        
-      ));
+      if (!isClosed) emit(SignOutSuccess());
     } on CustomException catch (e) {
-      emit(SignOutFailure(exception: e.message));
+      if (!isClosed) emit(SignOutFailure(exception: e.message));
     }
   }
 }
-

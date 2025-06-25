@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frutes_app/Features/check_out/presentation/widgets/shipping_page_view.dart';
+import '../manager/address_cubit.dart';
 import 'ConfirmOrder/custom_comfirm_order.dart';
-import 'checkout_page_base.dart';
 import 'address/custom_address_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frutes_app/Features/check_out/domain/Repositories/address_repository.dart';
+import 'package:frutes_app/core/services/get_it_services.dart';
 
 class CheckoutStepsPageView extends StatefulWidget {
   const CheckoutStepsPageView({
@@ -21,6 +24,7 @@ class CheckoutStepsPageView extends StatefulWidget {
 
 class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
   late PageController _pageController;
+  int? selectedAddressIndex;
 
   @override
   void initState() {
@@ -72,21 +76,30 @@ class _CheckoutStepsPageViewState extends State<CheckoutStepsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500.h,
-      child: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: widget.onPageChanged,
-        children: [
-          ShippingPageView(onNext: _goToNextPage),
-          CustomAddressPage(
-            onNext: _goToNextPage,
-            onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
-          ),
-          // _buildPaymentPage(),
-          const CustomConfirmOrderPage(),
-        ],
+    return BlocProvider<AddressCubit>(
+      create: (_) => AddressCubit(getIt<AddressRepository>()),
+      child: SizedBox(
+        height: 500.h,
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: widget.onPageChanged,
+          children: [
+            ShippingPageView(onNext: _goToNextPage),
+            CustomAddressPage(
+              onNext: _goToNextPage,
+              onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
+              selectedIndex: selectedAddressIndex,
+              onSelectedIndexChanged: (val) =>
+                  setState(() => selectedAddressIndex = val),
+            ),
+            // _buildPaymentPage(),
+            CustomConfirmOrderPage(
+              onBack: widget.currentStep > 0 ? _goToPreviousPage : null,
+              selectedAddressIndex: selectedAddressIndex,
+            ),
+          ],
+        ),
       ),
     );
   }

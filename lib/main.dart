@@ -41,13 +41,20 @@ Future<void> mainCommon(String env) async {
   await Hive.openBox<AddressModel>('addresses');
 
   // Firebase configuration based on environment
+  const devOptions = FirebaseOptions(
+    apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
+    appId: '1:244051247756:android:c83b13fce76349217c71a9',
+    messagingSenderId: '244051247756',
+    projectId: 'furute-fefa1',
+  );
+  const prodOptions = FirebaseOptions(
+    apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
+    appId: '1:244051247756:android:4949f37a25d791ef7c71a9',
+    messagingSenderId: '244051247756',
+    projectId: 'furute-fefa1',
+  );
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyA99v6kzJO5LCgQcZvA3ZuuYpQ6jt0_9F0',
-      appId: '1:244051247756:android:4949f37a25d791ef7c71a9',
-      messagingSenderId: '244051247756',
-      projectId: 'furute-fefa1',
-    ),
+    options: env == 'dev' ? devOptions : prodOptions, 
   );
   // log(DebugConsoleMessages.debug(env == 'dev' ? 'Dev' : 'Prod'));
 

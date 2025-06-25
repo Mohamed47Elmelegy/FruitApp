@@ -34,97 +34,91 @@ class FruitItem extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Gap(5),
-                    SizedBox(
-                      height: Constants.mediaQuery.height * 0.15.h,
-                      width: double.infinity,
-                      child: products.imageUrl != null
-                          ? CustomNetworkImage(products: products)
-                          : Container(
-                              width: 50.h,
-                              height: 50.h,
-                              color: AppColors.grayscale50,
-                            ),
-                    ),
-                    const Gap(5),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    products.productName,
-                                    textAlign: TextAlign.right,
-                                    style: AppTextStyles.bodyBaseSemiBold13,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                  const Gap(2),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        products.productPrice.toString(),
-                                        style: AppTextStyles.bodyBaseSemiBold13
-                                            .copyWith(
-                                                color: AppColors.orange500),
-                                      ),
-                                      Text(
-                                        'جنية',
-                                        style: AppTextStyles.bodyBaseSemiBold13
-                                            .copyWith(
-                                                color: AppColors.orange500),
-                                      ),
-                                      Text(
-                                        '/',
-                                        style: AppTextStyles.bodyBaseSemiBold13
-                                            .copyWith(
-                                                color: AppColors.orange500),
-                                      ),
-                                      Text(
-                                        'كيلو',
-                                        style: AppTextStyles.bodyBaseSemiBold13
-                                            .copyWith(
-                                                color: AppColors.orange300),
-                                      ),
-                                    ],
-                                  ),
-                                ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Gap(5),
+                  SizedBox(
+                    height: Constants.mediaQuery.height * 0.15.h,
+                    width: double.infinity,
+                    child: products.imageUrl != null
+                        ? CustomNetworkImage(products: products)
+                        : Container(
+                            width: 50.h,
+                            height: 50.h,
+                            color: AppColors.grayscale50,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              context
-                                  .read<CartCubit>()
-                                  .addToCart(ProductModel.fromEntity(products));
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100.r),
-                              child: Container(
-                                color: AppColors.green1_500,
-                                width: 36.w,
-                                height: 36.h,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
+                  ),
+                  const Gap(5),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  products.productName,
+                                  textAlign: TextAlign.right,
+                                  style: AppTextStyles.bodyBaseSemiBold13,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
+                                const Gap(2),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      products.productPrice.toString(),
+                                      style: AppTextStyles.bodyBaseSemiBold13
+                                          .copyWith(color: AppColors.orange500),
+                                    ),
+                                    Text(
+                                      'جنية',
+                                      style: AppTextStyles.bodyBaseSemiBold13
+                                          .copyWith(color: AppColors.orange500),
+                                    ),
+                                    Text(
+                                      '/',
+                                      style: AppTextStyles.bodyBaseSemiBold13
+                                          .copyWith(color: AppColors.orange500),
+                                    ),
+                                    Text(
+                                      'كيلو',
+                                      style: AppTextStyles.bodyBaseSemiBold13
+                                          .copyWith(color: AppColors.orange300),
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<CartCubit>()
+                                .addToCart(ProductModel.fromEntity(products));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100.r),
+                            child: Container(
+                              color: AppColors.green1_500,
+                              width: 36.w,
+                              height: 36.h,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Positioned(

@@ -16,17 +16,18 @@ import '../../manager/order_cubit.dart';
 import '../../../domain/entity/order_entity.dart';
 
 class CustomConfirmOrderPage extends StatelessWidget {
-  const CustomConfirmOrderPage({super.key, this.onBack});
+  const CustomConfirmOrderPage(
+      {super.key, this.onBack, this.selectedAddressIndex});
 
   final VoidCallback? onBack;
+  final int? selectedAddressIndex;
 
   void _handleConfirmOrder(BuildContext context) async {
     final cart = context.read<CartCubit>().cartEntity;
     final subtotal = cart.calculateTotalPrice();
     const delivery = 30.0;
     final total = subtotal + delivery;
-    final addresses = context.read<AddressCubit>().state;
-    final address = addresses.isNotEmpty ? addresses.last : null;
+    final address = context.read<AddressCubit>().selectedAddress;
     final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     final order = OrderEntity(
@@ -59,167 +60,161 @@ class CustomConfirmOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: BlocProvider.of<AddressCubit>(context),
-      child: BlocListener<OrderCubit, OrderState>(
-        listener: (context, state) async {
-          if (state is OrderSuccess) {
-            await context.read<CartCubit>().clearCart();
-            SnackBarService.showSuccessMessage('تم تأكيد الطلب وحفظه بنجاح!');
-            await Future.delayed(const Duration(seconds: 1));
-            navigatorKey.currentState?.pushNamed(PageRoutesName.home);
-          } else if (state is OrderFailure) {
-            SnackBarService.showErrorMessage('حدث خطأ أثناء حفظ الطلب!');
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title:
-                const Text('ملخص الطلب', style: AppTextStyles.bodyLargeBold19),
-            backgroundColor: Colors.white,
-            elevation: 0,
-            iconTheme: const IconThemeData(color: AppColors.grayscale900),
-          ),
-          body: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(16.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Order Summary
-                      BlocBuilder<CartCubit, CartState>(
-                        builder: (context, state) {
-                          final cart = context.read<CartCubit>().cartEntity;
-                          final subtotal = cart.calculateTotalPrice();
-                          const delivery = 30.0; // ثابت كما في الصورة
-                          final total = subtotal + delivery;
-                          return Container(
-                            padding: EdgeInsets.all(16.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.grayscale50,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('المجموع الفرعي:',
-                                        style: AppTextStyles.bodyBaseRegular16),
-                                    Text('${subtotal.toInt()} جنيه',
-                                        style: AppTextStyles.bodyBaseBold16),
-                                  ],
-                                ),
-                                Gap(8.h),
-                                const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('التوصيل:',
-                                        style: AppTextStyles.bodyBaseRegular16),
-                                    Text('30 جنيه',
-                                        style: AppTextStyles.bodyBaseBold16),
-                                  ],
-                                ),
-                                Divider(
-                                    height: 24.h,
-                                    thickness: 1,
-                                    color: AppColors.grayscale200),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('الكلي',
-                                        style: AppTextStyles.bodyLargeBold19),
-                                    Text('${total.toInt()} جنيه',
-                                        style: AppTextStyles.bodyLargeBold19),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      Gap(24.h),
-                      const Text('يرجي تأكيد طلبك',
-                          style: AppTextStyles.bodyBaseBold16),
-                      Gap(16.h),
-                      // Address Section
-                      const Text('عنوان التوصيل',
-                          style: AppTextStyles.bodyBaseBold16),
-                      Gap(8.h),
-                      BlocBuilder<AddressCubit, List<AddressModel>>(
-                        builder: (context, addresses) {
-                          if (addresses.isEmpty) {
-                            return Container(
-                              padding: EdgeInsets.all(12.w),
-                              decoration: BoxDecoration(
-                                color: AppColors.grayscale100,
-                                borderRadius: BorderRadius.circular(8),
+    return BlocListener<OrderCubit, OrderState>(
+      listener: (context, state) async {
+        if (state is OrderSuccess) {
+          await context.read<CartCubit>().clearCart();
+          SnackBarService.showSuccessMessage('تم تأكيد الطلب وحفظه بنجاح!');
+          await Future.delayed(const Duration(seconds: 1));
+          navigatorKey.currentState?.pushNamed(PageRoutesName.home);
+        } else if (state is OrderFailure) {
+          SnackBarService.showErrorMessage('حدث خطأ أثناء حفظ الطلب!');
+        }
+      },
+      child: Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('ملخص الطلب',
+                        style: AppTextStyles.bodyLargeBold19),
+                    Gap(16.h),
+                    // Order Summary
+                    BlocBuilder<CartCubit, CartState>(
+                      builder: (context, state) {
+                        final cart = context.read<CartCubit>().cartEntity;
+                        final subtotal = cart.calculateTotalPrice();
+                        const delivery = 30.0; // ثابت كما في الصورة
+                        final total = subtotal + delivery;
+                        return Container(
+                          padding: EdgeInsets.all(16.w),
+                          decoration: BoxDecoration(
+                            color: AppColors.grayscale50,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('المجموع الفرعي:',
+                                      style: AppTextStyles.bodyBaseRegular16),
+                                  Text('${subtotal.toInt()} جنيه',
+                                      style: AppTextStyles.bodyBaseBold16),
+                                ],
                               ),
-                              child: const Text('لم يتم اختيار عنوان بعد',
-                                  style: AppTextStyles.bodyBaseRegular16),
-                            );
-                          }
-                          final address = addresses.last; // آخر عنوان مضاف
+                              Gap(8.h),
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('التوصيل:',
+                                      style: AppTextStyles.bodyBaseRegular16),
+                                  Text('30 جنيه',
+                                      style: AppTextStyles.bodyBaseBold16),
+                                ],
+                              ),
+                              Divider(
+                                  height: 24.h,
+                                  thickness: 1,
+                                  color: AppColors.grayscale200),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('الكلي',
+                                      style: AppTextStyles.bodyLargeBold19),
+                                  Text('${total.toInt()} جنيه',
+                                      style: AppTextStyles.bodyLargeBold19),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    Gap(24.h),
+                    const Text('يرجي تأكيد طلبك',
+                        style: AppTextStyles.bodyBaseBold16),
+                    Gap(16.h),
+                    // Address Section
+                    const Text('عنوان التوصيل',
+                        style: AppTextStyles.bodyBaseBold16),
+                    Gap(8.h),
+                    BlocBuilder<AddressCubit, List<AddressModel>>(
+                      builder: (context, addresses) {
+                        final address =
+                            context.read<AddressCubit>().selectedAddress;
+                        if (addresses.isEmpty || address == null) {
                           return Container(
                             padding: EdgeInsets.all(12.w),
                             decoration: BoxDecoration(
-                              color: AppColors.grayscale50,
+                              color: AppColors.grayscale100,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.location_on_outlined,
-                                    color: AppColors.green1_500),
-                                Gap(8.w),
-                                Expanded(
-                                  child: Text(
-                                    '${address.address}, ${address.details}',
-                                    style: AppTextStyles.bodyBaseRegular16,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: const Text('لم يتم اختيار عنوان بعد',
+                                style: AppTextStyles.bodyBaseRegular16),
                           );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  children: [
-                    if (onBack != null)
-                      Expanded(
-                        child: Butn(
-                          text: 'رجوع',
-                          onPressed: onBack!,
-                          color: AppColors.grayscale400,
-                        ),
-                      ),
-                    if (onBack != null) SizedBox(width: 12.w),
-                    Expanded(
-                      flex: 2,
-                      child: Butn(
-                        text: 'تأكيد الطلب',
-                        color: AppColors.green1_500,
-                        onPressed: () => _handleConfirmOrder(context),
-                      ),
+                        }
+                        return Container(
+                          padding: EdgeInsets.all(12.w),
+                          decoration: BoxDecoration(
+                            color: AppColors.grayscale50,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.location_on_outlined,
+                                  color: AppColors.green1_500),
+                              Gap(8.w),
+                              Expanded(
+                                child: Text(
+                                  '${address.address}, ${address.details}',
+                                  style: AppTextStyles.bodyBaseRegular16,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
-              Gap(16.h),
-            ],
-          ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Row(
+                children: [
+                  if (onBack != null)
+                    Expanded(
+                      child: Butn(
+                        text: 'رجوع',
+                        onPressed: onBack!,
+                        color: AppColors.grayscale400,
+                      ),
+                    ),
+                  if (onBack != null) SizedBox(width: 12.w),
+                  Expanded(
+                    flex: 2,
+                    child: Butn(
+                      text: 'تأكيد الطلب',
+                      color: AppColors.green1_500,
+                      onPressed: () => _handleConfirmOrder(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Gap(16.h),
+          ],
         ),
       ),
     );

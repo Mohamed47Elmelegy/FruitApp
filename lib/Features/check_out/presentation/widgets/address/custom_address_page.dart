@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import '../../../data/models/address_model.dart';
-import '../../../domain/Repositories/address_repository.dart';
 import '../../manager/address_cubit.dart';
 import 'custom_address_form.dart';
 import 'custom_address_list.dart';
@@ -14,13 +12,22 @@ import 'custom_address_list.dart';
 class CustomAddressPage extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback? onBack;
-  const CustomAddressPage({super.key, required this.onNext, this.onBack});
+  final int? selectedIndex;
+  final ValueChanged<int?>? onSelectedIndexChanged;
+  const CustomAddressPage(
+      {super.key,
+      required this.onNext,
+      this.onBack,
+      this.selectedIndex,
+      this.onSelectedIndexChanged});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AddressCubit(getIt<AddressRepository>()),
-      child: _CustomAddressPageBody(onNext: onNext, onBack: onBack),
+    return _CustomAddressPageBody(
+      onNext: onNext,
+      onBack: onBack,
+      selectedIndex: selectedIndex,
+      onSelectedIndexChanged: onSelectedIndexChanged,
     );
   }
 }
@@ -28,14 +35,19 @@ class CustomAddressPage extends StatelessWidget {
 class _CustomAddressPageBody extends StatefulWidget {
   final VoidCallback onNext;
   final VoidCallback? onBack;
-  const _CustomAddressPageBody({required this.onNext, this.onBack});
+  final int? selectedIndex;
+  final ValueChanged<int?>? onSelectedIndexChanged;
+  const _CustomAddressPageBody(
+      {required this.onNext,
+      this.onBack,
+      this.selectedIndex,
+      this.onSelectedIndexChanged});
 
   @override
   State<_CustomAddressPageBody> createState() => _CustomAddressPageBodyState();
 }
 
 class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
-  int? selectedIndex;
   bool showForm = false;
   bool saveAddress = false;
   bool isEditing = false;
@@ -46,6 +58,11 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
   final _addressController = TextEditingController();
   final _cityController = TextEditingController();
   final _detailsController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _editAddress(int index) {
     final addresses = context.read<AddressCubit>().state;
@@ -81,7 +98,8 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<AddressCubit, List<AddressModel>>(
       builder: (context, addresses) {
-        // Show different buttons based on selection
+        final cubit = context.read<AddressCubit>();
+        final selectedIndex = cubit.selectedIndex;
         final hasSelectedAddress = selectedIndex != null;
 
         return Column(
@@ -115,18 +133,15 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
                             details: _detailsController.text,
                             userId: existingAddress.userId,
                           );
-                          context
-                              .read<AddressCubit>()
-                              .updateAddress(updatedAddress);
+                          cubit.updateAddress(updatedAddress);
                         } else {
                           // Add new address
-                          context.read<AddressCubit>().addAddress(address);
+                          cubit.addAddress(address);
                         }
                         _clearForm();
-                        setState(() {
-                          selectedIndex = addresses
-                              .length; // Select the newly added address
-                        });
+                        if (widget.onSelectedIndexChanged != null) {
+                          widget.onSelectedIndexChanged!(cubit.selectedIndex);
+                        }
                       },
                       onCancel: context.read<AddressCubit>().state.isNotEmpty
                           ? () => _clearForm()
@@ -138,20 +153,21 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
                   : AddressListWidget(
                       addresses: addresses,
                       selectedIndex: selectedIndex,
-                      onSelect: (val) => setState(() => selectedIndex = val),
+                      onSelect: (val) {
+                        cubit.selectAddress(val);
+                        if (widget.onSelectedIndexChanged != null) {
+                          widget.onSelectedIndexChanged!(val);
+                        }
+                      },
                       onDelete: (index) {
                         final address = addresses[index];
                         if (address.id != null) {
-                          context
-                              .read<AddressCubit>()
-                              .deleteAddress(address.id!);
+                          cubit.deleteAddress(address.id!);
                         } else {
-                          context
-                              .read<AddressCubit>()
-                              .deleteAddressByIndex(index);
+                          cubit.deleteAddressByIndex(index);
                         }
                         if (selectedIndex == index) {
-                          setState(() => selectedIndex = null);
+                          setState(() => cubit.selectedIndex = null);
                         }
                       },
                       onEdit: _editAddress,
@@ -188,7 +204,6 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
                                     details: _detailsController.text,
                                   );
                                   if (isEditing && editingIndex != null) {
-                                    // Update existing address
                                     final existingAddress =
                                         addresses[editingIndex!];
                                     final updatedAddress = AddressModel(
@@ -200,20 +215,15 @@ class _CustomAddressPageBodyState extends State<_CustomAddressPageBody> {
                                       details: _detailsController.text,
                                       userId: existingAddress.userId,
                                     );
-                                    context
-                                        .read<AddressCubit>()
-                                        .updateAddress(updatedAddress);
+                                    cubit.updateAddress(updatedAddress);
                                   } else {
-                                    // Add new address
-                                    context
-                                        .read<AddressCubit>()
-                                        .addAddress(address);
+                                    cubit.addAddress(address);
                                   }
                                   _clearForm();
-                                  setState(() {
-                                    selectedIndex = addresses
-                                        .length; // Select the newly added address
-                                  });
+                                  if (widget.onSelectedIndexChanged != null) {
+                                    widget.onSelectedIndexChanged!(
+                                        cubit.selectedIndex);
+                                  }
                                 } else {
                                   return;
                                 }

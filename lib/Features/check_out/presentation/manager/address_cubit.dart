@@ -6,9 +6,21 @@ import '../../domain/Repositories/address_repository.dart';
 
 class AddressCubit extends Cubit<List<AddressModel>> {
   final AddressRepository repository;
+  int? selectedIndex;
 
   AddressCubit(this.repository) : super([]) {
     loadAddresses();
+  }
+
+  AddressModel? get selectedAddress => (state.isNotEmpty &&
+          selectedIndex != null &&
+          selectedIndex! < state.length)
+      ? state[selectedIndex!]
+      : (state.isNotEmpty ? state.last : null);
+
+  void selectAddress(int? index) {
+    selectedIndex = index;
+    emit(List<AddressModel>.from(state)); // force rebuild
   }
 
   Future<void> loadAddresses() async {
@@ -28,6 +40,8 @@ class AddressCubit extends Cubit<List<AddressModel>> {
     try {
       await repository.addAddress(address);
       await loadAddresses();
+      selectedIndex = state.isNotEmpty ? state.length - 1 : null;
+      emit(List<AddressModel>.from(state));
     } catch (e) {
       log('Error adding address: $e');
       // Handle error
@@ -38,6 +52,10 @@ class AddressCubit extends Cubit<List<AddressModel>> {
     try {
       await repository.updateAddress(address);
       await loadAddresses();
+      // بعد التحديث، ابحث عن العنوان المحدث وحدد الـ index
+      final idx = state.indexWhere((a) => a.id == address.id);
+      if (idx != -1) selectedIndex = idx;
+      emit(List<AddressModel>.from(state));
     } catch (e) {
       log('Error updating address: $e');
       // Handle error
