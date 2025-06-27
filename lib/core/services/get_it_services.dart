@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:frutes_app/core/Repos/add_proudcuts/products_repo.dart';
 import 'package:frutes_app/core/services/database_service.dart';
 import 'package:frutes_app/core/services/firebase_auth_service.dart';
@@ -12,47 +13,129 @@ import '../config/ansicolor.dart';
 import '../../Features/check_out/domain/Repositories/order_repository.dart';
 import '../../Features/check_out/data/Repositories/order_repository_impl.dart';
 import '../../Features/check_out/domain/usecase/save_order_usecase.dart';
+import '../../Features/check_out/domain/usecase/get_user_orders_usecase.dart';
+import '../../Features/check_out/domain/usecase/delete_order_usecase.dart';
 
 final getIt = GetIt.instance;
 
 void setupGetit() {
   try {
-    // Register services
-    getIt.registerSingleton<FirbaseAuthService>(FirbaseAuthService());
-    getIt.registerSingleton<DatabaseService>(FirebaseFirestoreService());
+    // Clear any existing registrations
+    if (getIt.isRegistered<FirbaseAuthService>()) {
+      getIt.unregister<FirbaseAuthService>();
+    }
+    if (getIt.isRegistered<DatabaseService>()) {
+      getIt.unregister<DatabaseService>();
+    }
+    if (getIt.isRegistered<AuthRepo>()) {
+      getIt.unregister<AuthRepo>();
+    }
+    if (getIt.isRegistered<ProductsRepo>()) {
+      getIt.unregister<ProductsRepo>();
+    }
+    if (getIt.isRegistered<AddressRepository>()) {
+      getIt.unregister<AddressRepository>();
+    }
+    if (getIt.isRegistered<OrderRepository>()) {
+      getIt.unregister<OrderRepository>();
+    }
 
-    // Register repositories
-    getIt.registerSingleton<AuthRepo>(
-      AuthRepoImpl(
-        getIt<FirbaseAuthService>(),
-        getIt<DatabaseService>(),
-      ),
-    );
+    // Register services with error handling
+    try {
+      getIt.registerSingleton<FirbaseAuthService>(FirbaseAuthService());
+    } catch (e) {
+      log('Failed to register FirbaseAuthService: $e');
+    }
 
-    getIt.registerSingleton<ProductsRepo>(
-      ProductsRepoImpl(
-        getIt<DatabaseService>(),
-      ),
-    );
+    try {
+      getIt.registerSingleton<DatabaseService>(FirebaseFirestoreService());
+    } catch (e) {
+      log('Failed to register DatabaseService: $e');
+    }
+
+    // Register repositories with error handling
+    try {
+      if (getIt.isRegistered<FirbaseAuthService>() &&
+          getIt.isRegistered<DatabaseService>()) {
+        getIt.registerSingleton<AuthRepo>(
+          AuthRepoImpl(
+            getIt<FirbaseAuthService>(),
+            getIt<DatabaseService>(),
+          ),
+        );
+      }
+    } catch (e) {
+      log('Failed to register AuthRepo: $e');
+    }
+
+    try {
+      if (getIt.isRegistered<DatabaseService>()) {
+        getIt.registerSingleton<ProductsRepo>(
+          ProductsRepoImpl(
+            getIt<DatabaseService>(),
+          ),
+        );
+      }
+    } catch (e) {
+      log('Failed to register ProductsRepo: $e');
+    }
 
     // Register address repository - using hybrid implementation for best of both worlds
-    getIt.registerSingleton<AddressRepository>(
-      AddressRepositoryHybrid(),
-    );
+    try {
+      getIt.registerSingleton<AddressRepository>(
+        AddressRepositoryHybrid(),
+      );
+    } catch (e) {
+      log('Failed to register AddressRepository: $e');
+    }
 
     // Register order repository
-    getIt.registerSingleton<OrderRepository>(
-      OrderRepositoryImpl(databaseService: getIt<DatabaseService>()),
-    );
+    try {
+      if (getIt.isRegistered<DatabaseService>()) {
+        getIt.registerSingleton<OrderRepository>(
+          OrderRepositoryImpl(databaseService: getIt<DatabaseService>()),
+        );
+      }
+    } catch (e) {
+      log('Failed to register OrderRepository: $e');
+    }
 
     // Register save order usecase
-    getIt.registerSingleton<SaveOrderUseCase>(
-      SaveOrderUseCase(getIt<OrderRepository>()),
-    );
+    try {
+      if (getIt.isRegistered<OrderRepository>()) {
+        getIt.registerSingleton<SaveOrderUseCase>(
+          SaveOrderUseCase(getIt<OrderRepository>()),
+        );
+      }
+    } catch (e) {
+      log('Failed to register SaveOrderUseCase: $e');
+    }
+
+    // Register get user orders usecase
+    try {
+      if (getIt.isRegistered<OrderRepository>()) {
+        getIt.registerSingleton<GetUserOrdersUseCase>(
+          GetUserOrdersUseCase(getIt<OrderRepository>()),
+        );
+      }
+    } catch (e) {
+      log('Failed to register GetUserOrdersUseCase: $e');
+    }
+
+    // Register delete order usecase
+    try {
+      if (getIt.isRegistered<OrderRepository>()) {
+        getIt.registerSingleton<DeleteOrderUseCase>(
+          DeleteOrderUseCase(getIt<OrderRepository>()),
+        );
+      }
+    } catch (e) {
+      log('Failed to register DeleteOrderUseCase: $e');
+    }
 
     DebugConsoleMessages.success('✅ All dependencies registered successfully');
   } catch (e) {
     DebugConsoleMessages.error('❌ Error registering dependencies: $e');
-    rethrow;
+    // Don't rethrow - let the app continue with partial functionality
   }
 }

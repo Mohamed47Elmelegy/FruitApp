@@ -3,7 +3,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:frutes_app/core/Repos/add_proudcuts/products_repo.dart';
+import 'package:frutes_app/core/constants/sort_options.dart';
 import 'package:frutes_app/core/entities/proudcuts_entity.dart';
+import 'package:frutes_app/core/services/sort_service.dart';
 
 part 'products_state.dart';
 
@@ -11,7 +13,11 @@ class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit(
     this.productsRepo,
   ) : super(ProductsInitial());
+
   final ProductsRepo productsRepo;
+  List<ProductsEntity> _allProducts = [];
+  SortOption _currentSortOption = SortOption.priceLowToHigh;
+
   Future<void> getProducts() async {
     emit(ProductsLoading());
     final products = await productsRepo.getProducts();
@@ -21,7 +27,8 @@ class ProductsCubit extends Cubit<ProductsState> {
         if (!isClosed) emit(ProductsFailure(failure.message));
       },
       (product) {
-        if (!isClosed) emit(ProductsSuccess(product));
+        _allProducts = product;
+        _applySorting();
       },
     );
   }
@@ -35,8 +42,22 @@ class ProductsCubit extends Cubit<ProductsState> {
         if (!isClosed) emit(ProductsFailure(failure.message));
       },
       (product) {
-        if (!isClosed) emit(ProductsSuccess(product));
+        _allProducts = product;
+        _applySorting();
       },
     );
+  }
+
+  void sortProducts(SortOption sortOption) {
+    _currentSortOption = sortOption;
+    _applySorting();
+  }
+
+  void _applySorting() {
+    if (_allProducts.isNotEmpty) {
+      final sortedProducts =
+          SortService.sortProducts(_allProducts, _currentSortOption);
+      if (!isClosed) emit(ProductsSuccess(sortedProducts));
+    }
   }
 }

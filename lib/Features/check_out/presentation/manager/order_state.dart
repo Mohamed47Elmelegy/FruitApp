@@ -6,7 +6,10 @@ class OrderInitial extends OrderState {}
 
 class OrderLoading extends OrderState {}
 
-class OrderSuccess extends OrderState {}
+class OrderSuccess extends OrderState {
+  final String trackingNumber;
+  OrderSuccess(this.trackingNumber);
+}
 
 class OrderFailure extends OrderState {
   final String message;

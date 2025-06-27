@@ -64,11 +64,15 @@ class CustomConfirmOrderPage extends StatelessWidget {
       listener: (context, state) async {
         if (state is OrderSuccess) {
           await context.read<CartCubit>().clearCart();
-          SnackBarService.showSuccessMessage('تم تأكيد الطلب وحفظه بنجاح!');
-          await Future.delayed(const Duration(seconds: 1));
-          navigatorKey.currentState?.pushNamed(PageRoutesName.home);
+          SnackBarService.showSuccessMessage('تم تأكيد الطلب بنجاح');
+          navigatorKey.currentState?.pushNamedAndRemoveUntil(
+            PageRoutesName.orderConfirmed,
+            (route) => false,
+            arguments: state.trackingNumber,
+          );
         } else if (state is OrderFailure) {
-          SnackBarService.showErrorMessage('حدث خطأ أثناء حفظ الطلب!');
+          SnackBarService.showErrorMessage(
+              'حدث خطأ أثناء حفظ الطلب! يرجى المحاولة مرة أخرى');
         }
       },
       child: Scaffold(

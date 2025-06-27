@@ -18,7 +18,7 @@ class ActivePageViewItems extends StatelessWidget {
         SizedBox(
           width: 23.w,
           height: 23.h,
-          child: CircleAvatar(
+          child: const CircleAvatar(
             backgroundColor: AppColors.green1_500,
             child: Icon(
               Icons.check,

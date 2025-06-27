@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frutes_app/Features/Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import '../widgets/custom_button_navigatoin_bar.dart';
 import '../widgets/main_view_body_bloc_consumer.dart';

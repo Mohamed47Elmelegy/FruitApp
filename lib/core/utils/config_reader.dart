@@ -8,9 +8,9 @@ abstract class ConfigReader {
   static Future<void> initialize(String env) async {
     var configString = '{}';
     try {
-      configString = await rootBundle.loadString('config/$env.json');
+      configString = await rootBundle.loadString('Config/$env.json');
     } catch (_) {
-      configString = await rootBundle.loadString('config/dev.json');
+      configString = await rootBundle.loadString('Config/dev.json');
     }
     _config = json.decode(configString) as Map<String, dynamic>;
     _isDevMode = env == "dev";

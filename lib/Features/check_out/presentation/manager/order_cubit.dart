@@ -11,8 +11,8 @@ class OrderCubit extends Cubit<OrderState> {
   Future<void> saveOrder(OrderEntity order) async {
     emit(OrderLoading());
     try {
-      await saveOrderUseCase(order);
-      emit(OrderSuccess());
+      final trackingNumber = await saveOrderUseCase(order);
+      emit(OrderSuccess(trackingNumber));
     } catch (e) {
       emit(OrderFailure(e.toString()));
     }

@@ -14,5 +14,7 @@ class PageRoutesName {
   static const productView = '/ProductView';
   static const checkoutView = '/checkoutView';
   static const paymentView = '/paymentView';
-  
+  static const ordersView = '/ordersView';
+  static const orderConfirmed = '/orderConfirmed';
+  static const orderTracking = '/orderTracking';
 }

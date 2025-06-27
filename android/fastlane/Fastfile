@@ -7,14 +7,134 @@ platform :android do
     sh "flutter build apk  --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
     release = firebase_app_distribution(
             app: "1:244051247756:android:4949f37a25d791ef7c71a9",
-            firebase_cli_token: "1//032SbOH4_sBvMCgYIARAAGAMSNwF-L9Irtp4V0t61gNa4Ws-8XQuPlUn4ybmEZKieech8-kBNNBGelqnHwV5V2on_q0SiiQo5agg",
+            firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
             android_artifact_type: "APK",
-            android_artifact_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
+            android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
             testers: "mohamedelmelegydeveloper@gmail.com",
-            release_notes: "Product Details Page", 
+            release_notes: "new version", 
             )
     end
+
+  # 🚀 Shorebird Auto Update Lanes
+  desc "Increase build number automatically in pubspec.yaml"
+  lane :bump_version do
+    version_line = File.read("../../pubspec.yaml").each_line.find { |line| line.start_with?("version:") }
+    version, build = version_line.match(/version: (\d+\.\d+\.\d+)\+(\d+)/).captures
+    new_build = build.to_i + 1
+    new_version_line = "version: #{version}+#{new_build}"
+    sh "powershell -Command \"(Get-Content ../../pubspec.yaml) -replace 'version: #{version}\+#{build}', '#{new_version_line}' | Set-Content ../../pubspec.yaml\""
+    UI.message "✅ Updated version to #{version}+#{new_build}"
   end
+
+  desc "Create and release Shorebird patch for automatic updates"
+  lane :shorebird_auto_update do
+    bump_version
+    UI.message "🔄 Creating Shorebird patch..."
+    sh "shorebird patch android --flavor prod -- --target=lib/main_prod.dart"
+    UI.message "📤 Releasing patch to users..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Patch released successfully! Users will get automatic update."
+  end
+
+  desc "Create Shorebird patch only (without releasing)"
+  lane :shorebird_patch do
+    bump_version
+    UI.message "🔄 Creating Shorebird patch..."
+    sh "shorebird patch android --flavor prod -- --target=lib/main_prod.dart"
+    UI.message "✅ Patch created successfully!"
+  end
+
+  desc "Release existing Shorebird patch"
+  lane :shorebird_release do
+    bump_version
+    UI.message "📤 Releasing patch to users..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Patch released successfully!"
+  end
+
+  desc "Full release with Firebase + Shorebird initial version"
+  lane :shorebird_full_release do
+    bump_version
+    UI.message "🏗️ Building full APK..."
+    sh "flutter clean"
+    sh "flutter build apk --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
+    UI.message "📱 Uploading to Firebase App Distribution..."
+    release = firebase_app_distribution(
+      app: "1:244051247756:android:4949f37a25d791ef7c71a9",
+      firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
+      testers: "mohamedelmelegydeveloper@gmail.com",
+      release_notes: "Full release with Shorebird support"
+    )
+    UI.message "🚀 Creating Shorebird release..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Full release completed! Future updates will be automatic."
+  end
+
+  desc "Major version update - Firebase + Shorebird (for big changes)"
+  lane :major_update do
+    bump_version
+    UI.message "🏗️ Building major version APK..."
+    sh "flutter clean"
+    sh "flutter build apk --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
+    UI.message "📱 Uploading new APK to Firebase App Distribution..."
+    release = firebase_app_distribution(
+      app: "1:244051247756:android:4949f37a25d791ef7c71a9",
+      firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
+      testers: "mohamedelmelegydeveloper@gmail.com",
+      release_notes: "Major version update - please install new APK"
+    )
+    UI.message "🚀 Creating new Shorebird release for major version..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Major version released! Users need to install new APK from Firebase."
+  end
+
+  desc "Minor update - Shorebird patch only (for small changes)"
+  lane :minor_update do
+    bump_version
+    UI.message "🔄 Creating Shorebird patch for minor update..."
+    sh "shorebird patch android --flavor prod -- --target=lib/main_prod.dart"
+    UI.message "📤 Releasing patch to users..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Minor update released! Users will get automatic update."
+  end
+
+  desc "Check Shorebird status and releases"
+  lane :shorebird_status do
+    UI.message "🔍 Checking Shorebird status..."
+    sh "shorebird doctor"
+    
+    UI.message "📋 Available releases:"
+    sh "shorebird releases"
+  end
+
+  desc "Clean and rebuild Shorebird patch"
+  lane :shorebird_clean_patch do
+    bump_version
+    UI.message "🧹 Cleaning project..."
+    sh "flutter clean"
+    sh "flutter pub get"
+    UI.message "🔄 Creating fresh Shorebird patch..."
+    sh "shorebird patch android --flavor prod -- --target=lib/main_prod.dart"
+    UI.message "📤 Releasing patch..."
+    sh "shorebird release android --flavor prod --artifact-type apk"
+    UI.message "✅ Clean patch released successfully!"
+  end
+
+end
   
 # fastlane add_plugin firebase_app_distribution
 # fastlane android firebase_distribution
+# shorebird patch android --flavor prod -- --target=lib/main_prod.dart
+# fastlane android major_update big update
+# fastlane android minor_update small update
+# fastlane android shorebird_auto_update fast update
+# fastlane android shorebird_status check status
+# fastlane android shorebird_clean_patch clean and release patch
+# fastlane android shorebird_patch create patch
+# fastlane android shorebird_release release patch
+# fastlane android shorebird_full_release full release
+# fastlane android bump_version bump version

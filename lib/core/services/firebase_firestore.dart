@@ -24,31 +24,39 @@ class FirebaseFirestoreService implements DatabaseService {
     String? documentId,
     Map<String, dynamic>? query,
   }) async {
-    log(DebugConsoleMessages.info('Path: $path, DocumentId: $documentId, Query: $query'));
+    log(DebugConsoleMessages.info(
+        'Path: $path, DocumentId: $documentId, Query: $query'));
     try {
-    if (documentId != null) {
-      var data = await firestore.collection(path).doc(documentId).get();
-        log(DebugConsoleMessages.error("Document Data: ${data.data()}")); // Print data to verify
-      return data.data();
-    } else {
-      Query<Map<String, dynamic>> data = firestore.collection(path);
-      if (query != null) {
-        if (query['orderBy'] != null) {
-          var orderByField = query['orderBy'];
+      if (documentId != null) {
+        var data = await firestore.collection(path).doc(documentId).get();
+        log(DebugConsoleMessages.error(
+            "Document Data: ${data.data()}")); // Print data to verify
+        return data.data();
+      } else {
+        Query<Map<String, dynamic>> data = firestore.collection(path);
+        if (query != null) {
+          // Handle where clause
+          if (query['where'] != null && query['isEqualTo'] != null) {
+            data = data.where(query['where'], isEqualTo: query['isEqualTo']);
+          }
+
+          if (query['orderBy'] != null) {
+            var orderByField = query['orderBy'];
             var descending = query['descending'] ?? false;
-          data = data.orderBy(orderByField, descending: descending);
+            data = data.orderBy(orderByField, descending: descending);
+          }
+          if (query['limit'] != null) {
+            var limit = query['limit'];
+            data = data.limit(limit);
+          }
         }
-        if (query['limit'] != null) {
-          var limit = query['limit'];
-          data = data.limit(limit);
-        }
-      }
-      var result = await data.get();
-        log(DebugConsoleMessages.info("Total documents found: ${result.docs.length}"));
-      log(DebugConsoleMessages.success(
+        var result = await data.get();
+        log(DebugConsoleMessages.info(
+            "Total documents found: ${result.docs.length}"));
+        log(DebugConsoleMessages.success(
             "Query Data: ${result.docs.map((e) => e.data()).toList()}")); // Print data to verify
-      return result.docs.map((e) => e.data()).toList();
-    }
+        return result.docs.map((e) => e.data()).toList();
+      }
     } catch (e) {
       log(DebugConsoleMessages.error('Error in getData: $e'));
       rethrow;
@@ -61,5 +69,12 @@ class FirebaseFirestoreService implements DatabaseService {
     var data = await firestore.collection(path).doc(documentId).get();
     return data.exists;
   }
-  
+
+  @override
+  Future<void> deleteData({
+    required String path,
+    required String documentId,
+  }) async {
+    await firestore.collection(path).doc(documentId).delete();
+  }
 }

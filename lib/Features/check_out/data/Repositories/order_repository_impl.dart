@@ -3,6 +3,7 @@ import '../../domain/entity/order_entity.dart';
 import '../model/order_model.dart';
 import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/services/database_service.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
   final DatabaseService databaseService;
@@ -10,8 +11,105 @@ class OrderRepositoryImpl implements OrderRepository {
       : databaseService = databaseService ?? getIt<DatabaseService>();
 
   @override
-  Future<void> saveOrder(OrderEntity order) async {
-    final orderModel = OrderModel.fromEntity(order);
-    await databaseService.addData(path: 'orders', data: orderModel.toMap());
+  Future<String> saveOrder(OrderEntity order) async {
+    try {
+      // إنشاء رقم تتبع فريد
+      final trackingNumber = _generateTrackingNumber();
+
+      // إنشاء order entity مع رقم التتبع
+      final orderWithTracking = OrderEntity(
+        uid: order.uid,
+        products: order.products,
+        subtotal: order.subtotal,
+        delivery: order.delivery,
+        total: order.total,
+        createdAt: order.createdAt,
+        address: order.address,
+        status: order.status,
+        trackingNumber: trackingNumber,
+      );
+
+      final orderModel = OrderModel.fromEntity(orderWithTracking);
+
+      // إنشاء document ID فريد للطلب
+      final orderId = const Uuid().v4();
+
+      // إضافة metadata إضافية للطلب
+      final orderData = {
+        ...orderModel.toMap(),
+        'orderId': orderId,
+        'createdAtTimestamp': DateTime.now().millisecondsSinceEpoch,
+        'updatedAt': DateTime.now().toIso8601String(),
+      };
+
+      await databaseService.addData(
+        path: 'orders',
+        data: orderData,
+        documentId: orderId,
+      );
+      return trackingNumber;
+    } catch (e) {
+      throw Exception('Failed to save order: $e');
+    }
+  }
+
+  @override
+  Future<List<OrderEntity>> getUserOrders(String userId) async {
+    try {
+      final data = await databaseService.getData(
+        path: 'orders',
+        query: {
+          'where': 'uid',
+          'isEqualTo': userId,
+          'orderBy': 'createdAtTimestamp',
+          'descending': true,
+        },
+      ) as List<Map<String, dynamic>>;
+
+      return data.map((orderData) => OrderModel.fromMap(orderData)).toList();
+    } catch (e) {
+      throw Exception('Failed to get user orders: $e');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getOrderByTrackingNumber(
+      String trackingNumber) async {
+    final data = await databaseService.getData(
+      path: 'orders',
+      query: {
+        'where': 'trackingNumber',
+        'isEqualTo': trackingNumber,
+        'limit': 1,
+      },
+    );
+    if (data is List && data.isNotEmpty) {
+      return data.first;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> deleteOrder(String orderId) async {
+    try {
+      await databaseService.deleteData(
+        path: 'orders',
+        documentId: orderId,
+      );
+    } catch (e) {
+      throw Exception('Failed to delete order: $e');
+    }
+  }
+
+  // إنشاء رقم تتبع فريد
+  String _generateTrackingNumber() {
+    final now = DateTime.now();
+    final year = now.year.toString().substring(2); // آخر رقمين من السنة
+    final month = now.month.toString().padLeft(2, '0');
+    final day = now.day.toString().padLeft(2, '0');
+    final random =
+        (1000 + (DateTime.now().millisecondsSinceEpoch % 9000)).toString();
+
+    return 'TRK$year$month$day$random';
   }
 }

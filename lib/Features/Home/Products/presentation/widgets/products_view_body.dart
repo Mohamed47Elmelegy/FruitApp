@@ -56,8 +56,9 @@ class _ProductsViewBodyState extends State<ProductsViewBody> {
                       padding: const EdgeInsets.only(left: 13),
                       child: GestureDetector(
                         onTap: () {
-                          // Show the bottom sheet
-                          showFilterBottomSheet(context);
+                          // Show the bottom sheet with ProductsCubit
+                          final productsCubit = context.read<ProductsCubit>();
+                          showFilterBottomSheet(context, productsCubit);
                         },
                         child: SvgPicture.asset(
                           Assets.imagesFilter2,

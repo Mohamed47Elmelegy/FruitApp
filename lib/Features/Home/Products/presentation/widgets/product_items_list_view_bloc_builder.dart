@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-
+import '../../../../../core/widgets/skeleton_widget.dart';
 import '../../../../../core/cubit/products_cubit.dart';
 import '../../../../../core/errors/error_widget.dart';
 import '../../../../../core/functions/get_dummy_products.dart';
@@ -23,8 +22,9 @@ class ProductListViewBlocBuilder extends StatelessWidget {
           return SliverToBoxAdapter(
               child: CustomErrorWidget(text: state.errMessage));
         } else {
-          return Skeletonizer.zone(
-            containersColor: AppColors.grayscale50,
+          return SkeletonWidget(
+            baseColor: AppColors.grayscale50,
+            highlightColor: AppColors.grayscale50.withValues(alpha: 0.3),
             enabled: true,
             child: ProductItemsListView(
               products: getDummyProducts(),

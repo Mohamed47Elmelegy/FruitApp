@@ -10,6 +10,8 @@ class OrderModel extends OrderEntity {
     required super.createdAt,
     required super.address,
     required super.status,
+    super.trackingNumber,
+    super.orderId,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,8 @@ class OrderModel extends OrderEntity {
       'createdAt': createdAt,
       'address': address,
       'status': status,
+      'trackingNumber': trackingNumber,
+      'orderId': orderId,
     };
   }
 
@@ -35,6 +39,8 @@ class OrderModel extends OrderEntity {
       createdAt: map['createdAt'],
       address: map['address'],
       status: map['status'],
+      trackingNumber: map['trackingNumber'],
+      orderId: map['orderId'],
     );
   }
 
@@ -48,6 +54,8 @@ class OrderModel extends OrderEntity {
       createdAt: entity.createdAt,
       address: entity.address,
       status: entity.status,
+      trackingNumber: entity.trackingNumber,
+      orderId: entity.orderId,
     );
   }
 }

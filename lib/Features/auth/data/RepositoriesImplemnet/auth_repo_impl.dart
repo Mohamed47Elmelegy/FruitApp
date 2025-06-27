@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +5,6 @@ import 'package:frutes_app/core/constants/backend_point.dart';
 import 'package:frutes_app/core/errors/custom_exception.dart';
 import 'package:frutes_app/core/services/database_service.dart';
 import '../../../../core/config/ansicolor.dart';
-import '../../../../core/constants/prefs.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/services/firebase_auth_service.dart';
 import '../../../../core/services/shared_preferences_sengltion.dart';

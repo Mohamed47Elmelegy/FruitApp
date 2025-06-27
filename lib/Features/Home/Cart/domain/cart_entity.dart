@@ -1,5 +1,4 @@
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
-import 'package:frutes_app/core/entities/proudcuts_entity.dart';
 import 'package:hive/hive.dart';
 import 'package:frutes_app/core/model/Products/product_model.dart';
 

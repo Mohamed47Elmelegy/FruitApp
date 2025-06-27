@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:frutes_app/core/constants/sort_options.dart';
+import 'package:frutes_app/core/cubit/products_cubit.dart';
 import 'package:frutes_app/core/extensions/padding_ext.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/theme/text_theme.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
 import 'package:gap/gap.dart';
+import '../manager/sort_manager.dart';
+import 'sort_option_item.dart';
 
 class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({super.key});
+  final ProductsCubit productsCubit;
+
+  const FilterBottomSheet({
+    super.key,
+    required this.productsCubit,
+  });
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
-  int selectedRadioValue = 0; // State for the selected radio button
+  SortOption selectedSortOption = SortManager.getDefaultSortOption();
 
   @override
   Widget build(BuildContext context) {
@@ -37,88 +46,26 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 style: AppTextStyles.bodyLargeBold19,
               ).setHorizontalPadding(context, 16, enableMediaQuery: false),
               Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedRadioValue = 0;
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Radio(
-                          autofocus: true,
-                          value: 0,
-                          groupValue: selectedRadioValue,
-                          onChanged: (value) {
+                children: SortManager.getAllSortOptions()
+                    .map((sortOption) => SortOptionItem(
+                          sortOption: sortOption,
+                          selectedSortOption: selectedSortOption,
+                          onSortOptionChanged: (option) {
                             setState(() {
-                              selectedRadioValue = value!;
+                              selectedSortOption = option;
                             });
                           },
-                        ),
-                        const Text(
-                          'السعر ( الأقل الي الأعلي )',
-                          style: AppTextStyles.bodySmallBold13,
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedRadioValue = 1;
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 1,
-                          groupValue: selectedRadioValue,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedRadioValue = value!;
-                            });
-                          },
-                        ),
-                        const Text(
-                          'السعر ( الأعلي الي الأقل )',
-                          style: AppTextStyles.bodySmallBold13,
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedRadioValue = 2;
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 2,
-                          groupValue: selectedRadioValue,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedRadioValue = value!;
-                            });
-                          },
-                        ),
-                        const Text(
-                          'الأبجديه',
-                          style: AppTextStyles.bodySmallBold13,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                        ))
+                    .toList(),
               ),
             ],
           ),
           const Gap(20),
           Butn(
             onPressed: () {
-              Navigator.pop(context); // Close the bottom sheet
+              // Apply sorting and close bottom sheet
+              widget.productsCubit.sortProducts(selectedSortOption);
+              Navigator.pop(context);
             },
             color: AppColors.green1_500,
             text: 'تصفية',

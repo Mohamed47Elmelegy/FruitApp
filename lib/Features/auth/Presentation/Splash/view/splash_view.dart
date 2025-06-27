@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frutes_app/core/constants/prefs.dart';
@@ -57,27 +58,63 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void navigateBasedOnUserStatus() {
-    bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
-    var isLoggedIn = FirbaseAuthService().isLoggedIn();
-    Future.delayed(
-      const Duration(seconds: 3),
-      () {
-        if (isOnBordingViewSeen) {
-          if (isLoggedIn) {
-            // Navigate to Home page if the user is logged in
-            navigatorKey.currentState
-                ?.pushReplacementNamed(PageRoutesName.home);
-          } else {
-            // Navigate to Login page if the user is not logged in
-            navigatorKey.currentState
-                ?.pushReplacementNamed(PageRoutesName.signin);
+    try {
+      bool isOnBordingViewSeen = Prefs.getBool(SharedPrefs.hasSeenOnboarding);
+      var isLoggedIn = false;
+
+      try {
+        isLoggedIn = FirbaseAuthService().isLoggedIn();
+      } catch (e) {
+        log('Firebase Auth check failed: $e');
+        // Default to not logged in if Firebase Auth fails
+        isLoggedIn = false;
+      }
+
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          try {
+            if (isOnBordingViewSeen) {
+              if (isLoggedIn) {
+                // Navigate to Home page if the user is logged in
+                navigatorKey.currentState
+                    ?.pushReplacementNamed(PageRoutesName.home);
+              } else {
+                // Navigate to Login page if the user is not logged in
+                navigatorKey.currentState
+                    ?.pushReplacementNamed(PageRoutesName.signin);
+              }
+            } else {
+              // Navigate to Onboarding page if the user hasn't seen it
+              navigatorKey.currentState
+                  ?.pushReplacementNamed(PageRoutesName.onBording);
+            }
+          } catch (e) {
+            log('Navigation error: $e');
+            // Fallback to onboarding if navigation fails
+            try {
+              navigatorKey.currentState
+                  ?.pushReplacementNamed(PageRoutesName.onBording);
+            } catch (fallbackError) {
+              log('Fallback navigation also failed: $fallbackError');
+            }
           }
-        } else {
-          // Navigate to Onboarding page if the user hasn't seen it
-          navigatorKey.currentState
-              ?.pushReplacementNamed(PageRoutesName.onBording);
-        }
-      },
-    );
+        },
+      );
+    } catch (e) {
+      log('Splash screen initialization error: $e');
+      // Fallback navigation after delay
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          try {
+            navigatorKey.currentState
+                ?.pushReplacementNamed(PageRoutesName.onBording);
+          } catch (fallbackError) {
+            log('Final fallback navigation failed: $fallbackError');
+          }
+        },
+      );
+    }
   }
 }

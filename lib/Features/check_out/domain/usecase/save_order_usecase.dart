@@ -5,7 +5,7 @@ class SaveOrderUseCase {
   final OrderRepository repository;
   SaveOrderUseCase(this.repository);
 
-  Future<void> call(OrderEntity order) async {
-    await repository.saveOrder(order);
+  Future<String> call(OrderEntity order) async {
+    return await repository.saveOrder(order);
   }
 }

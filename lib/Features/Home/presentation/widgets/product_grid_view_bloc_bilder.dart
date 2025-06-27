@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/cubit/products_cubit.dart';
 import '../../../../core/errors/error_widget.dart';
 import '../../../../core/functions/get_dummy_products.dart';
-import '../../../../core/theme/colors_theme.dart';
 import 'products_grid_view.dart';
 
 class ProductsGridViewBolcBilder extends StatelessWidget {
@@ -24,16 +22,11 @@ class ProductsGridViewBolcBilder extends StatelessWidget {
           return SliverToBoxAdapter(
               child: CustomErrorWidget(text: state.errMessage));
         } else {
-          return Skeletonizer.sliver(
-            containersColor: AppColors.grayscale50,
-            enabled: true,
-            child: ProductsGridView(
-              products: getDummyProducts(),
-            ),
+          return ProductsGridView(
+            products: getDummyProducts(),
           );
         }
       },
     );
   }
 }
-

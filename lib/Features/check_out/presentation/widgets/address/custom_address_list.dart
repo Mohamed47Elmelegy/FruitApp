@@ -128,7 +128,7 @@ class AddressListWidget extends StatelessWidget {
                         if (isSelected)
                           Container(
                             padding: EdgeInsets.all(8.w),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: AppColors.green1_500,
                               shape: BoxShape.circle,
                             ),
