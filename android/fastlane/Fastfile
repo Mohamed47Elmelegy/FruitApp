@@ -7,7 +7,7 @@ platform :android do
     sh "flutter build apk  --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
     release = firebase_app_distribution(
             app: "1:244051247756:android:4949f37a25d791ef7c71a9",
-            firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
+            firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
             android_artifact_type: "APK",
             android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
             testers: "mohamedelmelegydeveloper@gmail.com",
@@ -61,7 +61,7 @@ platform :android do
     UI.message "📱 Uploading to Firebase App Distribution..."
     release = firebase_app_distribution(
       app: "1:244051247756:android:4949f37a25d791ef7c71a9",
-      firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
+      firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
       testers: "mohamedelmelegydeveloper@gmail.com",
@@ -81,7 +81,7 @@ platform :android do
     UI.message "📱 Uploading new APK to Firebase App Distribution..."
     release = firebase_app_distribution(
       app: "1:244051247756:android:4949f37a25d791ef7c71a9",
-      firebase_cli_token: "1//03oEqt46cIfQYCgYIARAAGAMSNwF-L9IrauFP-r2_Bk93-thpIV9m8jbmxLXoy3Fvq32qWkGM1qRolSADm64a1zltmRE0irNGF40",
+      firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
       testers: "mohamedelmelegydeveloper@gmail.com",
