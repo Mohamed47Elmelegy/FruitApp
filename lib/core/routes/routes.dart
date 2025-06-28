@@ -54,10 +54,37 @@ class Routes {
             builder: (context) =>
                 OrderConfirmedView(trackingNumber: trackingNumber));
       case PageRoutesName.orderTracking:
-        final String trackingNumber = settings.arguments as String;
+        // Handle both old string format and new map format
+        String trackingNumber;
+        String source = 'orders_list'; // default source
+
+        if (settings.arguments is String) {
+          // Old format - just tracking number
+          trackingNumber = settings.arguments as String;
+        } else if (settings.arguments is Map<String, dynamic>) {
+          // New format - map with tracking number and source
+          final args = settings.arguments as Map<String, dynamic>;
+          trackingNumber = args['trackingNumber'] as String? ?? '';
+          source = args['source'] as String? ?? 'orders_list';
+        } else {
+          // Fallback - redirect to home if no valid arguments
+          return MaterialPageRoute(
+            builder: (context) => const MainView(),
+          );
+        }
+
+        // Validate tracking number
+        if (trackingNumber.isEmpty) {
+          return MaterialPageRoute(
+            builder: (context) => const MainView(),
+          );
+        }
+
         return MaterialPageRoute(
-            builder: (context) =>
-                OrderTrackingView(trackingNumber: trackingNumber));
+            builder: (context) => OrderTrackingView(
+                  trackingNumber: trackingNumber,
+                  source: source,
+                ));
       // case PageRoutesName.paymentView:
       //   return MaterialPageRoute(builder: (context) => const PaymentView());
       default:

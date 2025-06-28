@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frutes_app/Features/Home/Profile/presentation/manager/cubit/sign_out_cubit.dart';
-import 'package:frutes_app/Features/Home/Profile/presentation/view/orders_view.dart';
 import 'package:frutes_app/core/widgets/butn.dart';
-import 'package:frutes_app/core/widgets/custom_app_bar.dart';
 import 'package:frutes_app/main.dart';
 
 import '../../../../../core/routes/page_routes_name.dart';

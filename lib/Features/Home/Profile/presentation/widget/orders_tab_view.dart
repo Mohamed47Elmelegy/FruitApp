@@ -7,9 +7,8 @@ import '../view/order_item_view.dart';
 
 class OrdersTabView extends StatelessWidget {
   final List<OrderEntity> orders;
-  final String searchQuery;
 
-  const OrdersTabView({super.key, required this.orders, this.searchQuery = ''});
+  const OrdersTabView({super.key, required this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +49,6 @@ class OrdersTabView extends StatelessWidget {
     var filteredOrders =
         context.read<OrdersCubit>().getOrdersByStatus(orders, status);
 
-    // تطبيق البحث إذا كان هناك search query
-    if (searchQuery.isNotEmpty) {
-      filteredOrders = filteredOrders.where((order) {
-        final orderId = order.uid.toLowerCase();
-        final trackingNumber = order.trackingNumber?.toLowerCase() ?? '';
-        final searchLower = searchQuery.toLowerCase();
-
-        return orderId.contains(searchLower) ||
-            trackingNumber.contains(searchLower);
-      }).toList();
-    }
-
     if (filteredOrders.isEmpty) {
       return Center(
         child: Column(
@@ -74,25 +61,12 @@ class OrdersTabView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              searchQuery.isNotEmpty
-                  ? 'لا توجد نتائج للبحث'
-                  : 'لا توجد طلبات ${_getStatusText(status)}',
+              'لا توجد طلبات ${_getStatusText(status)}',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
               ),
             ),
-            if (searchQuery.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                'جرب البحث برقم طلب أو رقم تتبع مختلف',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[500],
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
           ],
         ),
       );

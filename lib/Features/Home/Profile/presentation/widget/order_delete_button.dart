@@ -12,16 +12,18 @@ class OrderDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton.icon(
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
         onPressed: () => _showDeleteConfirmation(context),
-        icon: const Icon(Icons.delete, size: 16),
-        label: const Text('حذف الطلب'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 12),
+        icon: const Icon(
+          Icons.delete_outline,
+          color: Colors.red,
+          size: 24,
+        ),
+        tooltip: 'حذف الطلب',
+        style: IconButton.styleFrom(
+          backgroundColor: Colors.red.withOpacity(0.1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),

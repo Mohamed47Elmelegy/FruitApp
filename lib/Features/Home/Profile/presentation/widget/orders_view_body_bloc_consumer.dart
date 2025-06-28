@@ -6,9 +6,7 @@ import 'package:frutes_app/core/widgets/model_progress_hud.dart';
 import 'orders_tab_view.dart';
 
 class OrdersViewBodyBlocConsumer extends StatelessWidget {
-  final String searchQuery;
-
-  const OrdersViewBodyBlocConsumer({super.key, this.searchQuery = ''});
+  const OrdersViewBodyBlocConsumer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class OrdersViewBodyBlocConsumer extends StatelessWidget {
         return CustomModelProgressHud(
           isLoding: state is OrdersLoading,
           child: state is OrdersSuccess
-              ? OrdersTabView(orders: state.orders, searchQuery: searchQuery)
+              ? OrdersTabView(orders: state.orders)
               : _buildEmptyState(context),
         );
       },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import '../../../../../core/routes/page_routes_name.dart';
 import '../../../../../core/theme/colors_theme.dart';
-import '../../../../../core/services/snack_bar_service.dart';
 
 class OrderConfirmedView extends StatelessWidget {
   final String trackingNumber;
@@ -30,41 +30,9 @@ class OrderConfirmedView extends StatelessWidget {
               'تم تأكيد طلبك بنجاح!',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'رقم تتبع الطلب:',
-              style: TextStyle(fontSize: 16, color: Colors.black54),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[300]!),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    trackingNumber,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'monospace',
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: trackingNumber));
-                      SnackBarService.showSuccessMessage('تم نسخ رقم التتبع');
-                    },
-                    icon: const Icon(Icons.copy, size: 18),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
+            Gap(150.h),
+            // Delivery truck icon for tracking
+
             Row(
               children: [
                 Expanded(
@@ -73,7 +41,10 @@ class OrderConfirmedView extends StatelessWidget {
                       Navigator.pushReplacementNamed(
                         context,
                         PageRoutesName.orderTracking,
-                        arguments: trackingNumber,
+                        arguments: {
+                          'trackingNumber': trackingNumber,
+                          'source': 'checkout',
+                        },
                       );
                     },
                     icon: const Icon(Icons.local_shipping),

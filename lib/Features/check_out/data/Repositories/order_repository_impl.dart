@@ -16,7 +16,10 @@ class OrderRepositoryImpl implements OrderRepository {
       // إنشاء رقم تتبع فريد
       final trackingNumber = _generateTrackingNumber();
 
-      // إنشاء order entity مع رقم التتبع
+      // إنشاء document ID فريد للطلب
+      final orderId = const Uuid().v4();
+
+      // إنشاء order entity مع رقم التتبع و orderId
       final orderWithTracking = OrderEntity(
         uid: order.uid,
         products: order.products,
@@ -27,17 +30,14 @@ class OrderRepositoryImpl implements OrderRepository {
         address: order.address,
         status: order.status,
         trackingNumber: trackingNumber,
+        orderId: orderId,
       );
 
       final orderModel = OrderModel.fromEntity(orderWithTracking);
 
-      // إنشاء document ID فريد للطلب
-      final orderId = const Uuid().v4();
-
       // إضافة metadata إضافية للطلب
       final orderData = {
         ...orderModel.toMap(),
-        'orderId': orderId,
         'createdAtTimestamp': DateTime.now().millisecondsSinceEpoch,
         'updatedAt': DateTime.now().toIso8601String(),
       };

@@ -10,15 +10,6 @@ class OrdersViewBody extends StatefulWidget {
 }
 
 class _OrdersViewBodyState extends State<OrdersViewBody> {
-  final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,55 +20,7 @@ class _OrdersViewBodyState extends State<OrdersViewBody> {
         arrowVisible: true,
         notificationVisible: false,
       ),
-      body: Column(
-        children: [
-          // Search Bar
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'البحث برقم الطلب أو رقم التتبع...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        onPressed: () {
-                          _searchController.clear();
-                          setState(() {
-                            _searchQuery = '';
-                          });
-                        },
-                        icon: const Icon(Icons.clear),
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.green),
-                ),
-                filled: true,
-                fillColor: Colors.grey[50],
-              ),
-            ),
-          ),
-          // Orders List
-          Expanded(
-            child: OrdersViewBodyBlocConsumer(searchQuery: _searchQuery),
-          ),
-        ],
-      ),
+      body: const OrdersViewBodyBlocConsumer(),
     );
   }
 }

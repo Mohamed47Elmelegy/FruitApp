@@ -3,16 +3,20 @@ default_platform(:android)
 platform :android do
   desc "Lane for Android Firebase App Distribution"
   lane :firebase_distribution do
+    bump_version
+    UI.message "🏗️ Building APK..."
     sh "flutter clean"
     sh "flutter build apk  --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
+    UI.message "📱 Uploading to Firebase App Distribution..."
     release = firebase_app_distribution(
             app: "1:244051247756:android:4949f37a25d791ef7c71a9",
             firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
             android_artifact_type: "APK",
             android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
             testers: "mohamedelmelegydeveloper@gmail.com",
-            release_notes: "new version", 
+            release_notes: "New version with updated build number", 
             )
+    UI.message "✅ Firebase distribution completed successfully!"
     end
 
   # 🚀 Shorebird Auto Update Lanes
@@ -55,8 +59,9 @@ platform :android do
   desc "Full release with Firebase + Shorebird initial version"
   lane :shorebird_full_release do
     bump_version
-    UI.message "🏗️ Building full APK..."
+    UI.message "🏗️ Building full APK with new version..."
     sh "flutter clean"
+    sh "flutter pub get"
     sh "flutter build apk --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons"
     UI.message "📱 Uploading to Firebase App Distribution..."
     release = firebase_app_distribution(
@@ -65,7 +70,7 @@ platform :android do
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/apk/prod/release/app-prod-release.apk",
       testers: "mohamedelmelegydeveloper@gmail.com",
-      release_notes: "Full release with Shorebird support"
+      release_notes: "Full release with Shorebird support - New version available"
     )
     UI.message "🚀 Creating Shorebird release..."
     sh "shorebird release android --flavor prod --artifact-type apk"
