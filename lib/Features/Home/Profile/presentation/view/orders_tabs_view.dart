@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/widgets/custom_app_bar.dart';
-import 'package:frutes_app/Features/check_out/domain/entity/order_tracking_entity.dart';
 import 'active_orders_view.dart';
 import 'inactive_orders_view.dart';
 

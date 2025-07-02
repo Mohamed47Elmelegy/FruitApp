@@ -12,10 +12,10 @@ class OrderFinancialSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.green1_500.withOpacity(0.05),
+        color: AppColors.green1_500.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.green1_500.withOpacity(0.2),
+          color: AppColors.green1_500.withValues(alpha: 0.2),
         ),
       ),
       child: Column(

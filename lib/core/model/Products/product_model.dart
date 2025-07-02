@@ -54,26 +54,26 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      productName: json['productName'],
-      productPrice: json['productPrice'],
-      productCode: json['productCode'],
-      productDescription: json['productDescription'],
-      isFeatured: json['isFeatured'],
+      productName: json['productName'] ?? '',
+      productPrice: json['productPrice'] ?? 0,
+      productCode: json['productCode'] ?? '',
+      productDescription: json['productDescription'] ?? '',
+      isFeatured: json['isFeatured'] ?? false,
       imageUrl: json['imageUrl'],
-      expiryDateMonths: json['expiryDateMonths'],
-      calorieDensity: json['calories'],
-      unitAmount: json['unitAmount'],
+      expiryDateMonths: json['expiryDateMonths'] ?? 0,
+      calorieDensity: json['calories'] ?? 0,
+      unitAmount: json['unitAmount'] ?? 0,
       productRating: getAvgRating(json['reviews'] != null
           ? List<ReviewsModel>.from(
               json['reviews'].map((e) => ReviewsModel.fromJson(e)))
           : []),
-      ratingCount: json['ratingCount'],
-      isOrganic: json['isOrganic'],
+      ratingCount: json['ratingCount'] ?? 0,
+      isOrganic: json['isOrganic'] ?? false,
       reviews: json['reviews'] != null
           ? List<ReviewsModel>.from(
               (json['reviews'] as List).map((e) => ReviewsModel.fromJson(e)))
           : [],
-      sellingCount: json['sellingCount'],
+      sellingCount: json['sellingCount'] ?? 0,
     );
   }
 
@@ -124,7 +124,7 @@ class ProductModel {
       'isFeatured': isFeatured,
       'imageUrl': imageUrl,
       'expiryDateMonths': expiryDateMonths,
-      'calories': calorieDensity,
+      'calorieDensity': calorieDensity,
       'unitAmount': unitAmount,
       'productRating': productRating,
       'ratingCount': ratingCount,

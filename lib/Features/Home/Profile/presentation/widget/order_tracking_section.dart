@@ -16,7 +16,7 @@ class OrderTrackingSection extends StatelessWidget {
         color: AppColors.green1_100,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.green1_500.withOpacity(0.3),
+          color: AppColors.green1_500.withValues(alpha: 0.3),
         ),
       ),
       child: InkWell(
@@ -63,7 +63,7 @@ class OrderTrackingSection extends StatelessWidget {
                     'اضغط لمتابعة شحنتك',
                     style: TextStyle(
                       fontSize: 12,
-                      color: AppColors.green1_500.withOpacity(0.8),
+                      color: AppColors.green1_500.withValues(alpha: 0.8),
                     ),
                   ),
                 ],

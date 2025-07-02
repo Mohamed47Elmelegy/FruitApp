@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../core/config/ansicolor.dart';
 import '../../domain/Repositories/address_repository.dart';
 import '../../domain/entity/address_entity.dart';
 import '../models/address_model.dart';
@@ -35,7 +38,7 @@ class AddressRepositoryHybrid implements AddressRepository {
           return firestoreAddresses;
         } catch (e) {
           // If Firestore fails, fall back to Hive
-          print('Firestore failed, using Hive: $e');
+          log(DebugConsoleMessages.error('Firestore failed, using Hive: $e'));
         }
       }
 
@@ -81,7 +84,7 @@ class AddressRepositoryHybrid implements AddressRepository {
             await _hiveBox.putAt(lastIndex, updatedModel);
           }
         } catch (e) {
-          print('Failed to sync with Firestore: $e');
+          log(DebugConsoleMessages.error('Failed to sync with Firestore: $e'));
           // Continue with local storage only
         }
       }
@@ -114,7 +117,8 @@ class AddressRepositoryHybrid implements AddressRepository {
             .doc(address.id)
             .update(addressData);
       } catch (e) {
-        print('Failed to sync update with Firestore: $e');
+        log(DebugConsoleMessages.error(
+            'Failed to sync update with Firestore: $e'));
       }
     } catch (e) {
       throw Exception('Failed to update address: $e');
@@ -135,7 +139,8 @@ class AddressRepositoryHybrid implements AddressRepository {
       try {
         await _firestore.collection(_collection).doc(addressId).delete();
       } catch (e) {
-        print('Failed to sync delete with Firestore: $e');
+        log(DebugConsoleMessages.error(
+            'Failed to sync delete with Firestore: $e'));
       }
     } catch (e) {
       throw Exception('Failed to delete address: $e');
@@ -155,7 +160,8 @@ class AddressRepositoryHybrid implements AddressRepository {
           try {
             await _firestore.collection(_collection).doc(address.id).delete();
           } catch (e) {
-            print('Failed to sync delete with Firestore: $e');
+            log(DebugConsoleMessages.error(
+                'Failed to sync delete with Firestore: $e'));
           }
         }
       }
@@ -172,16 +178,16 @@ class AddressRepositoryHybrid implements AddressRepository {
       for (final address in firestoreAddresses) {
         await _hiveBox.add(AddressModel(
           id: address.id,
-          fullName: address.fullName ?? '',
-          email: address.email ?? '',
-          address: address.address ?? '',
-          city: address.city ?? '',
-          details: address.details ?? '',
+          fullName: address.fullName,
+          email: address.email,
+          address: address.address,
+          city: address.city,
+          details: address.details,
           userId: address.userId,
         ));
       }
     } catch (e) {
-      print('Failed to sync Hive with Firestore: $e');
+      log(DebugConsoleMessages.error('Failed to sync Hive with Firestore: $e'));
     }
   }
 }

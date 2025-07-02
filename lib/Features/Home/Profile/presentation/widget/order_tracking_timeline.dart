@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/Features/check_out/domain/entity/order_tracking_entity.dart';
 
 class OrderTrackingTimeline extends StatelessWidget {
@@ -39,7 +38,7 @@ class OrderTrackingTimeline extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: step.isActive
-                    ? step.activeColor.withOpacity(0.2)
+                    ? step.activeColor.withValues(alpha: 0.2)
                     : Colors.grey[200],
                 shape: BoxShape.circle,
                 border: step.isActive
@@ -57,7 +56,7 @@ class OrderTrackingTimeline extends StatelessWidget {
                 width: 2,
                 height: 40,
                 color: step.isActive
-                    ? step.activeColor.withOpacity(0.3)
+                    ? step.activeColor.withValues(alpha: 0.3)
                     : Colors.grey[300],
               ),
           ],

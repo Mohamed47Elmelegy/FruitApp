@@ -20,7 +20,7 @@ class AccountCreationPrompt extends StatelessWidget {
         Text(
           text,
           style: AppTextStyles.bodyBaseSemiBold16.copyWith(
-            color: AppColors.grayscale600.withOpacity(0.5),
+            color: AppColors.grayscale600.withValues(alpha: 0.5),
           ),
         ),
         TextButton(

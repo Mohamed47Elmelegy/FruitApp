@@ -17,6 +17,16 @@ class OrderStatusChip extends StatelessWidget {
         text = 'قيد المراجعة';
         icon = Icons.schedule;
         break;
+      case 'confirmed':
+        color = Colors.blue;
+        text = 'تم التأكيد';
+        icon = Icons.check_circle_outline;
+        break;
+      case 'processing':
+        color = Colors.purple;
+        text = 'قيد المعالجة';
+        icon = Icons.inventory_2_outlined;
+        break;
       case 'shipping':
         color = Colors.blue;
         text = 'قيد الشحن';
@@ -32,6 +42,11 @@ class OrderStatusChip extends StatelessWidget {
         text = 'ملغي';
         icon = Icons.cancel;
         break;
+      case 'refunded':
+        color = Colors.grey;
+        text = 'تم الاسترداد';
+        icon = Icons.money_off_outlined;
+        break;
       default:
         color = Colors.grey;
         text = 'غير محدد';
@@ -41,7 +56,7 @@ class OrderStatusChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color),
       ),

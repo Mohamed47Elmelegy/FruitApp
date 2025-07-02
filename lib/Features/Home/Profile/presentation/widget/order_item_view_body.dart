@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frutes_app/Features/check_out/domain/entity/order_entity.dart';
 import 'order_header_section.dart';
 import 'order_delete_button.dart';
+import 'order_cancel_button.dart';
 import 'order_tracking_section.dart';
 import 'order_products_section.dart';
 import 'order_financial_section.dart';
@@ -30,9 +31,23 @@ class OrderItemViewBody extends StatelessWidget {
             // Header Section - رقم الطلب والحالة
             OrderHeaderSection(order: order),
 
-            // Delete Button Section - زر حذف الطلب
-            if (order.status == 'pending' && order.orderId != null) ...[
-              OrderDeleteButton(order: order),
+            // Action Buttons Section - أزرار الحذف والإلغاء
+            if (order.orderId != null) ...[
+              Row(
+                children: [
+                  // Delete Button - زر حذف الطلب (للطلبات المعلقة فقط)
+                  if (order.status == 'pending') ...[
+                    OrderDeleteButton(order: order),
+                    const SizedBox(width: 8),
+                  ],
+                  // Cancel Button - زر إلغاء الطلب (للطلبات غير المكتملة)
+                  if (order.status != 'delivered' &&
+                      order.status != 'cancelled' &&
+                      order.status != 'refunded') ...[
+                    OrderCancelButton(order: order),
+                  ],
+                ],
+              ),
             ],
 
             // Tracking Section - رقم التتبع

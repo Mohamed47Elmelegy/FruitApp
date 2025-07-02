@@ -41,7 +41,7 @@ class InactiveOrdersViewBody extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 4,
             offset: const Offset(0, 2),
@@ -54,7 +54,7 @@ class InactiveOrdersViewBody extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: order.statusInfo.statusColor.withOpacity(0.1),
+              color: order.statusInfo.statusColor.withValues(alpha: 0.1),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -153,9 +153,7 @@ class InactiveOrdersViewBody extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () {
-                      // TODO: Implement order details view
-                    },
+                    onPressed: () {},
                     icon: const Icon(Icons.info_outline),
                     label: const Text('التفاصيل'),
                     style: ElevatedButton.styleFrom(

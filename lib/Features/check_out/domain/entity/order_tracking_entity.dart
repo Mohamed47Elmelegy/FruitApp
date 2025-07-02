@@ -71,21 +71,21 @@ class OrderStatusInfo {
           statusIcon: Icons.inventory_2_outlined,
           description: 'طلبك قيد المراجعة من قبل فريقنا',
         );
-      case 'approved':
+      case 'confirmed':
         return OrderStatusInfo(
           status: status,
-          displayName: 'تم قبول الطلب',
+          displayName: 'تم التأكيد',
           statusColor: const Color(0xFF2196F3),
           statusIcon: Icons.check_circle_outline,
-          description: 'تم قبول طلبك وسيتم تجهيزه قريباً',
+          description: 'تم تأكيد طلبك وسيتم تجهيزه قريباً',
         );
-      case 'preparing':
+      case 'processing':
         return OrderStatusInfo(
           status: status,
-          displayName: 'قيد التجهيز',
+          displayName: 'قيد المعالجة',
           statusColor: const Color(0xFF9C27B0),
           statusIcon: Icons.inventory_2_outlined,
-          description: 'طلبك قيد التجهيز والتعبئة',
+          description: 'طلبك قيد المعالجة والتجهيز',
         );
       case 'shipping':
         return OrderStatusInfo(
@@ -111,6 +111,14 @@ class OrderStatusInfo {
           statusIcon: Icons.cancel_outlined,
           description: 'تم إلغاء الطلب',
         );
+      case 'refunded':
+        return OrderStatusInfo(
+          status: status,
+          displayName: 'تم الاسترداد',
+          statusColor: const Color(0xFF607D8B),
+          statusIcon: Icons.money_off_outlined,
+          description: 'تم استرداد المبلغ',
+        );
       default:
         return OrderStatusInfo(
           status: status,
@@ -126,11 +134,12 @@ class OrderStatusInfo {
 /// Enum لحالات الطلب
 enum OrderStatus {
   pending('pending'),
-  approved('approved'),
-  preparing('preparing'),
+  confirmed('confirmed'),
+  processing('processing'),
   shipping('shipping'),
   delivered('delivered'),
-  cancelled('cancelled');
+  cancelled('cancelled'),
+  refunded('refunded');
 
   const OrderStatus(this.value);
   final String value;

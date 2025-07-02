@@ -33,11 +33,22 @@ class OrderRepositoryImpl implements OrderRepository {
         orderId: orderId,
       );
 
-      final orderModel = OrderModel.fromEntity(orderWithTracking);
+      final orderModel = OrderModel(
+        uid: orderWithTracking.uid,
+        products: orderWithTracking.products,
+        subtotal: orderWithTracking.subtotal,
+        delivery: orderWithTracking.delivery,
+        total: orderWithTracking.total,
+        createdAt: orderWithTracking.createdAt,
+        address: orderWithTracking.address,
+        status: orderWithTracking.status,
+        trackingNumber: orderWithTracking.trackingNumber,
+        orderId: orderWithTracking.orderId,
+      );
 
       // إضافة metadata إضافية للطلب
       final orderData = {
-        ...orderModel.toMap(),
+        ...orderModel.toJson(),
         'createdAtTimestamp': DateTime.now().millisecondsSinceEpoch,
         'updatedAt': DateTime.now().toIso8601String(),
       };
@@ -66,7 +77,7 @@ class OrderRepositoryImpl implements OrderRepository {
         },
       ) as List<Map<String, dynamic>>;
 
-      return data.map((orderData) => OrderModel.fromMap(orderData)).toList();
+      return data.map((orderData) => OrderModel.fromJson(orderData)).toList();
     } catch (e) {
       throw Exception('Failed to get user orders: $e');
     }
@@ -98,6 +109,48 @@ class OrderRepositoryImpl implements OrderRepository {
       );
     } catch (e) {
       throw Exception('Failed to delete order: $e');
+    }
+  }
+
+  @override
+
+  /// Cancel order and remove tracking number
+  Future<void> cancelOrder(String orderId, {String? notes}) async {
+    try {
+      // Get current order data
+      final orderData = await databaseService.getData(
+        path: 'orders',
+        documentId: orderId,
+      ) as Map<String, dynamic>?;
+
+      if (orderData == null) {
+        throw Exception('Order not found');
+      }
+
+      // Create status history entry
+      final statusHistory = orderData['statusHistory'] ?? [];
+      statusHistory.add({
+        'status': 'cancelled',
+        'updatedBy': orderData['uid'],
+        'updatedAt': DateTime.now().toIso8601String(),
+        'notes': notes ?? 'Order cancelled by customer',
+      });
+
+      // Update order - remove tracking number when cancelled
+      await databaseService.updateData(
+        path: 'orders',
+        documentId: orderId,
+        data: {
+          'status': 'cancelled',
+          'trackingNumber': null, // Remove tracking number
+          'lastUpdated': DateTime.now().toIso8601String(),
+          'statusHistory': statusHistory,
+          'cancelledAt': DateTime.now().toIso8601String(),
+          'cancelledBy': orderData['uid'],
+        },
+      );
+    } catch (e) {
+      throw Exception('Failed to cancel order: $e');
     }
   }
 

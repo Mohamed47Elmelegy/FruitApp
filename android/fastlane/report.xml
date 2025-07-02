@@ -5,37 +5,42 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.0009672">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.0011419">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to android bump_version lane" time="0.0008499">
+      <testcase classname="fastlane.lanes" name="1: Switch to android bump_version lane" time="0.0009304">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: powershell -Command &quot;(Get-Content ../../pubspec.yaml) -replace &apos;version: 1.0.115+1750970115&apos;, &apos;version: 1.0.115+1750970116&apos; | Set-Content ../../pubspec.yaml&quot;" time="0.2107446">
+      <testcase classname="fastlane.lanes" name="2: powershell -Command &quot;(Get-Content ../../pubspec.yaml) -replace &apos;version: 1.0.115+1750970115&apos;, &apos;version: 1.0.115+1750970116&apos; | Set-Content ../../pubspec.yaml&quot;" time="0.2025309">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: flutter clean" time="5.4443972">
+      <testcase classname="fastlane.lanes" name="3: flutter clean" time="2.5714413">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: flutter build apk --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons" time="126.8405041">
+      <testcase classname="fastlane.lanes" name="4: flutter pub get" time="7.398507">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: firebase_app_distribution" time="234.7363503">
+      <testcase classname="fastlane.lanes" name="5: flutter build apk --release -t lib/main_prod.dart --flavor prod --no-tree-shake-icons" time="164.7405944">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: shorebird release android --flavor prod --artifact-type apk" time="0.7632279">
+      <testcase classname="fastlane.lanes" name="6: firebase_app_distribution" time="229.1585336">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: shorebird release android --flavor prod --artifact-type apk" time="1.9321366">
         
       </testcase>
     

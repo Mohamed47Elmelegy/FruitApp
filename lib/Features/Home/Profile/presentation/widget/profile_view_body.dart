@@ -24,68 +24,69 @@ class ProfileViewBody extends StatelessWidget {
           notificationVisible: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Header Section - الصورة والاسم
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  // صورة المستخدم
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: AppColors.green1_500.withOpacity(0.1),
-                    child: const Icon(
-                      Icons.person,
-                      size: 35,
-                      color: AppColors.green1_500,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Header Section - الصورة والاسم
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 2),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  // معلومات المستخدم
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          user.name.isNotEmpty ? user.name : 'المستخدم',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          user.email,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    // صورة المستخدم
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor:
+                          AppColors.green1_500.withValues(alpha: 0.1),
+                      child: const Icon(
+                        Icons.person,
+                        size: 35,
+                        color: AppColors.green1_500,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 16),
+                    // معلومات المستخدم
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name.isNotEmpty ? user.name : 'المستخدم',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            user.email,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            // Menu Items - قائمة الخيارات
-            Expanded(
-              child: Column(
+              // Menu Items - قائمة الخيارات
+              Column(
                 children: [
                   // زر الطلبات
                   _buildMenuItem(
@@ -158,19 +159,19 @@ class ProfileViewBody extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
 
-            // زر تسجيل الخروج
-            Butn(
-              text: "تسجيل خروج",
-              color: AppColors.green1_500,
-              onPressed: () {
-                context.read<SignOutCubit>().signOut();
-                navigatorKey.currentState
-                    ?.pushReplacementNamed(PageRoutesName.signin);
-              },
-            ),
-          ],
+              // زر تسجيل الخروج
+              Butn(
+                text: "تسجيل خروج",
+                color: AppColors.green1_500,
+                onPressed: () {
+                  context.read<SignOutCubit>().signOut();
+                  navigatorKey.currentState
+                      ?.pushReplacementNamed(PageRoutesName.signin);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -188,7 +189,7 @@ class ProfileViewBody extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),

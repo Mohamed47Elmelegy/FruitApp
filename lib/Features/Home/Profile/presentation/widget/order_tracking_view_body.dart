@@ -84,8 +84,15 @@ class OrderTrackingViewBody extends StatelessWidget {
         final steps = [
           _TrackingStep(
               'قيد المراجعة', orderDate, Icons.inventory_2_outlined, true),
-          _TrackingStep('قبول الطلب', orderDate, Icons.check_circle_outline,
+          _TrackingStep('تم التأكيد', orderDate, Icons.check_circle_outline,
               status != 'pending'),
+          _TrackingStep(
+              'قيد المعالجة',
+              orderDate,
+              Icons.inventory_2_outlined,
+              status == 'processing' ||
+                  status == 'shipping' ||
+                  status == 'delivered'),
           _TrackingStep('تم شحن الطلب', orderDate, Icons.location_on_outlined,
               status == 'shipping' || status == 'delivered'),
           _TrackingStep(

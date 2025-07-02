@@ -5,25 +5,25 @@ import 'package:frutes_app/Features/Home/Profile/presentation/manager/cubit/orde
 import 'package:frutes_app/core/functions/get_user.dart';
 import 'package:frutes_app/core/services/snack_bar_service.dart';
 
-class OrderDeleteButton extends StatelessWidget {
+class OrderCancelButton extends StatelessWidget {
   final OrderEntity order;
 
-  const OrderDeleteButton({super.key, required this.order});
+  const OrderCancelButton({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       child: IconButton(
-        onPressed: () => _showDeleteConfirmation(context),
+        onPressed: () => _showCancelConfirmation(context),
         icon: const Icon(
-          Icons.delete_outline,
-          color: Colors.red,
+          Icons.cancel_outlined,
+          color: Colors.orange,
           size: 24,
         ),
-        tooltip: 'حذف الطلب',
+        tooltip: 'إلغاء الطلب',
         style: IconButton.styleFrom(
-          backgroundColor: Colors.red.withValues(alpha: 0.1),
+          backgroundColor: Colors.orange.withValues(alpha: 0.1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -32,15 +32,16 @@ class OrderDeleteButton extends StatelessWidget {
     );
   }
 
-  void _showDeleteConfirmation(BuildContext context) {
+  void _showCancelConfirmation(BuildContext context) {
     showDialog(
       context: context,
       builder: (dialogContext) {
         return BlocProvider.value(
           value: context.read<OrdersCubit>(),
           child: AlertDialog(
-            title: const Text('حذف الطلب'),
-            content: const Text('هل أنت متأكد من حذف الطلب؟'),
+            title: const Text('إلغاء الطلب'),
+            content: const Text(
+                'هل أنت متأكد من إلغاء الطلب؟\nسيتم إزالة رقم التتبع.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
@@ -49,12 +50,12 @@ class OrderDeleteButton extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
-                  _deleteOrder(context);
+                  _cancelOrder(context);
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.red,
+                  foregroundColor: Colors.orange,
                 ),
-                child: const Text('حذف'),
+                child: const Text('إلغاء الطلب'),
               ),
             ],
           ),
@@ -63,13 +64,17 @@ class OrderDeleteButton extends StatelessWidget {
     );
   }
 
-  void _deleteOrder(BuildContext context) {
+  void _cancelOrder(BuildContext context) {
     if (order.orderId != null) {
-      context.read<OrdersCubit>().deleteOrder(order.orderId!, getUser().uId);
-      SnackBarService.showSuccessMessage('تم حذف الطلب بنجاح');
+      context.read<OrdersCubit>().cancelOrder(
+            order.orderId!,
+            getUser().uId,
+            notes: 'تم إلغاء الطلب من قبل العميل',
+          );
+      SnackBarService.showSuccessMessage('تم إلغاء الطلب بنجاح');
     } else {
       SnackBarService.showErrorMessage(
-          'لا يمكن حذف الطلب - معرف الطلب غير متوفر');
+          'لا يمكن إلغاء الطلب - معرف الطلب غير متوفر');
     }
   }
 }

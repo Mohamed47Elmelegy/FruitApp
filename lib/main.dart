@@ -31,6 +31,7 @@ Future<void> mainCommon(String env) async {
   try {
     log('📱 Initializing Flutter binding...');
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
     Bloc.observer = BlocObserverService();
 
     // Initialize ConfigReader first

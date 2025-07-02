@@ -57,9 +57,7 @@ class _OnBordingViewBodyState extends State<OnBordingViewBody> {
               activeColor: AppColors.green1_500,
               color: currentPage == 1
                   ? AppColors.green1_500
-                  : AppColors.green1_500.withOpacity(
-                      0.5,
-                    ),
+                  : AppColors.green1_500.withValues(alpha: 0.5),
               spacing: const EdgeInsets.all(
                 10.0,
               ),

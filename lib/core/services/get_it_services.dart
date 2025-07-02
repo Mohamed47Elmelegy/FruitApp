@@ -15,6 +15,7 @@ import '../../Features/check_out/data/Repositories/order_repository_impl.dart';
 import '../../Features/check_out/domain/usecase/save_order_usecase.dart';
 import '../../Features/check_out/domain/usecase/get_user_orders_usecase.dart';
 import '../../Features/check_out/domain/usecase/delete_order_usecase.dart';
+import '../../Features/check_out/domain/usecase/cancel_order_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -131,6 +132,17 @@ void setupGetit() {
       }
     } catch (e) {
       log('Failed to register DeleteOrderUseCase: $e');
+    }
+
+    // Register cancel order usecase
+    try {
+      if (getIt.isRegistered<OrderRepository>()) {
+        getIt.registerSingleton<CancelOrderUseCase>(
+          CancelOrderUseCase(getIt<OrderRepository>()),
+        );
+      }
+    } catch (e) {
+      log('Failed to register CancelOrderUseCase: $e');
     }
 
     DebugConsoleMessages.success('✅ All dependencies registered successfully');

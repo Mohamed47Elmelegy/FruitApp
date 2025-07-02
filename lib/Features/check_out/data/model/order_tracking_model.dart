@@ -65,7 +65,7 @@ class OrderTrackingModel extends OrderTrackingEntity {
         activeColor: const Color(0xFFFF9800),
       ),
       OrderTrackingStep(
-        title: 'تم قبول الطلب',
+        title: 'تم التأكيد',
         subtitle: orderDate,
         icon: Icons.check_circle_outline,
         isActive: statusEnum != OrderStatus.pending,
@@ -73,11 +73,11 @@ class OrderTrackingModel extends OrderTrackingEntity {
         activeColor: const Color(0xFF2196F3),
       ),
       OrderTrackingStep(
-        title: 'قيد التجهيز',
+        title: 'قيد المعالجة',
         subtitle: orderDate,
         icon: Icons.inventory_2_outlined,
-        isActive: statusEnum == OrderStatus.preparing,
-        isCompleted: statusEnum.index > OrderStatus.preparing.index,
+        isActive: statusEnum == OrderStatus.processing,
+        isCompleted: statusEnum.index > OrderStatus.processing.index,
         activeColor: const Color(0xFF9C27B0),
       ),
       OrderTrackingStep(

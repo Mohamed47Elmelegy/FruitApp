@@ -2,18 +2,59 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // السماح بالقراءة والكتابة لأي شخص في مجموعة products
-    match /products/{document=**} {
-      allow read, write: if true;
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // Helper function to check if user is customer
+    function isCustomer() {
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
 
-    // Address collection - users can only access their own addresses
-    match /addresses/{document} {
+    // Products collection - public read, admin write
+    match /products/{productId} {
+      allow read: if true; // Anyone can read products
+      allow write: if isAdmin(); // Only admins can create/update/delete products
+    }
+
+    // Orders collection - customers can create, admins can manage
+    match /orders/{orderId} {
+      allow read: if request.auth != null && 
+        (isAdmin() || resource.data.userId == request.auth.uid);
+      allow create: if isCustomer() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // Users collection - users can read/update their own data, admins can read all
+    match /users/{userId} {
+      allow read: if request.auth != null && 
+        (isAdmin() || request.auth.uid == userId);
+      allow write: if request.auth != null && 
+        (isAdmin() || request.auth.uid == userId);
+    }
+
+    // Admins collection - only admins can access
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Addresses collection - users can only access their own addresses
+    match /addresses/{addressId} {
       allow read, write: if request.auth != null && 
-        (resource == null || request.auth.uid == resource.data.userId);
+        (resource == null || resource.data.userId == request.auth.uid);
     }
 
-    // قواعد أخرى (تتطلب تسجيل الدخول للوصول لأي وثيقة أخرى)
+    // Discount codes - public read, admin write
+    match /discountCodes/{codeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Default rule - require authentication for other collections
     match /{document=**} {
       allow read, write: if request.auth != null;
     }

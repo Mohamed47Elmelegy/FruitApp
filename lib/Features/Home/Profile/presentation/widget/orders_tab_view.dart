@@ -94,12 +94,18 @@ class OrdersTabView extends StatelessWidget {
     switch (status) {
       case 'pending':
         return Icons.schedule;
+      case 'confirmed':
+        return Icons.check_circle_outline;
+      case 'processing':
+        return Icons.inventory_2_outlined;
       case 'shipping':
         return Icons.local_shipping;
       case 'delivered':
         return Icons.check_circle;
       case 'cancelled':
         return Icons.cancel;
+      case 'refunded':
+        return Icons.money_off_outlined;
       default:
         return Icons.shopping_bag_outlined;
     }
@@ -109,12 +115,18 @@ class OrdersTabView extends StatelessWidget {
     switch (status) {
       case 'pending':
         return 'قيد المراجعة';
+      case 'confirmed':
+        return 'تم التأكيد';
+      case 'processing':
+        return 'قيد المعالجة';
       case 'shipping':
         return 'قيد الشحن';
       case 'delivered':
         return 'تم التوصيل';
       case 'cancelled':
         return 'ملغي';
+      case 'refunded':
+        return 'تم الاسترداد';
       default:
         return '';
     }

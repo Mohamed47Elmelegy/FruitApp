@@ -4,8 +4,6 @@ import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/core/theme/colors_theme.dart';
 import 'package:frutes_app/core/widgets/custom_app_bar.dart';
 import 'package:frutes_app/Features/check_out/presentation/manager/active_orders_cubit.dart';
-import 'package:frutes_app/Features/check_out/domain/entity/order_tracking_entity.dart';
-import 'package:frutes_app/core/routes/page_routes_name.dart';
 import '../widget/active_orders_view_body.dart';
 
 class ActiveOrdersView extends StatelessWidget {

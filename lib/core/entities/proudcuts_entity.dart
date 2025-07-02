@@ -7,7 +7,7 @@ class ProductsEntity extends Equatable {
   final String productCode;
   final String productDescription;
   final bool isFeatured;
-  String? imageUrl;
+  final String? imageUrl;
   final int expiryDateMonths;
   final int calorieDensity;
   final int unitAmount;
@@ -15,7 +15,7 @@ class ProductsEntity extends Equatable {
   final num ratingCount;
   final bool isOrganic;
   final List<ReviewsEntity> reviews;
-  ProductsEntity({
+  const ProductsEntity({
     required this.productName,
     required this.productPrice,
     required this.productCode,
