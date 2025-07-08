@@ -18,10 +18,19 @@ class FirbaseAuthService {
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      ); // Success log with green color
+      );
+
+      // Print Firebase Auth token after successful user creation
+      final firebaseIdToken = await userCredential.user?.getIdToken();
+      log('🔥 FIREBASE AUTH TOKEN (User Creation):');
+      log('Firebase ID Token: $firebaseIdToken');
+      log('User UID: ${userCredential.user?.uid}');
+      log('User Email: ${userCredential.user?.email}');
+      log('🔥 END FIREBASE AUTH TOKEN (User Creation)');
+
       log(DebugConsoleMessages.success(
           'User created successfully: ${userCredential.user!.email}'));
-      return userCredential.user!; // Success log with green color
+      return userCredential.user!;
     } on FirebaseAuthException catch (e) {
       log(DebugConsoleMessages.error(
           'FirbaseAuthService.createUserWithEmailAndPassword Exception message : ${e.toString()}Exception e.code : ${e.code}'));
@@ -54,10 +63,19 @@ class FirbaseAuthService {
           await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      ); // Success log with green color
+      );
+
+      // Print Firebase Auth token after successful sign-in
+      final firebaseIdToken = await userCredential.user?.getIdToken();
+      log('🔥 FIREBASE AUTH TOKEN (Email/Password):');
+      log('Firebase ID Token: $firebaseIdToken');
+      log('User UID: ${userCredential.user?.uid}');
+      log('User Email: ${userCredential.user?.email}');
+      log('🔥 END FIREBASE AUTH TOKEN (Email/Password)');
+
       log(DebugConsoleMessages.success(
           'User signed in successfully: ${userCredential.user!.email}'));
-      return userCredential.user!; // Success log with green color
+      return userCredential.user!;
     } on FirebaseAuthException catch (e) {
       log(DebugConsoleMessages.error(
           'FirbaseAuthService.signInWithEmailAndPassword Exception message : ${e.toString()}Exception e.code : ${e.code}'));
@@ -95,8 +113,13 @@ class FirbaseAuthService {
       // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-      log(DebugConsoleMessages.error(
-          'GoogleSignInAuthentication: ${googleAuth?.accessToken}, ${googleAuth?.idToken}'));
+
+      // Print Google Sign-In tokens to console
+      log('🔑 GOOGLE SIGN-IN TOKENS:');
+      log('Access Token: ${googleAuth?.accessToken}');
+      log('ID Token: ${googleAuth?.idToken}');
+      log('Server Auth Code: ${googleAuth?.serverAuthCode}');
+      log('🔑 END GOOGLE SIGN-IN TOKENS');
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -107,6 +130,15 @@ class FirbaseAuthService {
       // Once signed in, return the UserCredential
       final userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Print Firebase Auth token after successful sign-in
+      final firebaseIdToken = await userCredential.user?.getIdToken();
+      log('🔥 FIREBASE AUTH TOKEN:');
+      log('Firebase ID Token: $firebaseIdToken');
+      log('User UID: ${userCredential.user?.uid}');
+      log('User Email: ${userCredential.user?.email}');
+      log('🔥 END FIREBASE AUTH TOKEN');
+
       log(DebugConsoleMessages.success(
           'User signed in successfully with Google: ${userCredential.user!.email}'));
       return userCredential.user!;
@@ -133,11 +165,24 @@ class FirbaseAuthService {
     try {
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
+      // Print Facebook authentication tokens to console
+      log('📘 FACEBOOK SIGN-IN TOKENS:');
+      log('Access Token: ${loginResult.accessToken?.tokenString}');
+      log('📘 END FACEBOOK SIGN-IN TOKENS');
+
       final OAuthCredential facebookAuthCredential =
           FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
       final userCredential = await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
+
+      // Print Firebase Auth token after successful sign-in
+      final firebaseIdToken = await userCredential.user?.getIdToken();
+      log('🔥 FIREBASE AUTH TOKEN (Facebook):');
+      log('Firebase ID Token: $firebaseIdToken');
+      log('User UID: ${userCredential.user?.uid}');
+      log('User Email: ${userCredential.user?.email}');
+      log('🔥 END FIREBASE AUTH TOKEN (Facebook)');
 
       log(DebugConsoleMessages.success(
           'User signed in successfully with Facebook: ${userCredential.user!.email}'));
@@ -171,13 +216,13 @@ class FirbaseAuthService {
   }
 
   Future signOut() async {
-await FirebaseAuth.instance.signOut();
-await FacebookAuth.instance.logOut();
-await GoogleSignIn().signOut();
-log(DebugConsoleMessages.success('User signed out successfully '));
-
+    await FirebaseAuth.instance.signOut();
+    await FacebookAuth.instance.logOut();
+    await GoogleSignIn().signOut();
+    log(DebugConsoleMessages.success('User signed out successfully '));
   }
-   Future<void> sendEmailVerification() async {
+
+  Future<void> sendEmailVerification() async {
     try {
       final user = _firebaseAuth.currentUser;
 
@@ -200,5 +245,4 @@ log(DebugConsoleMessages.success('User signed out successfully '));
           message: 'There was an error sending the verification email.');
     }
   }
-
 }

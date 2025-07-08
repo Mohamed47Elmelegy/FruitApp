@@ -30,4 +30,12 @@ class OrderEntity {
 
   /// الحصول على التاريخ المنسق للعرض
   String get displayDate => OrderUtils.formatDate(createdAt);
+
+  bool get isCancelled => status.toLowerCase() == 'cancelled';
+  bool get isRefunded => status.toLowerCase() == 'refunded';
+
+  /// احسب الإيرادات الكلية (تستثني الملغاة والمسترجعة)
+  static double totalRevenue(List<OrderEntity> orders) => orders
+      .where((order) => !order.isCancelled && !order.isRefunded)
+      .fold(0, (sum, order) => sum + order.total);
 }

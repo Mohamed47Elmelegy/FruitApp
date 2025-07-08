@@ -130,10 +130,15 @@ class ProductDetailsViewBody extends StatelessWidget {
                   Butn(
                       text: 'أضف الي السلة',
                       color: AppColors.green1_500,
-                      onPressed: () {
-                        context
-                            .read<CartCubit>()
+                      onPressed: () async {
+                        final cartCubit = context.read<CartCubit>();
+                        final error = await cartCubit
                             .addToCart(ProductModel.fromEntity(product));
+                        if (error != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(error)),
+                          );
+                        }
                       }),
                 ],
               ).setHorizontalPadding(context, 20, enableMediaQuery: false),

@@ -7,6 +7,8 @@ import 'package:frutes_app/core/services/get_it_services.dart';
 import 'package:frutes_app/Features/check_out/domain/usecase/save_order_usecase.dart';
 import 'package:frutes_app/Features/check_out/domain/Repositories/address_repository.dart';
 
+import '../../domain/usecases/confirm_order_usecase.dart';
+
 class CheckoutView extends StatelessWidget {
   const CheckoutView({super.key});
 
@@ -15,7 +17,10 @@ class CheckoutView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<OrderCubit>(
-          create: (_) => OrderCubit(getIt<SaveOrderUseCase>()),
+          create: (_) => OrderCubit(
+            getIt<SaveOrderUseCase>(),
+            getIt<ConfirmOrderUseCase>(),
+          ),
         ),
         BlocProvider<AddressCubit>(
           create: (_) => AddressCubit(getIt<AddressRepository>()),

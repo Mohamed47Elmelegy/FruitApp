@@ -13,6 +13,7 @@ import '../../../../../core/theme/text_theme.dart';
 import '../../../../../core/widgets/custom_header.dart';
 import '../manager/cubits/Cart_cubit/cart_cubit.dart';
 import 'cart_items_list.dart';
+import 'package:frutes_app/core/services/app_settings_service.dart';
 
 class CartViewBody extends StatelessWidget {
   const CartViewBody({
@@ -73,12 +74,20 @@ class CartViewBody extends StatelessWidget {
                 text:
                     '${context.watch<CartCubit>().cartEntity.calculateTotalPrice()} جنيه',
                 color: AppColors.green1_500,
-                onPressed: () {
-                  if (context.read<CartCubit>().cartEntity.cartItems.isNotEmpty) {
+                onPressed: () async {
+                  final cartCubit = context.read<CartCubit>();
+                  final settings = await AppSettingsService.fetchAppSettings();
+                  final minOrder =
+                      settings.minOrderAmount > 0 ? settings.minOrderAmount : 1;
+                  final total = cartCubit.cartEntity.calculateTotalPrice();
+                  if (cartCubit.cartEntity.cartItems.isEmpty) {
+                    SnackBarService.showErrorMessage('لا يوجد منتجات في السلة');
+                  } else if (total < minOrder) {
+                    SnackBarService.showErrorMessage(
+                        'الحد الأدنى للطلب هو $minOrder جنيه');
+                  } else {
                     navigatorKey.currentState
                         ?.pushNamed(PageRoutesName.checkoutView);
-                  } else {
-                    SnackBarService.showErrorMessage('لا يوجد منتجات في السلة');
                   }
                 },
               );

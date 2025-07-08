@@ -3,6 +3,7 @@ import 'package:frutes_app/Features/Home/Cart/domain/cart_entity.dart';
 import 'package:frutes_app/Features/Home/Cart/domain/cart_item_entity.dart';
 import 'package:hive/hive.dart';
 import 'package:frutes_app/core/model/Products/product_model.dart';
+import 'package:frutes_app/core/services/app_settings_service.dart';
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
@@ -11,7 +12,12 @@ class CartCubit extends Cubit<CartState> {
   }
   CartEntity cartEntity = CartEntity(cartItems: []);
 
-  void addToCart(ProductModel productModel) {
+  Future<String?> addToCart(ProductModel productModel) async {
+    final settings = await AppSettingsService.fetchAppSettings();
+    final maxOrder = settings.maxOrderAmount;
+    if (maxOrder > 0 && cartEntity.cartItems.length >= maxOrder) {
+      return 'لا يمكنك إضافة أكثر من $maxOrder منتجات في السلة';
+    }
     bool isProductExist = cartEntity.isExist(productModel);
     var cartItem = cartEntity.getCartItem(productModel);
     if (isProductExist) {
@@ -19,8 +25,9 @@ class CartCubit extends Cubit<CartState> {
     } else {
       cartEntity.addCartItem(cartItem);
     }
-    saveCart(cartEntity);
+    await saveCart(cartEntity);
     emit(AddItemToCart());
+    return null;
   }
 
   void removeCartItem(CartItemEntity cartItem) {

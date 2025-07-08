@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "244051247756-7vjm1s58jmrk01v8opc9ek4orhjpar3v.apps.googleusercontent.com",
+          "client_id": "244051247756-ga061u9n53vls7pvl75eoputtf93mu4g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.furute",
-            "certificate_hash": "000a55e604d30475299b2b376ecd5a15a4fdf4a3"
+            "certificate_hash": "97fde79c478034de9cfdc2eb0a908741b09e5292"
           }
         },
         {
@@ -59,11 +59,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "244051247756-hqmksjo5anfv5sldo9i3n5uldp0nuoqp.apps.googleusercontent.com",
+          "client_id": "244051247756-39l7bepmu3rgq0bsfpch2ggnpt3q0a43.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.furute.dev",
-            "certificate_hash": "000a55e604d30475299b2b376ecd5a15a4fdf4a3"
+            "certificate_hash": "97fde79c478034de9cfdc2eb0a908741b09e5292"
           }
         },
         {
@@ -103,11 +103,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "244051247756-el8ja5hh348nvdohh45b0jgb5ango6ha.apps.googleusercontent.com",
+          "client_id": "244051247756-adbc5h2vatedvs4r08n4uc5etco61e0g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.furute_app_dashbord",
-            "certificate_hash": "000a55e604d30475299b2b376ecd5a15a4fdf4a3"
+            "certificate_hash": "97fde79c478034de9cfdc2eb0a908741b09e5292"
           }
         },
         {

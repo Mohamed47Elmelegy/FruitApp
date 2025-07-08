@@ -61,7 +61,7 @@ class ProductModel {
       isFeatured: json['isFeatured'] ?? false,
       imageUrl: json['imageUrl'],
       expiryDateMonths: json['expiryDateMonths'] ?? 0,
-      calorieDensity: json['calories'] ?? 0,
+      calorieDensity: json['calorieDensity'] ?? 0,
       unitAmount: json['unitAmount'] ?? 0,
       productRating: getAvgRating(json['reviews'] != null
           ? List<ReviewsModel>.from(

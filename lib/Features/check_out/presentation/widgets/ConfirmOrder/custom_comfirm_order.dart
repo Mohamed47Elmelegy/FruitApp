@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../../core/services/snack_bar_service.dart';
 import '../../../../Home/Cart/presentation/manager/cubits/Cart_cubit/cart_cubit.dart';
 import '../../manager/address_cubit.dart';
@@ -13,7 +12,8 @@ import '../../../../../../core/widgets/butn.dart';
 import '../../../../../../main.dart';
 import '../../../../../../core/routes/page_routes_name.dart';
 import '../../manager/order_cubit.dart';
-import '../../../domain/entity/order_entity.dart';
+import '../../../../../../core/services/app_settings_service.dart'
+    show AppSettings, AppSettingsService;
 
 class CustomConfirmOrderPage extends StatelessWidget {
   const CustomConfirmOrderPage(
@@ -24,38 +24,8 @@ class CustomConfirmOrderPage extends StatelessWidget {
 
   void _handleConfirmOrder(BuildContext context) async {
     final cart = context.read<CartCubit>().cartEntity;
-    final subtotal = cart.calculateTotalPrice();
-    const delivery = 30.0;
-    final total = subtotal + delivery;
     final address = context.read<AddressCubit>().selectedAddress;
-    final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-
-    final order = OrderEntity(
-      uid: uid,
-      products: cart.cartItems
-          .map((item) => {
-                'productCode': item.productModel.productCode,
-                'name': item.productModel.productName,
-                'count': item.count,
-                'price': item.productModel.productPrice,
-              })
-          .toList(),
-      subtotal: subtotal,
-      delivery: delivery,
-      total: total,
-      createdAt: DateTime.now().toIso8601String(),
-      address: address != null
-          ? {
-              'fullName': address.fullName,
-              'email': address.email,
-              'address': address.address,
-              'city': address.city,
-              'details': address.details,
-            }
-          : null,
-      status: 'pending',
-    );
-    context.read<OrderCubit>().saveOrder(order);
+    context.read<OrderCubit>().confirmOrder(cart: cart, address: address);
   }
 
   @override
@@ -92,54 +62,61 @@ class CustomConfirmOrderPage extends StatelessWidget {
                       builder: (context, state) {
                         final cart = context.read<CartCubit>().cartEntity;
                         final subtotal = cart.calculateTotalPrice();
-                        const delivery = 30.0; // ثابت كما في الصورة
-                        final total = subtotal + delivery;
-                        return Container(
-                          padding: EdgeInsets.all(16.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.grayscale50,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        return FutureBuilder<AppSettings>(
+                          future: AppSettingsService.fetchAppSettings(),
+                          builder: (context, snapshot) {
+                            final delivery = snapshot.data?.deliveryFee ?? 0;
+                            final total = subtotal + delivery;
+                            return Container(
+                              padding: EdgeInsets.all(16.w),
+                              decoration: BoxDecoration(
+                                color: AppColors.grayscale50,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('المجموع الفرعي:',
-                                      style: AppTextStyles.bodyBaseRegular16),
-                                  Text('${subtotal.toInt()} جنيه',
-                                      style: AppTextStyles.bodyBaseBold16),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text('المجموع الفرعي:',
+                                          style:
+                                              AppTextStyles.bodyBaseRegular16),
+                                      Text('${subtotal.toInt()} جنيه',
+                                          style: AppTextStyles.bodyBaseBold16),
+                                    ],
+                                  ),
+                                  Gap(8.h),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text('التوصيل:',
+                                          style:
+                                              AppTextStyles.bodyBaseRegular16),
+                                      Text('${delivery.toInt()} جنيه',
+                                          style: AppTextStyles.bodyBaseBold16),
+                                    ],
+                                  ),
+                                  Divider(
+                                      height: 24.h,
+                                      thickness: 1,
+                                      color: AppColors.grayscale200),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text('الكلي',
+                                          style: AppTextStyles.bodyLargeBold19),
+                                      Text('${total.toInt()} جنيه',
+                                          style: AppTextStyles.bodyLargeBold19),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              Gap(8.h),
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('التوصيل:',
-                                      style: AppTextStyles.bodyBaseRegular16),
-                                  Text('30 جنيه',
-                                      style: AppTextStyles.bodyBaseBold16),
-                                ],
-                              ),
-                              Divider(
-                                  height: 24.h,
-                                  thickness: 1,
-                                  color: AppColors.grayscale200),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text('الكلي',
-                                      style: AppTextStyles.bodyLargeBold19),
-                                  Text('${total.toInt()} جنيه',
-                                      style: AppTextStyles.bodyLargeBold19),
-                                ],
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

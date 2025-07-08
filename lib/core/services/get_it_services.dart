@@ -16,6 +16,9 @@ import '../../Features/check_out/domain/usecase/save_order_usecase.dart';
 import '../../Features/check_out/domain/usecase/get_user_orders_usecase.dart';
 import '../../Features/check_out/domain/usecase/delete_order_usecase.dart';
 import '../../Features/check_out/domain/usecase/cancel_order_usecase.dart';
+import 'package:frutes_app/Features/check_out/domain/usecases/confirm_order_usecase.dart';
+import 'package:frutes_app/core/services/app_settings_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final getIt = GetIt.instance;
 
@@ -143,6 +146,35 @@ void setupGetit() {
       }
     } catch (e) {
       log('Failed to register CancelOrderUseCase: $e');
+    }
+
+    // Register AppSettingsService
+    try {
+      getIt.registerSingleton<AppSettingsService>(AppSettingsService());
+    } catch (e) {
+      log('Failed to register AppSettingsService: $e');
+    }
+
+    // Register FirebaseAuth
+    try {
+      getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
+    } catch (e) {
+      log('Failed to register FirebaseAuth: $e');
+    }
+
+    // Register ConfirmOrderUseCase
+    try {
+      if (getIt.isRegistered<AppSettingsService>() &&
+          getIt.isRegistered<FirebaseAuth>()) {
+        getIt.registerSingleton<ConfirmOrderUseCase>(
+          ConfirmOrderUseCase(
+            appSettingsService: getIt<AppSettingsService>(),
+            firebaseAuth: getIt<FirebaseAuth>(),
+          ),
+        );
+      }
+    } catch (e) {
+      log('Failed to register ConfirmOrderUseCase: $e');
     }
 
     DebugConsoleMessages.success('✅ All dependencies registered successfully');

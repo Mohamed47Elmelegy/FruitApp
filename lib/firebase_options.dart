@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     projectId: 'furute-fefa1',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'furute-fefa1.firebasestorage.app',
-    androidClientId: '244051247756-7vjm1s58jmrk01v8opc9ek4orhjpar3v.apps.googleusercontent.com',
+    androidClientId: '244051247756-39l7bepmu3rgq0bsfpch2ggnpt3q0a43.apps.googleusercontent.com',
     iosClientId: '244051247756-i8idqh0narptlff19ijn3gnhutpdeonq.apps.googleusercontent.com',
     iosBundleId: 'com.example.furute',
   );
@@ -79,7 +79,7 @@ class DefaultFirebaseOptions {
     projectId: 'furute-fefa1',
     databaseURL: 'https://furute-fefa1-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'furute-fefa1.firebasestorage.app',
-    androidClientId: '244051247756-7vjm1s58jmrk01v8opc9ek4orhjpar3v.apps.googleusercontent.com',
+    androidClientId: '244051247756-39l7bepmu3rgq0bsfpch2ggnpt3q0a43.apps.googleusercontent.com',
     iosClientId: '244051247756-fuumk4khn8ittd8es1dbf8gkbnhm7ft3.apps.googleusercontent.com',
     iosBundleId: 'com.example.frutesApp',
   );

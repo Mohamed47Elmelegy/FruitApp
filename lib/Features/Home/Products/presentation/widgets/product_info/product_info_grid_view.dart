@@ -28,7 +28,7 @@ class ProductInfoGridView extends StatelessWidget {
         _buildGridItem(Assets.imagesRating,
             "${product.productRating} (${product.ratingCount})", "التقييم"),
         _buildGridItem(Assets.imagesCalorie, "${product.calorieDensity} كالوري",
-            "${100} جرام"),
+            "${product.unitAmount} جرام"),
       ],
     );
   }
